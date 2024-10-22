@@ -25,6 +25,9 @@
         },
         {
             "m_Id": "72ff7c2a31fe4ba895b929be6f045b06"
+        },
+        {
+            "m_Id": "298eff2caa3f4d2b8edfc4fb4bbf5c28"
         }
     ],
     "m_GroupDatas": [],
@@ -119,6 +122,49 @@
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalFullscreenSubTarget",
     "m_ObjectId": "270adb43fda944abb5c6e6d62b0ccb0a"
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.CustomFunctionNode",
+    "m_ObjectId": "298eff2caa3f4d2b8edfc4fb4bbf5c28",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "PaletteLimit (Custom Function)",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 51.9998893737793,
+            "y": 716.7999877929688,
+            "width": 223.2001495361328,
+            "height": 277.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "edc7f3abb4ba4fd581600263fcd9e368"
+        },
+        {
+            "m_Id": "666b53b6282c42e28446bb8ec840e0c6"
+        }
+    ],
+    "synonyms": [
+        "code",
+        "HLSL"
+    ],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SourceType": 1,
+    "m_FunctionName": "PaletteLimit",
+    "m_FunctionSource": "",
+    "m_FunctionBody": "\rconst float colorResolution = 7.96875;\r\nconst float colorStep = 1.0 / colorResolution;\r\r\nOut = round(In * colorResolution) * colorStep;"
 }
 
 {
@@ -230,6 +276,31 @@
     "m_depthWriteMode": 0,
     "m_AllowMaterialOverride": false,
     "m_DepthTestMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "666b53b6282c42e28446bb8ec840e0c6",
+    "m_Id": 1,
+    "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -365,10 +436,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -536.800048828125,
-            "y": 123.99999237060547,
-            "width": 222.40005493164063,
-            "height": 301.60003662109377
+            "x": -529.5999755859375,
+            "y": 103.99998474121094,
+            "width": 223.199951171875,
+            "height": 301.5999755859375
         }
     },
     "m_Slots": [
@@ -396,7 +467,7 @@
     "m_SourceType": 1,
     "m_FunctionName": "PaletteLimit",
     "m_FunctionSource": "",
-    "m_FunctionBody": "const float4x4 bayer = float4x4(0.0 / 16.0 - 0.5, 8.0  / 16.0 - 0.5, 2.0  / 16.0 - 0.5, 10.0 / 16.0 - 0.5,\r\n                               12.0 / 16.0 - 0.5, 4.0  / 16.0 - 0.5, 14.0 / 16.0 - 0.5, 6.0  / 16.0 - 0.5,\r\n                               3.0  / 16.0 - 0.5, 11.0 / 16.0 - 0.5, 1.0  / 16.0 - 0.5, 9.0  / 16.0 - 0.5,\r\n                               15.0 / 16.0 - 0.5, 7.0  / 16.0 - 0.5, 13.0 / 16.0 - 0.5, 5.0  / 16.0 - 0.5);\r\nconst float colorResolution = 15.9375;\r\nconst float colorStep = 1.0 / colorResolution;\r\nint2 bayerPos = int2(ScreenPos * _ScreenParams.xy) & 3;\r\nOut = round((In - bayer[bayerPos.x][bayerPos.y] * colorStep) * colorResolution) * colorStep;"
+    "m_FunctionBody": "const float4x4 bayer = float4x4(0.0 / 16.0 - 0.5, 8.0  / 16.0 - 0.5, 2.0  / 16.0 - 0.5, 10.0 / 16.0 - 0.5,\r\n                               12.0 / 16.0 - 0.5, 4.0  / 16.0 - 0.5, 14.0 / 16.0 - 0.5, 6.0  / 16.0 - 0.5,\r\n                               3.0  / 16.0 - 0.5, 11.0 / 16.0 - 0.5, 1.0  / 16.0 - 0.5, 9.0  / 16.0 - 0.5,\r\n                               15.0 / 16.0 - 0.5, 7.0  / 16.0 - 0.5, 13.0 / 16.0 - 0.5, 5.0  / 16.0 - 0.5);\r\nconst float colorResolution = 7.96875;\r\nconst float colorStep = 1.0 / colorResolution;\r\nint2 bayerPos = int2(ScreenPos * _ScreenParams.xy) & 3;\r\nOut = round((In - bayer[bayerPos.x][bayerPos.y] * colorStep) * colorResolution) * colorStep;"
 }
 
 {
@@ -511,6 +582,31 @@
         "y": 0.0,
         "z": 0.0,
         "w": 1.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "edc7f3abb4ba4fd581600263fcd9e368",
+    "m_Id": 0,
+    "m_DisplayName": "In",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "In",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
     },
     "m_Labels": []
 }
