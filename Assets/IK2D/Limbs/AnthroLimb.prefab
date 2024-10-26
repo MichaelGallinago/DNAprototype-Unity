@@ -136,9 +136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startBone: {fileID: 5359871445265459886}
   _endBone: {fileID: 8076463992552856355}
-  _length1: 0
-  _length2: 0
-  _endPosition: {x: 0, y: 0}
+  _end: {fileID: 2702610973667437403}
+  _targetPosition: {x: 0, y: 0}
 --- !u!212 &663374124770423663
 SpriteRenderer:
   m_ObjectHideFlags: 0

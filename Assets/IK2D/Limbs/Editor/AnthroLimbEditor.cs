@@ -1,4 +1,4 @@
-using System;
+using System.Runtime.CompilerServices;
 using Extensions;
 using UnityEditor;
 using UnityEngine;
@@ -14,24 +14,38 @@ namespace IK2D.Limbs.Editor
         {
             _anthroLimb.Target = target;
             
+            DrawGizmos();
+            
+            AnthroLimb anthroLimb = _anthroLimb;
+            EditorGUI.BeginChangeCheck();
+            Vector3 newPosition = Handles.PositionHandle(anthroLimb.TargetPosition, Quaternion.identity);
+            if (!EditorGUI.EndChangeCheck()) return;
+
+            var undoName = $"{anthroLimb.name} {nameof(anthroLimb.TargetPosition)} changed to {newPosition.ToString()}";
+            Undo.RecordObject(anthroLimb, undoName);
+            anthroLimb.TargetPosition = newPosition;
+            anthroLimb.UpdateLimb();
+        }
+        
+        private void DrawGizmos()
+        {
             AnthroLimb anthroLimb = _anthroLimb;
             Vector3 startPosition = anthroLimb.StartPosition;
+            Vector3 jointPosition = anthroLimb.JointPosition;
+            Vector3 endPosition = anthroLimb.EndPosition;
             
-            float angle = _startBone.rotation.z * Mathf.Deg2Rad;
-            float cosine = MathF.Cos(angle);
-            float sine = MathF.Sin(angle);
-            Vector3 joinPosition = startPosition + (Vector3)(new Vector2(cosine, sine) * _length1);
-            print($"{startPosition}, {joinPosition}, {_endPosition}");
-            Debug.DrawLine(startPosition, joinPosition, Color.green);
-            Debug.DrawLine(joinPosition, _endPosition, Color.red);
-            Debug.DrawLine(startPosition, _endPosition, Color.blue);
+            //Debug.Log($"{startPosition}, {joinPosition}, {endPosition}");
             
-            Handles.color = Color.red;
-            //Handles.DrawLine();
-            Handles.color = Color.green;
-            //Handles.DrawLine();
-            Handles.color = Color.blue;
-            //Handles.DrawLine();
+            DrawColoredLine(startPosition, endPosition, Color.green);
+            DrawColoredLine(startPosition, jointPosition, Color.red);
+            DrawColoredLine(jointPosition, endPosition, Color.blue);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DrawColoredLine(Vector3 p1, Vector3 p2, Color color)
+        {
+            Handles.color = color;
+            Handles.DrawLine(p1, p2);
         }
     }
 }
