@@ -13,6 +13,8 @@ namespace IK2D.Limbs
         [SerializeField] private Transform _end;
         [Header("Data")]
         [SerializeField] private Vector2 _targetPosition;
+        [field: SerializeField, Range(-360f, 360f)]
+        public float RotationLimit { get; private set; }
         
         private float _cosLength1;
         private float _cosLength2;
@@ -37,6 +39,7 @@ namespace IK2D.Limbs
         public Vector3 StartPosition => _startBone.position;
         public Vector3 JointPosition => _endBone.position;
         public Vector3 EndPosition => _end.position;
+        public float JointRotation => _endBone.localEulerAngles.z;
 
         public override float EndRotation
         {

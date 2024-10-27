@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using Extensions;
 using UnityEditor;
@@ -34,11 +35,20 @@ namespace IK2D.Limbs.Editor
             Vector3 jointPosition = anthroLimb.JointPosition;
             Vector3 endPosition = anthroLimb.EndPosition;
             
-            //Debug.Log($"{startPosition}, {joinPosition}, {endPosition}");
-            
             DrawColoredLine(startPosition, endPosition, Color.green);
             DrawColoredLine(startPosition, jointPosition, Color.red);
             DrawColoredLine(jointPosition, endPosition, Color.blue);
+            
+            Vector3 distances = jointPosition - endPosition;
+            float radians = MathF.Atan2(distances.y, distances.x) - anthroLimb.JointRotation * Mathf.Deg2Rad;
+            var from = new Vector3(-MathF.Cos(radians), -MathF.Sin(radians), 0f);
+            float angle = anthroLimb.RotationLimit;
+            float radius = Vector3.Distance(jointPosition, endPosition);
+            
+            Handles.color = new Color(1f, 1f, 1f, 0.025f);
+            Handles.DrawSolidArc(jointPosition, Vector3.forward, from, angle, radius);
+            Handles.color = Color.white;
+            Handles.DrawWireArc(jointPosition, Vector3.forward, from, angle, radius);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
