@@ -8,12 +8,12 @@ namespace IK2D.Bodies
         [SerializeField] private Transform _tail;
         [SerializeField] private Transform _wings;
         
-        void Start()
+        private void Start()
         {
             
         }
         
-        void Update()
+        private void Update()
         {
         
         }

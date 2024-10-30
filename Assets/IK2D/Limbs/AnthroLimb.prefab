@@ -138,6 +138,7 @@ MonoBehaviour:
   _endBone: {fileID: 8076463992552856355}
   _end: {fileID: 2702610973667437403}
   _targetPosition: {x: 0, y: 0}
+  <RotationLimit>k__BackingField: 0
 --- !u!212 &663374124770423663
 SpriteRenderer:
   m_ObjectHideFlags: 0
