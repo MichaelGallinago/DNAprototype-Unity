@@ -12,13 +12,15 @@ namespace Tiles.Generator
         public enum SolidType : byte { Full, Top, NoTop }
         
         [field: SerializeField] public Sprite Sprite { get; set; }
+        
         [SerializeField] private Matrix4x4 _transform = Matrix4x4.identity;
+        [SerializeField] private Color _color = Color.white;
+        
         [SerializeField] private byte[] _heightsDown;
         [SerializeField] private byte[] _widthsRight;
         [SerializeField] private byte[] _heightsUp;
         [SerializeField] private byte[] _widthsLeft;
         [SerializeField] private Vector4 _angles;
-        
         
         public Matrix4x4 Transform { get => _transform; set => _transform = value; }
         
@@ -27,10 +29,10 @@ namespace Tiles.Generator
         {
             return quadrant switch
             {
-                Quadrant.Down => _heightsDown[x & ModTileSize],
-                Quadrant.Right => _widthsRight[y & ModTileSize],
-                Quadrant.Up => _heightsUp[x & ModTileSize],
-                Quadrant.Left => _widthsLeft[y & ModTileSize],
+                Quadrant.Down => _heightsDown[x],
+                Quadrant.Right => _widthsRight[y],
+                Quadrant.Up => _heightsUp[x],
+                Quadrant.Left => _widthsLeft[y],
                 _ => 0
             };
         }
@@ -57,13 +59,7 @@ namespace Tiles.Generator
         public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
         {
             tileData.sprite = Sprite;
-            tileData.color = _solidType switch
-            {
-                 SolidType.Full => Color.black,
-                 SolidType.Top => Color.white,
-                 SolidType.NoTop => Color.yellow,
-                 _ => Color.magenta
-            };
+            tileData.color = _color;
             tileData.transform = _transform;
             tileData.gameObject = null;
             tileData.flags = TileFlags.LockAll;

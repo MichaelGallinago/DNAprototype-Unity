@@ -1,4 +1,4 @@
 namespace Tiles
 {
-    public enum Layers : byte { Main, Secondary, None }
+    public enum Layers : byte { Front, Back, None }
 }

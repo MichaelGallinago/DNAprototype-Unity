@@ -6,7 +6,7 @@ using static Tiles.TileUtilities;
 
 namespace Tiles.Collision
 {
-	public struct TilCollider
+	public struct TileCollider
 	{
 		private const int MaxDistance = TileSize * 2;
 		
@@ -16,7 +16,7 @@ namespace Tiles.Collision
 	    private readonly Tilemap _tileMap;
 	    
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-	    public TilCollider(Tilemap tileMap, Quadrant quadrant, Vector2Int position)
+	    public TileCollider(Tilemap tileMap, Quadrant quadrant, Vector2Int position)
 	    {
 		    _tileMap = tileMap;
 		    Quadrant = quadrant;
