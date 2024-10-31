@@ -9,12 +9,15 @@ namespace IK2D.Limbs.Editor
     [CustomEditor(typeof(AnthroLimb))]
     public class AnthroLimbEditor : UnityEditor.Editor
     {
-        private Cached<AnthroLimb> _anthroLimb;
-        
+        private AnthroLimb _anthroLimb;
+
+        private void Awake()
+        {
+            _anthroLimb = (AnthroLimb)target;
+        }
+
         private void OnSceneGUI()
         {
-            _anthroLimb.Target = target;
-            
             DrawGizmos();
             
             AnthroLimb anthroLimb = _anthroLimb;
@@ -24,14 +27,14 @@ namespace IK2D.Limbs.Editor
 
             var undoName = $"{anthroLimb.name} {nameof(anthroLimb.TargetPosition)} changed to {newPosition.ToString()}";
             Undo.RecordObject(anthroLimb, undoName);
+            anthroLimb.Setup();
             anthroLimb.TargetPosition = newPosition;
-            anthroLimb.UpdateLimb();
         }
         
         private void DrawGizmos()
         {
             AnthroLimb anthroLimb = _anthroLimb;
-            Vector3 startPosition = anthroLimb.StartPosition;
+            Vector3 startPosition = anthroLimb.RootPosition;
             Vector3 jointPosition = anthroLimb.JointPosition;
             Vector3 endPosition = anthroLimb.EndPosition;
             
