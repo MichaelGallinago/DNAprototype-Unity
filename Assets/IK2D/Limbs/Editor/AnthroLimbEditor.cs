@@ -11,10 +11,7 @@ namespace IK2D.Limbs.Editor
     {
         private AnthroLimb _anthroLimb;
 
-        private void Awake()
-        {
-            _anthroLimb = (AnthroLimb)target;
-        }
+        private void Awake() => _anthroLimb = (AnthroLimb)target;
 
         private void OnSceneGUI()
         {

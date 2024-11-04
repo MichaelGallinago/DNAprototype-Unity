@@ -2,19 +2,18 @@ using System;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
-using Utilities;
 
 namespace IK2D.Heads.Editor
 {
     [CustomEditor(typeof(AnthroHead))]
     public class AnthroHeadEditor : UnityEditor.Editor
     {
-        private Cached<AnthroHead> _anthroHead;
+        private AnthroHead _anthroHead;
+        
+        private void Awake() => _anthroHead = (AnthroHead)target;
         
         private void OnSceneGUI()
         {
-            _anthroHead.Target = target;
-            
             DrawGizmos();
             
             AnthroHead anthroHead = _anthroHead;
