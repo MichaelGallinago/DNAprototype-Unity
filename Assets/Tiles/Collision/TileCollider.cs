@@ -8,7 +8,7 @@ namespace Tiles.Collision
 {
 	public struct TileCollider
 	{
-		private const int MaxDistance = TileSize * 2;
+		private const int MaxDistance = Size * 2;
 		
 	    public Vector2Int Position { get; set; }
 	    public Quadrant Quadrant { get; set; }
@@ -70,7 +70,7 @@ namespace Tiles.Collision
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private bool FindTileData(Vector2Int targetPosition, out int distance, out GeneratedTile tile)
 		{
-			var inTilePosition = new Vector2Int(targetPosition.x & ModTileSize, targetPosition.y & ModTileSize);
+			var inTilePosition = new Vector2Int(targetPosition.x & ModSize, targetPosition.y & ModSize);
 			targetPosition = new Vector2Int(inTilePosition.x >> 4, inTilePosition.y >> 4);
 			
 			tile = Search(targetPosition, 0);
@@ -79,35 +79,8 @@ namespace Tiles.Collision
 			
 			switch (distance)
 			{
-				// Further tile check
-				case 0:
-				{
-					tile = Search(targetPosition, 1);
-					distance = tile.GetSize(Quadrant, inTilePosition.x, inTilePosition.y);
-					
-					if (distance == 0)
-					{
-						tile = null;
-						return false;
-					}
-					
-					distance = CalculateInTilePosition(inTilePosition) - distance + TileSize;
-					return true;
-				}
-				// Closer tile check
-				case TileSize: 
-				{
-					GeneratedTile closerTile = Search(targetPosition, -1);
-					distance = closerTile.GetSize(Quadrant, inTilePosition.x, inTilePosition.y);
-					
-					if (distance > 0)
-					{
-						tile = closerTile;
-					}
-					
-					distance = CalculateInTilePosition(inTilePosition) - distance - TileSize;
-					return true;
-				}
+				case 0: return CheckFurtherTile(targetPosition, inTilePosition, out distance, out tile);
+				case Size: return CheckCloserTile(targetPosition, inTilePosition, out distance, ref tile);
 				default:
 					distance = CalculateInTilePosition(inTilePosition) - distance;
 					return true;
@@ -115,12 +88,45 @@ namespace Tiles.Collision
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private bool CheckFurtherTile(
+			Vector2Int targetPosition, Vector2Int inTilePosition, out int distance, out GeneratedTile tile)
+		{
+			tile = Search(targetPosition, 1);
+			distance = tile.GetSize(Quadrant, inTilePosition.x, inTilePosition.y);
+					
+			if (distance == 0)
+			{
+				tile = null;
+				return false;
+			}
+					
+			distance = CalculateInTilePosition(inTilePosition) - distance + Size;
+			return true;
+		}
+		
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private bool CheckCloserTile(
+			Vector2Int targetPosition, Vector2Int inTilePosition, out int distance, ref GeneratedTile tile)
+		{
+			GeneratedTile closerTile = Search(targetPosition, -1);
+			distance = closerTile.GetSize(Quadrant, inTilePosition.x, inTilePosition.y);
+					
+			if (distance > 0)
+			{
+				tile = closerTile;
+			}
+					
+			distance = CalculateInTilePosition(inTilePosition) - distance - Size;
+			return true;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private int CalculateInTilePosition(Vector2Int inTilePosition) => Quadrant switch
 		{
-			Quadrant.Down => inTilePosition.y & ModTileSize,
-			Quadrant.Right => ModTileSize - (inTilePosition.x & ModTileSize),
-			Quadrant.Up => ModTileSize - (inTilePosition.y & ModTileSize),
-			Quadrant.Left => inTilePosition.x & ModTileSize,
+			Quadrant.Down => inTilePosition.y & ModSize,
+			Quadrant.Right => ModSize - (inTilePosition.x & ModSize),
+			Quadrant.Up => ModSize - (inTilePosition.y & ModSize),
+			Quadrant.Left => inTilePosition.x & ModSize,
 			_ => 0
 		};
 		

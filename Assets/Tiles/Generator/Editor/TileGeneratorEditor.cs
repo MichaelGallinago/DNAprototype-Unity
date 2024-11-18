@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
@@ -10,20 +11,32 @@ namespace Tiles.Generator.Editor
     [CustomEditor(typeof(TileGenerator))]
     public class TileGeneratorEditor : UnityEditor.Editor
     {
+        private static readonly Color CreationRectangleColor = new(0f, 0f, 1f, 0.1f);
+        
         private TileGenerator _tileGenerator;
         private Handles.CapFunction _capFunction;
 
-        private List<Vector2> _vertices = new();
+        private List<Vector2> _vertices;
+        
+        private bool _isRectangleCreation;
+        private Vector2Int _creationStartPosition;
         
         private void OnEnable()
         {
             _tileGenerator = (TileGenerator)target;
             _capFunction = Handles.SphereHandleCap;
+            _isRectangleCreation = false;
+            _vertices = new List<Vector2>();
         }
+
+        private void OnDisable() => CursorUtilities.ShowInEditor(true);
         
         private void OnSceneGUI()
         {
+            Cursor.visible = false;
             HandleInput(Event.current);
+            DrawCreationRectangle(Event.current);
+            
             //if (Handles.Button(Vector3.zero, Quaternion.identity, 1f, 1f, _capFunction))
             //{
             //    Debug.Log("suhom");
@@ -37,49 +50,106 @@ namespace Tiles.Generator.Editor
 
         private void HandleInput(Event e)
         {
-            if (e.type != EventType.KeyUp) return;
+            switch (e.type)
+            {
+                case EventType.KeyUp: HandleKeyUp(e); break;
+                case EventType.KeyDown: HandleKeyDown(e); break;
+                default: return;
+            }
+        }
+
+        private void HandleKeyUp(Event e)
+        {
             switch (e.keyCode)
             {
-                case KeyCode.Delete: DeleteSelectedVertex(); break;
-                case KeyCode.LeftShift: DrawCreationRectangle(); break;
+                case KeyCode.LeftShift: CreateRectangle(); break;
                 default: return;
             }
             
             e.Use();
         }
+
+        private void HandleKeyDown(Event e)
+        {
+            switch (e.keyCode)
+            {
+                case KeyCode.Delete: DeleteSelectedVertex(); break;
+                case KeyCode.LeftShift: StartRectangleCreation(e); break;
+                default: return;
+            }
+            
+            e.Use();
+        }
+
+        private void StartRectangleCreation(Event e)
+        {
+            if (_isRectangleCreation) return;
+            
+            _creationStartPosition = GetGridPosition(e);
+            _isRectangleCreation = true;
+            CursorUtilities.ShowInEditor(false);
+        }
         
         private void DeleteSelectedVertex()
         {
-            
-        }
-
-        private void DrawCreationRectangle()
-        {
-            Debug.Log("DrawCreationRectangle");
-            //Handles.DrawSolidRectangleWithOutline(new Rect(), new Color(0f, 0f, 1f, 0.5f), new Color(0f, 0f, 0.5f, 1f));
+            throw new NotImplementedException();
         }
         
+        private void DrawCreationRectangle(Event e)
+        {
+            if (!_isRectangleCreation) return;
+            
+            Vector2Int gridPosition = GetGridPosition(e);
+            
+            Vector2 position = _creationStartPosition;
+            var rectangle = new Rect(position, gridPosition - _creationStartPosition);
+            Handles.DrawSolidRectangleWithOutline(rectangle, CreationRectangleColor, Color.clear);
+
+            var endPosition = new Vector3(gridPosition.x, gridPosition.y);
+            Handles.DrawSolidDisc(position, Vector3.forward, 1f);
+            Handles.DrawSolidDisc(endPosition, Vector3.forward, 1f);
+            Handles.DrawSolidDisc(new Vector3(position.x, endPosition.y), Vector3.forward, 1f);
+            Handles.DrawSolidDisc(new Vector3(endPosition.x, position.y), Vector3.forward, 1f);
+        }
+
+        private static Vector2Int GetGridPosition(Event e)
+        {
+            Vector2 mousePosition = GetWorldMousePosition(e);
+            mousePosition.x = MathF.Round(mousePosition.x / 16f);
+            mousePosition.y = MathF.Round(mousePosition.y / 16f);
+            return mousePosition.ToInt() * 16;
+        }
+
+        private void CreateRectangle()
+        {
+            if (!_isRectangleCreation) return;
+            _isRectangleCreation = false;
+            
+            CursorUtilities.ShowInEditor(true);
+        }
+        
+        /*
         private void DrawEllipseArc(
             float centerX, float centerY, float radiusX, float radiusY, Vector3 from, float angle)
         {
             Vector3 position = _tileGenerator.transform.position;
-            
+
             float ratioX = MathF.Max(1f, radiusX / radiusY);
             float ratioY = MathF.Max(1f, radiusY / radiusX);
             Handles.matrix = Matrix4x4.TRS(position, Quaternion.identity, new Vector3(ratioX, ratioY));
-            
+
             var center = new Vector3(centerX / ratioX, centerY / ratioY);
             float minRadius = MathF.Min(radiusX, radiusY);
             Handles.DrawWireArc(center, Vector3.forward, from, angle, minRadius);
-            
+
             Handles.matrix = Matrix4x4.identity;
         }
-        
+
         private void DrawEllipse(float centerX, float centerY, float radiusX, float radiusY)
         {
             DrawEllipseArc(centerX, centerY, radiusX, radiusY, Vector3.up, 360f);
         }
-        
+
         private static void DrawArc(float centerX, float centerY, float radius, Vector3 from, float angle)
         {
             Handles.DrawWireArc(new Vector3(centerX, centerY), Vector3.forward, from, angle, radius);
@@ -89,7 +159,8 @@ namespace Tiles.Generator.Editor
         {
             Handles.DrawWireDisc(new Vector3(centerX, centerY), Vector3.forward, radius);
         }
-
+        */
+        
         private void DrawArc(Vector2 p1, Vector2 p2, Vector2 p3)
         {
             if (TryCalculateCircle(p1, p2, p3, out Vector2 center, out float radius))
