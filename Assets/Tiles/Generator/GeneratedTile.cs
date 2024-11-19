@@ -9,8 +9,6 @@ namespace Tiles.Generator
     [Serializable]
     public class GeneratedTile : TileBase
     {
-        public enum SolidType : byte { Full, Top, NoTop }
-        
         [field: SerializeField] public Sprite Sprite { get; set; }
         
         [SerializeField] private Matrix4x4 _transform = Matrix4x4.identity;

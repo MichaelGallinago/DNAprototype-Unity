@@ -1,4 +1,5 @@
 using Tiles;
+using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
-using static Utilities.CustomEditorUtilities;
+using static Utilities.Editor.CustomEditorUtilities;
 
 namespace Tiles.Generator.Editor
 {

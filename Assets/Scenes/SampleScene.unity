@@ -378,15 +378,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.00070921984
+    y: 0.0013623978
+    width: 0.9985815
+    height: 0.9972752
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 180
+  orthographic size: 183
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 982614495}
   m_Layer: 31
   m_Name: Closed Sprite Shape
-  m_TagString: Untagged
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -797,13 +797,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43745df06b70b0f46a1682567b1a475f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SolidType>k__BackingField: 0
+  <SolidType>k__BackingField: 1
   <LayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 0
   <TileMap>k__BackingField: {fileID: 1629173285}
-  <Controller>k__BackingField: {fileID: 0}
-  <Collider>k__BackingField: {fileID: 0}
+  <Controller>k__BackingField: {fileID: 982614492}
+  <Collider>k__BackingField: {fileID: 982614496}
 --- !u!60 &982614496
 PolygonCollider2D:
   m_ObjectHideFlags: 0

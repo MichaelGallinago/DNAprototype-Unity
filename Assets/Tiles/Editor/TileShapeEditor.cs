@@ -1,6 +1,6 @@
 using System;
-using System.Runtime.CompilerServices;
 using Tiles.Generator;
+using Tiles.SolidTypes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -12,9 +12,9 @@ namespace Tiles.Editor
     [CustomEditor(typeof(TileShape))]
     public class TileShapeEditor : UnityEditor.Editor
     {
-        private static readonly int SolidTypeNumber = Enum.GetValues(typeof(GeneratedTile.SolidType)).Length;
-        private static readonly Color32 White = new Color(255, 255, 255, 255);
-        private static readonly Color32 Clear = new Color();
+        private static readonly int SolidTypeNumber = Enum.GetValues(typeof(SolidType)).Length;
+        private static readonly Color32 White = new(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
+        private static readonly Color32 Clear = new();
         
         private TileShape _tileShape;
         private Vector2Int _cellSize;
@@ -36,20 +36,29 @@ namespace Tiles.Editor
             _colorData = new Color32[_cellSize.x * _cellSize.y];
             _renderer = _tileShape.Controller.spriteShapeRenderer;
             _rect = GetCeilRect(_renderer.bounds);
+            UpdateColor();
         }
 
         public override void OnInspectorGUI()
         {
             EditorGUI.BeginChangeCheck();
-            
             base.OnInspectorGUI();
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                _renderer.color = _tileShape.SolidType.GetColor();
-            }
+            if (!EditorGUI.EndChangeCheck()) return;
+            
+            UpdateColor();
+            OnTransformChanged();
         }
 
+        private void OnTransformChanged()
+        {
+            if (!_tileShape.transform.hasChanged) return;
+            
+            OnShapeChanged();
+            _tileShape.transform.hasChanged = false;
+        }
+
+        private void UpdateColor() => _renderer.color = _tileShape.SolidType.GetColor();
+        
         private void OnShapeChanged()
         {
             UpdateTilesInRect(_rect);
@@ -57,8 +66,7 @@ namespace Tiles.Editor
             if (rect == _rect) return;
             UpdateTilesInRect(_rect = rect);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        
         private RectInt GetCeilRect(Bounds bounds)
         {
             var min = _tileShape.TileMap.WorldToCell(bounds.min).ToVector2Int();
@@ -82,8 +90,8 @@ namespace Tiles.Editor
             
             Span<int> typeCounters = stackalloc int[SolidTypeNumber];
             
-            for (var y = 0; y <= _cellSize.y; y++) 
-            for (var x = 0; x <= _cellSize.x; x++)
+            for (var y = 0; y < _cellSize.y; y++) 
+            for (var x = 0; x < _cellSize.x; x++)
             {
                 Collider2D collider2d = Physics2D.OverlapPoint(worldPosition + new Vector2(x, y));
                 
@@ -91,18 +99,18 @@ namespace Tiles.Editor
                 {
                     tile[x, y] = true;
                 }
-
+                
                 typeCounters[(int)collider2d.GetComponent<TileShape>().SolidType]++;
             }
             
-            GeneratedTile.SolidType type = GetFrequentSolidType(typeCounters);
+            SolidType type = GetFrequentSolidType(typeCounters);
             
             var tilePosition = new Vector3Int(ceilX, ceilY);
             var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(tilePosition);
             //_tileShape.TileMap.SetTile(tilePosition, _tile);
         }
-
-        private static GeneratedTile.SolidType GetFrequentSolidType(Span<int> typeCounters)
+        
+        private static SolidType GetFrequentSolidType(Span<int> typeCounters)
         {
             var maxIndex = 0;
             int maxValue = typeCounters[0];
@@ -114,7 +122,7 @@ namespace Tiles.Editor
                 maxIndex = i;
             }
 
-            return (GeneratedTile.SolidType)maxIndex;
+            return (SolidType)maxIndex;
         }
         
         private Sprite CreateSprite(BitTile bitTile)

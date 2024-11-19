@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4aa3cba2ac3084c800ace01ff47628, type: 3}
+  m_Name: SolidTypesScriptableObjectScript
+  m_EditorClassIdentifier: 
+  SolidTypes:
+    _serializedList:
+    - Key: {fileID: 6200000, guid: 0bb455b85c7d3d144827bfda54374703, type: 2}
+      Value: 0
+    - Key: {fileID: 6200000, guid: 9eb0bd44eefcc194693c1c2768d66dee, type: 2}
+      Value: 1
+    - Key: {fileID: 6200000, guid: 018bfbbbca1a26f4db886d3e0fa77039, type: 2}
+      Value: 2

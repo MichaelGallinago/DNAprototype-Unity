@@ -1,4 +1,5 @@
 using Tiles.Generator;
+using Tiles.SolidTypes;
 using UnityEngine;
 
 namespace Tiles
@@ -7,12 +8,12 @@ namespace Tiles
     {
         public const int Size = 16;
         public const int ModSize = Size - 1;
-
-        public static Color GetColor(this GeneratedTile.SolidType solidType) => solidType switch
+        
+        public static Color GetColor(this SolidType solidType) => solidType switch
         {
-            GeneratedTile.SolidType.Full => Color.black,
-            GeneratedTile.SolidType.Top => Color.white,
-            GeneratedTile.SolidType.NoTop => Color.yellow,
+            SolidType.Full => Color.black,
+            SolidType.Top => Color.white,
+            SolidType.NoTop => Color.yellow,
             _ => Color.black
         };
     }
