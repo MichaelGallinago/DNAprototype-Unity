@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Tiles.Generator;
 using Tiles.SolidTypes;
 using UnityEditor;
@@ -12,33 +13,30 @@ namespace Tiles.Editor
     [CustomEditor(typeof(TileShape))]
     public class TileShapeEditor : UnityEditor.Editor
     {
-        private static readonly int SolidTypeNumber = Enum.GetValues(typeof(SolidType)).Length;
-        private static readonly Color32 White = new(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
-        private static readonly Color32 Clear = new();
+        private readonly List<Collider2D> _colliders = new();
         
         private TileShape _tileShape;
         private Vector2Int _cellSize;
-        private Texture2D _texture;
-        private Color32[] _colorData;
         private RectInt _rect;
-        private SpriteShapeRenderer _renderer;
+        private ContactFilter2D _contactFilter;
+
+        private SpriteShapeRenderer Renderer => _tileShape.Controller.spriteShapeRenderer;
         
         private void Awake()
         {
             _tileShape = (TileShape)target;
-            
+
             Tilemap tileMap = _tileShape.TileMap;
             if (!tileMap) return;
             
             Vector3 cellSize = tileMap.cellSize;
             _cellSize = new Vector2Int((int)cellSize.x, (int)cellSize.y);
-            _texture = new Texture2D(_cellSize.x, _cellSize.y);
-            _colorData = new Color32[_cellSize.x * _cellSize.y];
-            _renderer = _tileShape.Controller.spriteShapeRenderer;
-            _rect = GetCeilRect(_renderer.bounds);
+            _rect = GetCeilRect(Renderer.bounds);
             UpdateColor();
+            
+            _contactFilter.SetLayerMask(_tileShape.gameObject.layer);
         }
-
+        
         public override void OnInspectorGUI()
         {
             EditorGUI.BeginChangeCheck();
@@ -46,6 +44,7 @@ namespace Tiles.Editor
             if (!EditorGUI.EndChangeCheck()) return;
             
             UpdateColor();
+            UpdateMaterial();
             OnTransformChanged();
         }
 
@@ -57,13 +56,22 @@ namespace Tiles.Editor
             _tileShape.transform.hasChanged = false;
         }
 
-        private void UpdateColor() => _renderer.color = _tileShape.SolidType.GetColor();
+        private void UpdateColor() => Renderer.color = _tileShape.SolidType.GetColor();
+        
+        private void UpdateMaterial()
+        {
+            _tileShape.Collider.sharedMaterial = _tileShape.SolidTypes[_tileShape.SolidType];
+        }
         
         private void OnShapeChanged()
         {
+            if (!_tileShape.TileMap) return;
+            
             UpdateTilesInRect(_rect);
-            RectInt rect = GetCeilRect(_renderer.bounds);
+            
+            RectInt rect = GetCeilRect(Renderer.bounds);
             if (rect == _rect) return;
+            
             UpdateTilesInRect(_rect = rect);
         }
         
@@ -76,38 +84,45 @@ namespace Tiles.Editor
         
         private void UpdateTilesInRect(RectInt rect)
         {
-            for (int ceilX = rect.x; ceilX <= rect.xMax; ceilX++)
-            for (int ceilY = rect.y; ceilY <= rect.yMax; ceilY++)
+            var index = 0;
+            Vector2Int size = rect.size;
+            var tiles = new TileBase[size.x * size.y];
+            for (int ceilY = rect.yMin; ceilY <= rect.yMax; ceilY++)
             {
-                GenerateTile(ceilX, ceilY);
+                for (int ceilX = rect.xMin; ceilX <= rect.xMax; ceilX++)
+                {
+                    tiles[index++] = GenerateTile(ceilX, ceilY);
+                }
             }
+
+            var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 0);
+            _tileShape.TileMap.SetTilesBlock(bounds, tiles);
         }
 
-        private void GenerateTile(int ceilX, int ceilY)
+        private GeneratedTile GenerateTile(int ceilX, int ceilY)
         {
             Vector2 worldPosition = new Vector2Int(ceilX, ceilY) * _cellSize + new Vector2(0.5f, 0.5f);
             var tile = new BitTile();
             
-            Span<int> typeCounters = stackalloc int[SolidTypeNumber];
-            
+            Span<int> typeCounters = stackalloc int[SolidTypeExtensions.Number];
             for (var y = 0; y < _cellSize.y; y++) 
             for (var x = 0; x < _cellSize.x; x++)
             {
-                Collider2D collider2d = Physics2D.OverlapPoint(worldPosition + new Vector2(x, y));
-                
-                if (collider2d)
+                if (Physics2D.OverlapPoint(worldPosition + new Vector2(x, y), _contactFilter, _colliders) > 0)
                 {
                     tile[x, y] = true;
                 }
                 
-                typeCounters[(int)collider2d.GetComponent<TileShape>().SolidType]++;
+                foreach (Collider2D collider in _colliders)
+                {
+                    typeCounters[(int)_tileShape.SolidTypes[collider.sharedMaterial]]++;
+                }
             }
             
             SolidType type = GetFrequentSolidType(typeCounters);
             
-            var tilePosition = new Vector3Int(ceilX, ceilY);
-            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(tilePosition);
-            //_tileShape.TileMap.SetTile(tilePosition, _tile);
+            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(new Vector3Int(ceilX, ceilY));
+            return CreateInstance<GeneratedTile>(); //TODO: set data
         }
         
         private static SolidType GetFrequentSolidType(Span<int> typeCounters)
@@ -127,7 +142,7 @@ namespace Tiles.Editor
         
         private Sprite CreateSprite(BitTile bitTile)
         {
-            for (var y = 0; y < _cellSize.y; y++)
+            /*for (var y = 0; y < _cellSize.y; y++)
             for (var x = 0; x < _cellSize.x; x++)
             {
                 _colorData[y * _cellSize.x + x] = bitTile[x, y] ? White : Clear;
@@ -140,8 +155,8 @@ namespace Tiles.Editor
 
             var rect = new Rect(0, 0, _cellSize.x, _cellSize.y);
             var sprite = Sprite.Create(_texture, rect, new Vector2(0.5f, 0.5f));
-            
-            return sprite;
+            */
+            return null;
         }
     }
 }

@@ -2,51 +2,53 @@ using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Tiles.TileUtilities;
 
 namespace Tiles.Generator
 {
     [Serializable]
     public class GeneratedTile : TileBase
     {
-        [field: SerializeField] public Sprite Sprite { get; set; }
-        
-        [SerializeField] private Matrix4x4 _transform = Matrix4x4.identity;
+        [field: SerializeField] public Sprite Sprite { get; private set; }
         [SerializeField] private Color _color = Color.white;
         
-        [SerializeField] private byte[] _heightsDown;
-        [SerializeField] private byte[] _widthsRight;
-        [SerializeField] private byte[] _heightsUp;
-        [SerializeField] private byte[] _widthsLeft;
+        [SerializeReference] private byte[] _heightsUp;
+        [SerializeReference] private byte[] _heightsDown;
+        [SerializeReference] private byte[] _widthsLeft;
+        [SerializeReference] private byte[] _widthsRight;
         [SerializeField] private Vector4 _angles;
-        
-        public Matrix4x4 Transform { get => _transform; set => _transform = value; }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public byte GetSize(Quadrant quadrant, int x, int y)
+
+        public static GeneratedTile Create(Sprite sprite,
+            byte[] heightsUp, byte[] heightsDown, byte[] widthsLeft, byte[] widthsRight, Vector4 angles)
         {
-            return quadrant switch
-            {
-                Quadrant.Down => _heightsDown[x],
-                Quadrant.Right => _widthsRight[y],
-                Quadrant.Up => _heightsUp[x],
-                Quadrant.Left => _widthsLeft[y],
-                _ => 0
-            };
+            var tile = CreateInstance<GeneratedTile>();
+            tile.Sprite = sprite;
+            tile._heightsUp = heightsUp;
+            tile._heightsDown = heightsDown;
+            tile._widthsLeft = widthsLeft;
+            tile._widthsRight = widthsRight;
+            tile._angles = angles;
+            return tile;
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float GetAngle(Quadrant quadrant)
+        public byte GetSize(Quadrant quadrant, int x, int y) => quadrant switch
         {
-            return quadrant switch
-            {
-                Quadrant.Down => _angles.x,
-                Quadrant.Right => _angles.y,
-                Quadrant.Up => _angles.z,
-                Quadrant.Left => _angles.w,
-                _ => float.NaN
-            };
-        }
+            Quadrant.Down => _heightsDown[x],
+            Quadrant.Right => _widthsRight[y],
+            Quadrant.Up => _heightsUp[x],
+            Quadrant.Left => _widthsLeft[y],
+            _ => default
+        };
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float GetAngle(Quadrant quadrant) => quadrant switch
+        {
+            Quadrant.Down => _angles.x,
+            Quadrant.Right => _angles.y,
+            Quadrant.Up => _angles.z,
+            Quadrant.Left => _angles.w,
+            _ => float.NaN
+        };
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (byte, float) GetCollisionData(Quadrant quadrant, int x, int y)
@@ -58,7 +60,7 @@ namespace Tiles.Generator
         {
             tileData.sprite = Sprite;
             tileData.color = _color;
-            tileData.transform = _transform;
+            tileData.transform = Matrix4x4.identity;
             tileData.gameObject = null;
             tileData.flags = TileFlags.LockAll;
             tileData.colliderType = Tile.ColliderType.None;

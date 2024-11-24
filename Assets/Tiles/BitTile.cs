@@ -32,41 +32,43 @@ namespace Tiles
             [MethodImpl(AggressiveInlining)] set => _data[(byte)bitIndex] = value;
         }
         
-        public void GetSizes(
-            BitTile tile, out (SizeMap<byte> top, SizeMap<byte> bottom, SizeMap<byte> left, SizeMap<byte> right) sizes)
+        public void GetSizes(out SizeDto sizeMaps)
         {
-            var heightsTop = new SizeMap<byte>();
-            var heightsBottom = new SizeMap<byte>();
-            var widthsLeft = new SizeMap<byte>();
-            var widthsRight = new SizeMap<byte>();
+            sizeMaps = new SizeDto();
             
             for (var y = 0; y < Size; y++)
             for (var x = 0; x < Size; x++)
             {
-                if (!tile[x, y]) continue;
+                if (!this[x, y]) continue;
                 
-                if (heightsTop[y] < Size - y)
+                if (sizeMaps.Top[y] < Size - y)
                 {
-                    heightsTop[y] = (byte)(Size - y);
+                    sizeMaps.Top[y] = (byte)(Size - y);
                 }
 
-                if (heightsBottom[y] < y)
+                if (sizeMaps.Bottom[y] < y)
                 {
-                    heightsBottom[y] = (byte)y;
+                    sizeMaps.Bottom[y] = (byte)y;
                 }
                 
-                if (widthsLeft[y] < Size - x)
+                if (sizeMaps.Left[y] < Size - x)
                 {
-                    widthsLeft[y] = (byte)(Size - x);
+                    sizeMaps.Left[y] = (byte)(Size - x);
                 }
 
-                if (widthsRight[y] < x)
+                if (sizeMaps.Right[y] < x)
                 {
-                    widthsRight[y] = (byte)x;
+                    sizeMaps.Right[y] = (byte)x;
                 }
             }
-            
-            sizes = (heightsTop, heightsBottom, widthsLeft, widthsRight);
+        }
+        
+        public ref struct SizeDto
+        {
+            public SizeMap<byte> Top;
+            public SizeMap<byte> Bottom;
+            public SizeMap<byte> Left;
+            public SizeMap<byte> Right;
         }
     }
 }
