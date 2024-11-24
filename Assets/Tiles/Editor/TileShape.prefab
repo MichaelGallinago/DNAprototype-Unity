@@ -180,7 +180,7 @@ PolygonCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0bb455b85c7d3d144827bfda54374703, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -234,10 +234,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43745df06b70b0f46a1682567b1a475f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SolidType>k__BackingField: 0
-  <LayerMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 2147483648
+  <SizeMaps>k__BackingField: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
+  <SolidTypes>k__BackingField: {fileID: 11400000, guid: 75dfdee6b2c26fc4db889564121673a3, type: 2}
+  <TileTexture>k__BackingField: {fileID: 0}
   <TileMap>k__BackingField: {fileID: 0}
+  <SolidType>k__BackingField: 0
   <Controller>k__BackingField: {fileID: 1460458749299368290}
   <Collider>k__BackingField: {fileID: 1318113761840304038}
