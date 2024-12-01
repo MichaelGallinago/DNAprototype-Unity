@@ -105,8 +105,8 @@ namespace Tiles.Editor
             var tile = new BitTile();
             
             Span<int> typeCounters = stackalloc int[SolidTypeExtensions.Number];
-            for (var y = 0; y < _cellSize.y; y++) 
-            for (var x = 0; x < _cellSize.x; x++)
+            for (uint y = 0; y < _cellSize.y; y++) 
+            for (uint x = 0; x < _cellSize.x; x++)
             {
                 if (Physics2D.OverlapPoint(worldPosition + new Vector2(x, y), _contactFilter, _colliders) > 0)
                 {
