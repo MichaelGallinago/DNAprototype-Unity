@@ -39,34 +39,34 @@ namespace Tiles
             {
                 if (!this[x, y]) continue;
                 
-                if (sizeMaps.Up[x] < TileUtilities.Size - y)
-                {
-                    sizeMaps.Up[x] = (byte)(TileUtilities.Size - y);
-                }
-
                 if (sizeMaps.Down[x] < y + 1)
                 {
                     sizeMaps.Down[x] = (byte)(y + 1);
-                }
-                
-                if (sizeMaps.Left[y] < x + 1)
-                {
-                    sizeMaps.Left[y] = (byte)(x + 1);
                 }
                 
                 if (sizeMaps.Right[y] < TileUtilities.Size - x)
                 {
                     sizeMaps.Right[y] = (byte)(TileUtilities.Size - x);
                 }
+                
+                if (sizeMaps.Up[x] < TileUtilities.Size - y)
+                {
+                    sizeMaps.Up[x] = (byte)(TileUtilities.Size - y);
+                }
+                
+                if (sizeMaps.Left[y] < x + 1)
+                {
+                    sizeMaps.Left[y] = (byte)(x + 1);
+                }
             }
         }
         
         public ref struct SizeDto
         {
-            public SizeMap<byte> Up;
             public SizeMap<byte> Down;
-            public SizeMap<byte> Left;
             public SizeMap<byte> Right;
+            public SizeMap<byte> Up;
+            public SizeMap<byte> Left;
         }
 
         public override string ToString() => _data.humanizedData;

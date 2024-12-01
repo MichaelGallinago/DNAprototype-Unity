@@ -80,13 +80,17 @@ namespace Tiles.Storage
 
         public void Clear()
         {
-            _sizeDataStorage.Clear();  
+            _atlas.Remove(_atlas.GetPackables());
+            _sizeDataStorage.Clear();
             _tiles.Clear();
+            
             string[] assetPaths = AssetDatabase.FindAssets(string.Empty, new[] { _folderPath });
             foreach (string assetGuid in assetPaths)
             {
                 AssetDatabase.DeleteAsset(AssetDatabase.GUIDToAssetPath(assetGuid));
             }
+            
+            AssetDatabase.Refresh();
         }
         
         private static void DeleteAsset(Object asset) => AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(asset));
@@ -115,15 +119,15 @@ namespace Tiles.Storage
         {
             bitTile.GetSizes(out BitTile.SizeDto sizes);
             
-            SizeData up = _sizeDataStorage[sizes.Up];
             SizeData down = _sizeDataStorage[sizes.Down];
-            SizeData left = _sizeDataStorage[sizes.Left];
             SizeData right = _sizeDataStorage[sizes.Right];
+            SizeData up = _sizeDataStorage[sizes.Up];
+            SizeData left = _sizeDataStorage[sizes.Left];
             
             return GeneratedTile.Create(
                 CreateSprite(ref bitTile), 
-                up.Array, down.Array, left.Array, right.Array,
-                new Vector4(up.Angle[0], down.Angle[1], left.Angle[2], right.Angle[3])
+                down.Array, right.Array, up.Array, left.Array,
+                new Vector4(down.Angle[0], right.Angle[1], up.Angle[2], left.Angle[3])
             );
         }
         

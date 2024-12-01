@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using Tiles.Storage;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,21 +11,21 @@ namespace Tiles.Generator
         [field: SerializeField] public Sprite Sprite { get; private set; }
         [SerializeField] private Color _color = Color.white;
         
-        [SerializeReference] private byte[] _heightsUp;
         [SerializeReference] private byte[] _heightsDown;
-        [SerializeReference] private byte[] _widthsLeft;
         [SerializeReference] private byte[] _widthsRight;
+        [SerializeReference] private byte[] _heightsUp;
+        [SerializeReference] private byte[] _widthsLeft;
         [SerializeField] private Vector4 _angles;
 
-        public static GeneratedTile Create(Sprite sprite,
-            byte[] heightsUp, byte[] heightsDown, byte[] widthsLeft, byte[] widthsRight, Vector4 angles)
+        public static GeneratedTile Create(
+            Sprite sprite, byte[] heightsDown, byte[] widthsRight, byte[] heightsUp, byte[] widthsLeft, Vector4 angles)
         {
             var tile = CreateInstance<GeneratedTile>();
             tile.Sprite = sprite;
-            tile._heightsUp = heightsUp;
             tile._heightsDown = heightsDown;
-            tile._widthsLeft = widthsLeft;
             tile._widthsRight = widthsRight;
+            tile._heightsUp = heightsUp;
+            tile._widthsLeft = widthsLeft;
             tile._angles = angles;
             return tile;
         }
@@ -56,7 +55,7 @@ namespace Tiles.Generator
         {
             return (GetSize(quadrant, x, y), GetAngle(quadrant));
         }
-
+        
         public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
         {
             tileData.sprite = Sprite;

@@ -2,7 +2,7 @@ using System;
 
 namespace Utilities
 {
-    public class Circle
+    public static class Circle
     {
         public const float Quarter = 0.5f * MathF.PI;
         public const float Half = MathF.PI;
