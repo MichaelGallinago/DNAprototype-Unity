@@ -22,15 +22,17 @@ namespace Tiles.Storage
         [SerializeField, SerializedDictionary("Bit tiles", "Sprites")]
         private SerializedDictionary<BitTile, TileStorageData> _tiles;
         
-        [SerializeReference] private SpriteAtlas _atlas;
+        [field: SerializeReference] public SpriteAtlas Atlas { get; private set; }
         [SerializeReference] private SizeDataStorageScriptableObject _sizeDataStorage;
-        
-        [SerializeField] private string _path;
-        [SerializeField] private string _folderPath;
         
         [SerializeField] private List<int> _freeSpaceList;
         
+        [SerializeField, HideInInspector] private string _path;
+        [SerializeField] private string _atlasPath;
+        [SerializeField, HideInInspector] private string _folderPath;
+        
         private readonly byte[] _colorData = new byte[PixelNumber];
+        [SerializeReference] private SpriteAtlasAsset _atlasAsset;
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(ref BitTile bitTile)
@@ -44,16 +46,17 @@ namespace Tiles.Storage
 
             int index = GetFreeTileIndex();
             GeneratedTile tile = CreateTile(ref bitTile);
-            
+
             var stringIndex = index.ToString();
             AssetDatabase.CreateAsset(tile.Sprite.texture, $"{_folderPath}\\texture{stringIndex}.asset");
             AssetDatabase.CreateAsset(tile.Sprite, $"{_folderPath}\\sprite{stringIndex}.asset");
             AssetDatabase.CreateAsset(tile, $"{_folderPath}\\tile{stringIndex}.asset");
             
             _tiles.Add(bitTile, new TileStorageData(1, index, tile));
-            _atlas.Add(new Object[] {tile.Sprite});
             
-            AssetDatabase.SaveAssets();
+            _atlasAsset.Add(new Object[] { tile.Sprite });
+            SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
+            
             AssetDatabase.Refresh();
         }
 
@@ -72,7 +75,7 @@ namespace Tiles.Storage
             
             _tiles.Remove(bitTile);
             _freeSpaceList.Add(data.Index);
-            _atlas.Remove(new Object[] {data.Tile.Sprite});
+            Atlas.Remove(new Object[] {data.Tile.Sprite});
             DeleteAsset(data.Tile);
             DeleteAsset(data.Tile.Sprite);
             DeleteAsset(data.Tile.Sprite.texture);
@@ -80,7 +83,8 @@ namespace Tiles.Storage
 
         public void Clear()
         {
-            _atlas.Remove(_atlas.GetPackables());
+            SpriteAtlasAsset atlasAsset = SpriteAtlasAsset.Load(AssetDatabase.GetAssetPath(Atlas));
+            atlasAsset.Remove(Atlas.GetPackables());
             _sizeDataStorage.Clear();
             _tiles.Clear();
             
@@ -90,6 +94,7 @@ namespace Tiles.Storage
                 AssetDatabase.DeleteAsset(AssetDatabase.GUIDToAssetPath(assetGuid));
             }
             
+            AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
         
@@ -105,6 +110,11 @@ namespace Tiles.Storage
             return tileIndex;
         }
 
+        private void OnValidate()
+        {
+            InitAtlasAsset();
+        }
+
         private void Awake()
         {
             _path = Path.GetDirectoryName(AssetDatabase.GetAssetPath(this));
@@ -113,6 +123,15 @@ namespace Tiles.Storage
             
             AssetDatabase.CreateFolder(_path, "TileAssets");
             _folderPath = _path + "\\TileAssets";
+        }
+
+        private void InitAtlasAsset()
+        {
+            if (!Atlas) return;
+            string path = AssetDatabase.GetAssetPath(Atlas);
+            if (_atlasPath == path && _atlasAsset) return;
+
+            _atlasAsset = SpriteAtlasAsset.Load(_atlasPath = path);
         }
 
         private GeneratedTile CreateTile(ref BitTile bitTile)

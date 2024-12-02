@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.U2D;
 using UnityEngine;
 
 namespace Tiles.Storage.Editor
@@ -15,6 +16,8 @@ namespace Tiles.Storage.Editor
             DrawDefaultInspector();
             AddTestTileButton();
             ClearDataButton();
+            CreateSpriteAtlasAssetButton();
+            CheckAtlasSpritesCountButton();
         }
 
         private void AddTestTileButton()
@@ -34,6 +37,18 @@ namespace Tiles.Storage.Editor
         {
             if (!GUILayout.Button("Clear Test Data")) return;
             _tileStorage.Clear();
+        }
+        
+        private void CreateSpriteAtlasAssetButton()
+        {
+            if (!GUILayout.Button("Create Sprite Atlas Asset")) return;
+            //_tileStorage.CreateSpriteAtlasAsset();
+        }
+        
+        private void CheckAtlasSpritesCountButton()
+        {
+            if (!GUILayout.Button("Check Atlas Sprites Count")) return;
+            Debug.Log($"{_tileStorage.Atlas.GetPackables().Length}/{_tileStorage.Atlas.spriteCount}");
         }
     }
 }

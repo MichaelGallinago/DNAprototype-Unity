@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: TileStorageScriptableObject
   m_EditorClassIdentifier: 
   _tiles:
-    _serializedList:
-    - Value:
-        Count: 1
-        <Index>k__BackingField: 0
-        <Tile>k__BackingField: {fileID: 11400000, guid: cbc137ad8534de54a9149282d4186728, type: 2}
-  _atlas: {fileID: 100100200, guid: 1ee3a68f1a09c38418b95d680a724aff, type: 3}
+    _serializedList: []
+  <Atlas>k__BackingField: {fileID: 100100200, guid: 1ee3a68f1a09c38418b95d680a724aff, type: 3}
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
-  _path: Assets\Tiles\Storage
-  _folderPath: Assets\Tiles\Storage\TileAssets
   _freeSpaceList: 
+  _path: Assets\Tiles\Storage
+  _atlasPath: Assets/Tiles/Storage/TileAtlas.spriteatlasv2
+  _folderPath: Assets\Tiles\Storage\TileAssets
+  _atlasAsset: {fileID: 0}
