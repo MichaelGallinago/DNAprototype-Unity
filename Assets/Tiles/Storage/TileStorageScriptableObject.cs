@@ -28,11 +28,11 @@ namespace Tiles.Storage
         [SerializeField] private List<int> _freeSpaceList;
         
         [SerializeField, HideInInspector] private string _path;
-        [SerializeField] private string _atlasPath;
+        [SerializeField, HideInInspector] private string _atlasPath;
         [SerializeField, HideInInspector] private string _folderPath;
+        [SerializeReference, HideInInspector] private SpriteAtlasAsset _atlasAsset;
         
         private readonly byte[] _colorData = new byte[PixelNumber];
-        [SerializeReference] private SpriteAtlasAsset _atlasAsset;
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(ref BitTile bitTile)
@@ -83,8 +83,10 @@ namespace Tiles.Storage
 
         public void Clear()
         {
-            SpriteAtlasAsset atlasAsset = SpriteAtlasAsset.Load(AssetDatabase.GetAssetPath(Atlas));
-            atlasAsset.Remove(Atlas.GetPackables());
+            _atlasAsset.Remove(Atlas.GetPackables());
+            SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
+            AssetDatabase.Refresh();
+            
             _sizeDataStorage.Clear();
             _tiles.Clear();
             
@@ -110,13 +112,11 @@ namespace Tiles.Storage
             return tileIndex;
         }
 
-        private void OnValidate()
-        {
-            InitAtlasAsset();
-        }
+        private void OnValidate() => InitAtlasAsset();
 
         private void Awake()
         {
+            InitAtlasAsset();
             _path = Path.GetDirectoryName(AssetDatabase.GetAssetPath(this));
             
             if (!string.IsNullOrEmpty(_folderPath) && AssetDatabase.IsValidFolder(_folderPath)) return;
