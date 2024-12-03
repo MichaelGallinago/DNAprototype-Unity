@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,7 +10,7 @@ namespace Tiles.Generator
     public class GeneratedTile : TileBase
     {
         [field: SerializeField] public Sprite Sprite { get; private set; }
-        [SerializeField] private Color _color = Color.white;
+        [field: SerializeField] public SolidType SolidType { get; private set; }
         
         [SerializeReference] private byte[] _heightsDown;
         [SerializeReference] private byte[] _widthsRight;
@@ -18,10 +19,12 @@ namespace Tiles.Generator
         [SerializeField] private Vector4 _angles;
 
         public static GeneratedTile Create(
-            Sprite sprite, byte[] heightsDown, byte[] widthsRight, byte[] heightsUp, byte[] widthsLeft, Vector4 angles)
+            SolidType solidType, Sprite sprite, Vector4 angles,
+            byte[] heightsDown, byte[] widthsRight, byte[] heightsUp, byte[] widthsLeft)
         {
             var tile = CreateInstance<GeneratedTile>();
             tile.Sprite = sprite;
+            tile.SolidType = solidType;
             tile._heightsDown = heightsDown;
             tile._widthsRight = widthsRight;
             tile._heightsUp = heightsUp;
@@ -59,7 +62,7 @@ namespace Tiles.Generator
         public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
         {
             tileData.sprite = Sprite;
-            tileData.color = _color;
+            tileData.color = SolidType.ToColor();
             tileData.transform = Matrix4x4.identity;
             tileData.gameObject = null;
             tileData.flags = TileFlags.LockAll;

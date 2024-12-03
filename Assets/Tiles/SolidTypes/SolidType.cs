@@ -8,14 +8,15 @@ namespace Tiles.SolidTypes
     
     public static class SolidTypeExtensions
     {
-        public static readonly int Number = Enum.GetValues(typeof(SolidType)).Length;
+        public static readonly SolidType[] Values = (SolidType[])Enum.GetValues(typeof(SolidType));
+        public static readonly int Number = Values.Length;
         
-        public static Color GetColor(this SolidType solidType) => solidType switch
+        public static Color ToColor(this SolidType solidType) => solidType switch
         {
             SolidType.Full => Color.black,
             SolidType.Top => Color.white,
             SolidType.NoTop => Color.yellow,
-            _ => Color.black
+            _ => Color.magenta
         };
     }
 }

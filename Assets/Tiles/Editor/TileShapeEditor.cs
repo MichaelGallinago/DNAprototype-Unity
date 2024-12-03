@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Tiles.Generator;
 using Tiles.SolidTypes;
+using Tiles.Storage;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -14,6 +15,8 @@ namespace Tiles.Editor
     public class TileShapeEditor : UnityEditor.Editor
     {
         private readonly List<Collider2D> _colliders = new();
+
+        [SerializeField] private TileStorageScriptableObject _tileStorage;
         
         private TileShape _tileShape;
         private Vector2Int _cellSize;
@@ -56,7 +59,7 @@ namespace Tiles.Editor
             _tileShape.transform.hasChanged = false;
         }
 
-        private void UpdateColor() => Renderer.color = _tileShape.SolidType.GetColor();
+        private void UpdateColor() => Renderer.color = _tileShape.SolidType.ToColor();
         
         private void UpdateMaterial()
         {
@@ -102,7 +105,7 @@ namespace Tiles.Editor
         private GeneratedTile GenerateTile(int ceilX, int ceilY)
         {
             Vector2 worldPosition = new Vector2Int(ceilX, ceilY) * _cellSize + new Vector2(0.5f, 0.5f);
-            var tile = new BitTile();
+            var bitTile = new BitTile();
             
             Span<int> typeCounters = stackalloc int[SolidTypeExtensions.Number];
             for (uint y = 0; y < _cellSize.y; y++) 
@@ -110,19 +113,26 @@ namespace Tiles.Editor
             {
                 if (Physics2D.OverlapPoint(worldPosition + new Vector2(x, y), _contactFilter, _colliders) > 0)
                 {
-                    tile[x, y] = true;
+                    bitTile[x, y] = true;
                 }
                 
                 foreach (Collider2D collider in _colliders)
                 {
                     typeCounters[(int)_tileShape.SolidTypes[collider.sharedMaterial]]++;
                 }
+                
+                _colliders.Clear();
             }
             
             SolidType type = GetFrequentSolidType(typeCounters);
-            
-            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(new Vector3Int(ceilX, ceilY));
-            return CreateInstance<GeneratedTile>(); //TODO: set data
+
+            var position = new Vector3Int(ceilX, ceilY);
+            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(position);
+            GeneratedTile newTile = _tileStorage.AddOrReplace(ref bitTile, type);
+            if (currentTile == newTile) return newTile;
+            _tileStorage.Remove(currentTile);
+            _tileShape.TileMap.SetTile(position, newTile);
+            return newTile;
         }
         
         private static SolidType GetFrequentSolidType(Span<int> typeCounters)
@@ -138,25 +148,6 @@ namespace Tiles.Editor
             }
 
             return (SolidType)maxIndex;
-        }
-        
-        private Sprite CreateSprite(BitTile bitTile)
-        {
-            /*for (var y = 0; y < _cellSize.y; y++)
-            for (var x = 0; x < _cellSize.x; x++)
-            {
-                _colorData[y * _cellSize.x + x] = bitTile[x, y] ? White : Clear;
-            }
-            _texture.SetPixels32(0, 0, _cellSize.x, _cellSize.y, _colorData);
-            _texture.Apply();
-            
-            AssetDatabase.CreateAsset(_texture, "Assets/" + _texture.name + ".png");
-            //File.WriteAllBytes(filePath, _texture.EncodeToPNG());
-
-            var rect = new Rect(0, 0, _cellSize.x, _cellSize.y);
-            var sprite = Sprite.Create(_texture, rect, new Vector2(0.5f, 0.5f));
-            */
-            return null;
         }
     }
 }
