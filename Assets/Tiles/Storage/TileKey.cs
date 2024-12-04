@@ -1,12 +1,14 @@
-﻿using Tiles.SolidTypes;
+﻿using System;
+using Tiles.SolidTypes;
 using UnityEngine;
 
 namespace Tiles.Storage
 {
-    public readonly struct TileKey
+    [Serializable]
+    public struct TileKey
     {
-        public readonly Sprite Sprite;
-        public readonly SolidType SolidType;
+        public Sprite Sprite;
+        public SolidType SolidType;
 
         public TileKey(Sprite sprite, SolidType solidType)
         {

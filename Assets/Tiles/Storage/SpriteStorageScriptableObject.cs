@@ -16,8 +16,11 @@ namespace Tiles.Storage
         menuName = ScriptableObjectsFolder + nameof(SpriteStorageScriptableObject))]
     public class SpriteStorageScriptableObject : ScriptableObject
     {
-        [SerializeField, SerializedDictionary(nameof(BitTile), nameof(Sprite))]
+        [SerializeField, SerializedDictionary(nameof(BitTile), nameof(SpriteStorageData))]
         private SerializedDictionary<BitTile, SpriteStorageData> _sprites;
+        
+        [SerializeField, SerializedDictionary(nameof(Sprite), nameof(BitTile))]
+        private SerializedDictionary<Sprite, BitTile> _bitTiles;
 
         [field: SerializeField] public SpriteAtlas Atlas { get; private set; }
         
@@ -43,12 +46,10 @@ namespace Tiles.Storage
 
         public void Remove(Sprite sprite)
         {
-            foreach (KeyValuePair<BitTile, SpriteStorageData> pair in _sprites)
-            {
-                if (pair.Value.Sprite != sprite) continue;
-                _sprites.Remove(pair.Key);
-                break;
-            }
+            if (!_bitTiles.TryGetValue(sprite, out BitTile bitTile)) return;
+            
+            _sprites.Remove(bitTile);
+            _bitTiles.Remove(sprite);
             
             AtlasAssetTransferArray[0] = sprite;
             RemoveFromAtlas(AtlasAssetTransferArray);
@@ -114,6 +115,7 @@ namespace Tiles.Storage
             index = index < 0 ? _sprites.Count : index;
             SaveSpriteAsset(sprite, index);
             _sprites.Add(bitTile, new SpriteStorageData(index, sprite));
+            _bitTiles.Add(sprite, bitTile);
             
             AtlasAssetTransferArray[0] = sprite;
             _atlasAsset.Add(AtlasAssetTransferArray);
