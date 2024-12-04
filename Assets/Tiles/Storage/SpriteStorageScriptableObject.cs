@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using UnityEditor;
@@ -21,7 +20,7 @@ namespace Tiles.Storage
         
         [SerializeField, SerializedDictionary(nameof(Sprite), nameof(BitTile))]
         private SerializedDictionary<Sprite, BitTile> _bitTiles;
-
+        
         [field: SerializeField] public SpriteAtlas Atlas { get; private set; }
         
         [SerializeField] private FreeSpaceMap _freeSpaceMap;
@@ -42,6 +41,8 @@ namespace Tiles.Storage
         {
             RemoveFromAtlas(Atlas.GetPackables());
             ClearFolder();
+            _sprites.Clear();
+            _bitTiles.Clear();
         }
 
         public void Remove(Sprite sprite)

@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 using Tiles.SolidTypes;
-using Tiles.Storage;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
@@ -11,9 +10,6 @@ namespace Tiles
     [RequireComponent(typeof(PolygonCollider2D))]
     public class TileShape : MonoBehaviour
     {
-        [field: SerializeField] public SizeDataStorageScriptableObject SizeMaps { get; private set; }
-        [field: SerializeField] public SolidTypesScriptableObject SolidTypes { get; private set; }
-        [field: SerializeField] public Texture2D TileTexture { get; private set; }
         [field: SerializeField] public Tilemap TileMap { get; private set; }
         [field: SerializeField] public SolidType SolidType { get; private set; }
         [field: SerializeField, HideInInspector] public SpriteShapeController Controller { get; private set; }

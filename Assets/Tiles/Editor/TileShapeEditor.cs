@@ -15,6 +15,7 @@ namespace Tiles.Editor
     public class TileShapeEditor : UnityEditor.Editor
     {
         [SerializeField] private TileStorageScriptableObject _tileStorage;
+        [SerializeField] private SolidTypesScriptableObject _solidTypes;
         
         private readonly List<Collider2D> _colliders = new();
         
@@ -42,13 +43,14 @@ namespace Tiles.Editor
         
         public override void OnInspectorGUI()
         {
+            OnTransformChanged();
+            
             EditorGUI.BeginChangeCheck();
             base.OnInspectorGUI();
             if (!EditorGUI.EndChangeCheck()) return;
             
             UpdateColor();
             UpdateMaterial();
-            OnTransformChanged();
         }
 
         private void OnTransformChanged()
@@ -63,7 +65,7 @@ namespace Tiles.Editor
         
         private void UpdateMaterial()
         {
-            _tileShape.Collider.sharedMaterial = _tileShape.SolidTypes[_tileShape.SolidType];
+            _tileShape.Collider.sharedMaterial = _solidTypes[_tileShape.SolidType];
         }
         
         private void OnShapeChanged()
@@ -90,12 +92,10 @@ namespace Tiles.Editor
             var index = 0;
             Vector2Int size = rect.size;
             var tiles = new TileBase[size.x * size.y];
-            for (int ceilY = rect.yMin; ceilY <= rect.yMax; ceilY++)
+            for (int ceilY = rect.yMin; ceilY < rect.yMax; ceilY++)
+            for (int ceilX = rect.xMin; ceilX < rect.xMax; ceilX++)
             {
-                for (int ceilX = rect.xMin; ceilX <= rect.xMax; ceilX++)
-                {
-                    tiles[index++] = GenerateTile(ceilX, ceilY);
-                }
+                tiles[index++] = GenerateTile(ceilX, ceilY);
             }
 
             var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 0);
@@ -108,6 +108,7 @@ namespace Tiles.Editor
             var bitTile = new BitTile();
             
             Span<int> typeCounters = stackalloc int[SolidTypeExtensions.Number];
+            
             for (uint y = 0; y < _cellSize.y; y++)
             for (uint x = 0; x < _cellSize.x; x++)
             {
@@ -118,7 +119,7 @@ namespace Tiles.Editor
                 
                 foreach (Collider2D collider in _colliders)
                 {
-                    typeCounters[(int)_tileShape.SolidTypes[collider.sharedMaterial]]++;
+                    typeCounters[(int)_solidTypes[collider.sharedMaterial]]++;
                 }
                 
                 _colliders.Clear();
@@ -129,6 +130,7 @@ namespace Tiles.Editor
             var position = new Vector3Int(ceilX, ceilY);
             var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(position);
             GeneratedTile newTile = _tileStorage.AddOrReplace(ref bitTile, type);
+            if (ReferenceEquals(currentTile, null)) return newTile;
             _tileStorage.Remove(currentTile);
             return newTile;
         }

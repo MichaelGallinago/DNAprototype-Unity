@@ -13,7 +13,14 @@ MonoBehaviour:
   m_Name: TileStorageScriptableObject
   m_EditorClassIdentifier: 
   _tiles:
-    _serializedList: []
+    _serializedList:
+    - Key:
+        Sprite: {fileID: 21300000, guid: ca1cb2de6c170f1409b69059771ed9cc, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 0
+        <Tile>k__BackingField: {fileID: 11400000, guid: a566f07905f5f91469377438fc15cbf2, type: 2}
   _freeSpaceMap:
     _list: 
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}

@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Tiles;
+using UnityEngine;
 using UnityEngine.Rendering;
 using static System.Runtime.CompilerServices.MethodImplOptions;
 
@@ -11,7 +12,7 @@ namespace Tiles
     [Serializable]
     public struct BitTile
     {
-        private BitArray256 _data;
+        [SerializeField] private BitArray256 _data;
         
         public bool this[uint x, uint y]
         {
