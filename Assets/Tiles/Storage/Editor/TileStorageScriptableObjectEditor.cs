@@ -28,7 +28,7 @@ namespace Tiles.Storage.Editor
                 testTile[i, i / 2] = true;
             }
                 
-            _tileStorage.Add(ref testTile, SolidType.Full);
+            _tileStorage.AddOrReplace(ref testTile, SolidType.Full);
         }
         
         private void ClearDataButton()

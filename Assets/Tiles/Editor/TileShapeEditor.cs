@@ -14,9 +14,9 @@ namespace Tiles.Editor
     [CustomEditor(typeof(TileShape))]
     public class TileShapeEditor : UnityEditor.Editor
     {
-        private readonly List<Collider2D> _colliders = new();
-
         [SerializeField] private TileStorageScriptableObject _tileStorage;
+        
+        private readonly List<Collider2D> _colliders = new();
         
         private TileShape _tileShape;
         private Vector2Int _cellSize;
@@ -108,7 +108,7 @@ namespace Tiles.Editor
             var bitTile = new BitTile();
             
             Span<int> typeCounters = stackalloc int[SolidTypeExtensions.Number];
-            for (uint y = 0; y < _cellSize.y; y++) 
+            for (uint y = 0; y < _cellSize.y; y++)
             for (uint x = 0; x < _cellSize.x; x++)
             {
                 if (Physics2D.OverlapPoint(worldPosition + new Vector2(x, y), _contactFilter, _colliders) > 0)
@@ -129,9 +129,7 @@ namespace Tiles.Editor
             var position = new Vector3Int(ceilX, ceilY);
             var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(position);
             GeneratedTile newTile = _tileStorage.AddOrReplace(ref bitTile, type);
-            if (currentTile == newTile) return newTile;
             _tileStorage.Remove(currentTile);
-            _tileShape.TileMap.SetTile(position, newTile);
             return newTile;
         }
         

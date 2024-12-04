@@ -1,0 +1,18 @@
+using System;
+using UnityEngine;
+
+namespace Tiles.Storage
+{
+    [Serializable]
+    public struct SpriteStorageData
+    {
+        [field: SerializeField] public int Index { get; private set; }
+        [field: SerializeField] public Sprite Sprite { get; private set; }
+        
+        public SpriteStorageData(int index, Sprite sprite)
+        {
+            Index = index;
+            Sprite = sprite;
+        }
+    }
+}

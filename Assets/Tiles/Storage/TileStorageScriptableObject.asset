@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tiles:
     _serializedList: []
-  <Atlas>k__BackingField: {fileID: 100100200, guid: 1ee3a68f1a09c38418b95d680a724aff, type: 3}
+  _freeSpaceMap:
+    _list: 
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
-  _freeSpaceList: 
-  _path: Assets\Tiles\Storage
-  _atlasPath: Assets/Tiles/Storage/TileAtlas.spriteatlasv2
-  _folderPath: Assets\Tiles\Storage\TileAssets
-  _atlasAsset: {fileID: 0}
+  _spriteStorage: {fileID: 11400000, guid: 3b0c4f8686cf92b46ba066e24c44af4f, type: 2}
+  _folder:
+    <StoragePath>k__BackingField: Assets\Tiles\Storage
+    <Path>k__BackingField: Assets\Tiles\Storage\GeneratedTiles

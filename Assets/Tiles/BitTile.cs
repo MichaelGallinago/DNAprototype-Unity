@@ -1,9 +1,10 @@
 using System;
 using System.Runtime.CompilerServices;
+using Tiles;
 using UnityEngine.Rendering;
 using static System.Runtime.CompilerServices.MethodImplOptions;
 
-[assembly: StructArrayAttributes.StructArray("SizeMap", nameof(Tiles), 16)]
+[assembly: StructArrayAttributes.StructArray("SizeMap", nameof(Tiles), TileUtilities.Size)]
 
 namespace Tiles
 {
@@ -14,8 +15,8 @@ namespace Tiles
         
         public bool this[uint x, uint y]
         {
-            [MethodImpl(AggressiveInlining)] get => _data[(y << 4) + x];
-            [MethodImpl(AggressiveInlining)] set => _data[(y << 4) + x] = value;
+            [MethodImpl(AggressiveInlining)] get => _data[y * TileUtilities.Size + x];
+            [MethodImpl(AggressiveInlining)] set => _data[y * TileUtilities.Size + x] = value;
         }
         
         public bool this[byte bitIndex]
