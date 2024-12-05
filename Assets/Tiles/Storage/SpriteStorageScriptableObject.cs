@@ -28,14 +28,12 @@ namespace Tiles.Storage
         [SerializeField, HideInInspector] private string _atlasPath;
         [SerializeField, HideInInspector] private StorageFolder _folder;
         
-        private static readonly Color Solid = new(byte.MaxValue, byte.MaxValue, byte.MaxValue);
-        private static readonly Color Empty = new(0, 0, 0, 0);
         private static readonly Rect SpriteRect = new(0f, 0f, TileUtilities.Size, TileUtilities.Size);
         private static readonly Vector2 SpritePivot = new(0.5f, 0.5f);
         private static readonly Object[] AtlasAssetTransferArray = new Object[1];
         private static readonly string[] FolderPathTransferArray = new string[1];
         
-        private readonly byte[] _colorData = new byte[TileUtilities.PixelNumber];
+        private readonly ushort[] _colorData = new ushort[TileUtilities.PixelNumber];
         
         private SpriteAtlasAsset _atlasAsset;
 
@@ -109,7 +107,7 @@ namespace Tiles.Storage
             for (uint y = 0; y < TileUtilities.Size; y++) 
             for (uint x = 0; x < TileUtilities.Size; x++)
             {
-                _colorData[y * TileUtilities.Size + x] = bitTile[x, y] ? byte.MaxValue : byte.MinValue;
+                _colorData[y * TileUtilities.Size + x] = bitTile[x, y] ? ushort.MaxValue : ushort.MinValue;
             }
             
             var sprite = Sprite.Create(CreateTexture(), SpriteRect, SpritePivot, 1f);
@@ -131,7 +129,7 @@ namespace Tiles.Storage
         private Texture2D CreateTexture()
         {
             const int size = TileUtilities.Size;
-            var texture = new Texture2D(size, size, TextureFormat.Alpha8, false)
+            var texture = new Texture2D(size, size, TextureFormat.ARGB4444, false)
             {
                 filterMode = FilterMode.Point,
                 wrapMode = TextureWrapMode.Mirror

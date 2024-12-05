@@ -19,9 +19,9 @@ namespace Tiles.Editor
         
         private readonly List<Collider2D> _colliders = new();
         
+        private RectInt _rect;
         private TileShape _tileShape;
         private Vector2Int _cellSize;
-        private RectInt _rect;
         private ContactFilter2D _contactFilter;
 
         private SpriteShapeRenderer Renderer => _tileShape.Controller.spriteShapeRenderer;
@@ -38,6 +38,7 @@ namespace Tiles.Editor
             _rect = GetCeilRect(Renderer.bounds);
             UpdateColor();
             
+            _contactFilter.useTriggers = true;
             _contactFilter.SetLayerMask(1 << _tileShape.gameObject.layer);
         }
         
@@ -114,7 +115,6 @@ namespace Tiles.Editor
             for (uint y = 0; y < _cellSize.y; y++)
             for (uint x = 0; x < _cellSize.x; x++)
             {
-                bitTile[x, y] = true;
                 if (Physics2D.OverlapPoint(worldPosition + new Vector2(x, y), _contactFilter, _colliders) > 0)
                 {
                     bitTile[x, y] = true;
@@ -129,7 +129,9 @@ namespace Tiles.Editor
             }
             
             var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(new Vector3Int(ceilX, ceilY));
-            GeneratedTile newTile = _tileStorage.AddOrReplace(ref bitTile, GetFrequentSolidType(typeCounters));
+            
+            GeneratedTile newTile = bitTile.IsEmpty ? 
+                null : _tileStorage.AddOrReplace(ref bitTile, GetFrequentSolidType(typeCounters));
             
             if (ReferenceEquals(currentTile, null)) return newTile;
             _tileStorage.Remove(currentTile);

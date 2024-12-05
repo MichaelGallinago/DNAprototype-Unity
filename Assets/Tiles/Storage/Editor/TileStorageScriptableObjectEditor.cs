@@ -33,7 +33,7 @@ namespace Tiles.Storage.Editor
         
         private void ClearDataButton()
         {
-            if (!GUILayout.Button("Clear Test Data")) return;
+            if (!GUILayout.Button("Clear All Data")) return;
             _tileStorage.Clear();
         }
     }

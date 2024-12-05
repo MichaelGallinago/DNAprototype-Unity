@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,6 +7,7 @@ using UnityEngine.U2D;
 
 namespace Tiles
 {
+    [ExecuteInEditMode]
     [RequireComponent(typeof(SpriteShapeController))]
     [RequireComponent(typeof(PolygonCollider2D))]
     public class TileShape : MonoBehaviour

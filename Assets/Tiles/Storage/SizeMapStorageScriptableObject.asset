@@ -13,16 +13,4 @@ MonoBehaviour:
   m_Name: SizeMapStorageScriptableObject
   m_EditorClassIdentifier: 
   _sizeMaps:
-    _serializedList:
-    - Value:
-        Array: 01010202030304040505060607070808
-        Angle: {x: 0.4636476, y: 2.0344439, z: 2.6779451, w: 4.248741}
-    - Value:
-        Array: 100e0c0a080604020000000000000000
-        Angle: {x: 5.1760364, y: 0.4636476, z: 4.248741, w: 5.8195376}
-    - Value:
-        Array: 10100f0f0e0e0d0d0c0c0b0b0a0a0909
-        Angle: {x: 5.8195376, y: 1.1071488, z: 3.6052403, w: 5.1760364}
-    - Value:
-        Array: 020406080a0c0e100000000000000000
-        Angle: {x: 1.1071488, y: 2.6779451, z: 2.0344439, w: 3.6052403}
+    _serializedList: []

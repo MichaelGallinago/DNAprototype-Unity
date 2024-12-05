@@ -35,6 +35,7 @@ namespace Tiles.Storage
             tile = Create(ref bitTile, solidType, sprite);
             int index = _freeSpaceMap.Take();
             index = index < 0 ? _tiles.Count : index;
+            
             AssetDatabase.CreateAsset(tile, $"{_folder.Path}\\tile{index.ToString()}.asset");
             _tiles.Add(new TileKey(tile.Sprite, solidType), new TileStorageData(1, index, tile));
             
@@ -115,7 +116,7 @@ namespace Tiles.Storage
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private GeneratedTile Create(ref BitTile bitTile, SolidType solidType, Sprite sprite)
         {
-            bitTile.GetSizes(out BitTile.SizeDto sizes);
+            bitTile.GetSizes(solidType, out BitTile.SizeDto sizes);
             
             SizeData down = _sizeDataStorage[sizes.Down];
             SizeData right = _sizeDataStorage[sizes.Right];
