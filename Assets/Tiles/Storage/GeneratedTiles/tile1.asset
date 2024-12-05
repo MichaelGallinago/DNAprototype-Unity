@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e73a9eef7d6cea54398ab211df05a37c, type: 3}
-  m_Name: tile0
+  m_Name: tile1
   m_EditorClassIdentifier: 
-  <Sprite>k__BackingField: {fileID: 21300000, guid: ca1cb2de6c170f1409b69059771ed9cc, type: 2}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 2631d32c3d372c448b58e3250f086fb1, type: 2}
   <SolidType>k__BackingField: 0
-  _heightsDown: 00000000000000000000000000000000
-  _widthsRight: 00000000000000000000000000000000
-  _heightsUp: 00000000000000000000000000000000
-  _widthsLeft: 00000000000000000000000000000000
+  _heightsDown: 10101010101010101010101010101010
+  _widthsRight: 10101010101010101010101010101010
+  _heightsUp: 10101010101010101010101010101010
+  _widthsLeft: 10101010101010101010101010101010
   _angles: {x: 0, y: 1.5707964, z: 3.1415927, w: 4.712389}

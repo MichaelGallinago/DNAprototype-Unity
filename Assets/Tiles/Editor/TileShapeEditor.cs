@@ -38,7 +38,7 @@ namespace Tiles.Editor
             _rect = GetCeilRect(Renderer.bounds);
             UpdateColor();
             
-            _contactFilter.SetLayerMask(_tileShape.gameObject.layer);
+            _contactFilter.SetLayerMask(1 << _tileShape.gameObject.layer);
         }
         
         public override void OnInspectorGUI()
@@ -78,6 +78,7 @@ namespace Tiles.Editor
             if (rect == _rect) return;
             
             UpdateTilesInRect(_rect = rect);
+            SceneView.RepaintAll();
         }
         
         private RectInt GetCeilRect(Bounds bounds)
@@ -92,13 +93,14 @@ namespace Tiles.Editor
             var index = 0;
             Vector2Int size = rect.size;
             var tiles = new TileBase[size.x * size.y];
+            
             for (int ceilY = rect.yMin; ceilY < rect.yMax; ceilY++)
             for (int ceilX = rect.xMin; ceilX < rect.xMax; ceilX++)
             {
                 tiles[index++] = GenerateTile(ceilX, ceilY);
             }
 
-            var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 0);
+            var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 1);
             _tileShape.TileMap.SetTilesBlock(bounds, tiles);
         }
 
@@ -112,11 +114,12 @@ namespace Tiles.Editor
             for (uint y = 0; y < _cellSize.y; y++)
             for (uint x = 0; x < _cellSize.x; x++)
             {
+                bitTile[x, y] = true;
                 if (Physics2D.OverlapPoint(worldPosition + new Vector2(x, y), _contactFilter, _colliders) > 0)
                 {
                     bitTile[x, y] = true;
                 }
-                
+
                 foreach (Collider2D collider in _colliders)
                 {
                     typeCounters[(int)_solidTypes[collider.sharedMaterial]]++;
@@ -125,11 +128,9 @@ namespace Tiles.Editor
                 _colliders.Clear();
             }
             
-            SolidType type = GetFrequentSolidType(typeCounters);
-
-            var position = new Vector3Int(ceilX, ceilY);
-            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(position);
-            GeneratedTile newTile = _tileStorage.AddOrReplace(ref bitTile, type);
+            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(new Vector3Int(ceilX, ceilY));
+            GeneratedTile newTile = _tileStorage.AddOrReplace(ref bitTile, GetFrequentSolidType(typeCounters));
+            
             if (ReferenceEquals(currentTile, null)) return newTile;
             _tileStorage.Remove(currentTile);
             return newTile;

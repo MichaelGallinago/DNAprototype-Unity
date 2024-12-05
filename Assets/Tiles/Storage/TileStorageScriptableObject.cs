@@ -73,6 +73,8 @@ namespace Tiles.Storage
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
+        
+        private void OnValidate() => _folder.Init(this, "GeneratedTiles");
 
         private void ClearFolder()
         {
@@ -93,8 +95,6 @@ namespace Tiles.Storage
             
             return false;
         }
-        
-        private void Awake() => _folder.Init(this, "GeneratedTiles");
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool TryGet(in TileKey key, out GeneratedTile tile)

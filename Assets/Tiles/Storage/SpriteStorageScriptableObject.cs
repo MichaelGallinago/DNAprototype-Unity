@@ -28,6 +28,8 @@ namespace Tiles.Storage
         [SerializeField, HideInInspector] private string _atlasPath;
         [SerializeField, HideInInspector] private StorageFolder _folder;
         
+        private static readonly Color Solid = new(byte.MaxValue, byte.MaxValue, byte.MaxValue);
+        private static readonly Color Empty = new(0, 0, 0, 0);
         private static readonly Rect SpriteRect = new(0f, 0f, TileUtilities.Size, TileUtilities.Size);
         private static readonly Vector2 SpritePivot = new(0.5f, 0.5f);
         private static readonly Object[] AtlasAssetTransferArray = new Object[1];
@@ -110,7 +112,7 @@ namespace Tiles.Storage
                 _colorData[y * TileUtilities.Size + x] = bitTile[x, y] ? byte.MaxValue : byte.MinValue;
             }
             
-            var sprite = Sprite.Create(CreateTexture(), SpriteRect, SpritePivot);
+            var sprite = Sprite.Create(CreateTexture(), SpriteRect, SpritePivot, 1f);
          
             int index = _freeSpaceMap.Take();
             index = index < 0 ? _sprites.Count : index;

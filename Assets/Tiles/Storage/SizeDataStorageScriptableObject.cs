@@ -15,7 +15,7 @@ namespace Tiles.Storage
     {
         private static readonly Vector4 RightAngles = new(0f, Circle.Quarter, Circle.Half, Circle.HalfAndQuarter);
         
-        [SerializeField, SerializedDictionary("Size maps", "Size arrays")]
+        [SerializeField, SerializedDictionary(nameof(SizeMap<byte>), nameof(SizeData))]
         private SerializedDictionary<SizeMap<byte>, SizeData> _sizeMaps;
         
         public SizeData this[SizeMap<byte> key]
