@@ -68,7 +68,9 @@ namespace Tiles.Storage
             _spriteStorage.Clear();
             _sizeDataStorage.Clear();
             _tiles.Clear();
-
+            
+            EditorUtility.SetDirty(this);
+            
             ClearFolder();
             
             AssetDatabase.SaveAssets();

@@ -13,25 +13,9 @@ MonoBehaviour:
   m_Name: SpriteStorageScriptableObject
   m_EditorClassIdentifier: 
   _sprites:
-    _serializedList:
-    - Key:
-        _data:
-          data1: 54043401687662595
-          data2: 13835110832041624320
-          data3: 0
-          data4: 0
-      Value:
-        <Index>k__BackingField: 0
-        <Sprite>k__BackingField: {fileID: 21300000, guid: ca1cb2de6c170f1409b69059771ed9cc, type: 2}
+    _serializedList: []
   _bitTiles:
-    _serializedList:
-    - Key: {fileID: 21300000, guid: ca1cb2de6c170f1409b69059771ed9cc, type: 2}
-      Value:
-        _data:
-          data1: 54043401687662595
-          data2: 13835110832041624320
-          data3: 0
-          data4: 0
+    _serializedList: []
   <Atlas>k__BackingField: {fileID: 100100200, guid: 1ee3a68f1a09c38418b95d680a724aff, type: 3}
   _freeSpaceMap:
     _list: 

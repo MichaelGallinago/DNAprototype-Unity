@@ -43,6 +43,8 @@ namespace Tiles.Storage
             ClearFolder();
             _sprites.Clear();
             _bitTiles.Clear();
+            
+            EditorUtility.SetDirty(this);
         }
 
         public void Remove(Sprite sprite)

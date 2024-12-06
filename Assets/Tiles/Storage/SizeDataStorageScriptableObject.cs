@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
+using UnityEditor;
 using UnityEngine;
 using Utilities;
 using static Utilities.ScriptableObjectUtilities;
@@ -28,7 +29,11 @@ namespace Tiles.Storage
             }
         }
         
-        public void Clear() => _sizeMaps.Clear();
+        public void Clear()
+        {
+            _sizeMaps.Clear();
+            EditorUtility.SetDirty(this);
+        }
 
         private static Vector4 CalculateAngles(SizeMap<byte> sizes)
         {
