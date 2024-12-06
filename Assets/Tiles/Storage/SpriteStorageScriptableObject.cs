@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using UnityEditor;
@@ -30,10 +31,11 @@ namespace Tiles.Storage
         
         private static readonly Rect SpriteRect = new(0f, 0f, TileUtilities.Size, TileUtilities.Size);
         private static readonly Vector2 SpritePivot = new(0.5f, 0.5f);
-        private static readonly Object[] AtlasAssetTransferArray = new Object[1];
         private static readonly string[] FolderPathTransferArray = new string[1];
         
         private readonly ushort[] _colorData = new ushort[TileUtilities.PixelNumber];
+        private readonly List<(Sprite sprite, string index)> _spritesToSave = new();
+        private readonly List<Sprite> _spritesToRemove = new();
         
         private SpriteAtlasAsset _atlasAsset;
 
@@ -45,20 +47,6 @@ namespace Tiles.Storage
             _bitTiles.Clear();
             
             EditorUtility.SetDirty(this);
-        }
-
-        public void Remove(Sprite sprite)
-        {
-            if (!_bitTiles.TryGetValue(sprite, out BitTile bitTile)) return;
-            
-            _sprites.Remove(bitTile);
-            _bitTiles.Remove(sprite);
-            
-            AtlasAssetTransferArray[0] = sprite;
-            RemoveFromAtlas(AtlasAssetTransferArray);
-
-            sprite.DeleteAsset();
-            sprite.texture.DeleteAsset();
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -73,7 +61,62 @@ namespace Tiles.Storage
             sprite = _sprites[bitTile].Sprite;
             return true;
         }
+        
+        public void AddToRemove(Sprite sprite) => _spritesToRemove.Add(sprite);
+        
+        public void SaveAssets()
+        {
+            SaveNewSprites();
+            DeleteUnusedSprites();
+            EditorUtility.SetDirty(this);
+        }
 
+        private void SaveNewSprites()
+        {
+            if (_spritesToSave.Count <= 0) return;
+            
+            var spritesToAtlasInsertion = new Object[_spritesToSave.Count];
+            for (var i = 0; i < _spritesToSave.Count; i++)
+            {
+                (Sprite sprite, string index) = _spritesToSave[i];
+                spritesToAtlasInsertion[i] = sprite;
+                
+                AssetDatabase.CreateAsset(sprite.texture, $"{_folder.Path}\\texture{index}.asset");
+                AssetDatabase.CreateAsset(sprite, $"{_folder.Path}\\sprite{index}.asset");
+            }
+            
+            _atlasAsset.Add(spritesToAtlasInsertion);
+            
+            _spritesToSave.Clear();
+        }
+
+        private void DeleteUnusedSprites()
+        {
+            if (_spritesToRemove.Count <= 0) return;
+            
+            var spritesToAtlasDeletion = new Object[_spritesToRemove.Count];
+            for (var i = 0; i < _spritesToRemove.Count; i++)
+            {
+                Sprite sprite = _spritesToRemove[i];
+                spritesToAtlasDeletion[i] = sprite;
+                Remove(sprite);
+            }
+            RemoveFromAtlas(spritesToAtlasDeletion);
+            
+            _spritesToRemove.Clear();
+        }
+
+        private void Remove(Sprite sprite)
+        {
+            if (!_bitTiles.TryGetValue(sprite, out BitTile bitTile)) return;
+            
+            _sprites.Remove(bitTile);
+            _bitTiles.Remove(sprite);
+            
+            sprite.DeleteAsset();
+            sprite.texture.DeleteAsset();
+        }
+        
         private void OnValidate()
         {
             InitAtlasAsset();
@@ -100,7 +143,6 @@ namespace Tiles.Storage
         {
             _atlasAsset.Remove(assets);
             SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
-            AssetDatabase.Refresh();
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -116,14 +158,11 @@ namespace Tiles.Storage
          
             int index = _freeSpaceMap.Take();
             index = index < 0 ? _sprites.Count : index;
-            SaveSpriteAsset(sprite, index);
+            
+            _spritesToSave.Add((sprite, index.ToString()));
+            
             _sprites.Add(bitTile, new SpriteStorageData(index, sprite));
             _bitTiles.Add(sprite, bitTile);
-            
-            AtlasAssetTransferArray[0] = sprite;
-            _atlasAsset.Add(AtlasAssetTransferArray);
-            SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
-            AssetDatabase.Refresh();
             
             return sprite;
         }
@@ -139,13 +178,6 @@ namespace Tiles.Storage
             texture.SetPixelData(_colorData, 0);
             texture.Apply();
             return texture;
-        }
-
-        private void SaveSpriteAsset(Sprite sprite, int index)
-        {
-            var stringIndex = index.ToString();
-            AssetDatabase.CreateAsset(sprite.texture, $"{_folder.Path}\\texture{stringIndex}.asset");
-            AssetDatabase.CreateAsset(sprite, $"{_folder.Path}\\sprite{stringIndex}.asset");
         }
     }
 }

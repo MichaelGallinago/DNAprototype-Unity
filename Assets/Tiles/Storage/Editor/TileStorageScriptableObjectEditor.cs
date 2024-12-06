@@ -14,21 +14,7 @@ namespace Tiles.Storage.Editor
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-            AddTestTileButton();
             ClearDataButton();
-        }
-
-        private void AddTestTileButton()
-        {
-            if (!GUILayout.Button("Add Test Tile")) return;
-            
-            var testTile = new BitTile();
-            for (uint i = 0; i < TileUtilities.Size; i++)
-            {
-                testTile[i, i / 2] = true;
-            }
-                
-            _tileStorage.AddOrReplace(ref testTile, SolidType.Full);
         }
         
         private void ClearDataButton()

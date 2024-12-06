@@ -12,7 +12,7 @@ namespace Tiles.SolidTypes
         menuName = ScriptableObjectsFolder + nameof(SolidTypesScriptableObject))]
     public class SolidTypesScriptableObject : ScriptableObject
     {
-        [SerializeField, SerializedDictionary("Surrogate material key", "Solid type")]
+        [SerializeField, SerializedDictionary("Surrogate material key", nameof(SolidType))]
         private SerializedDictionary<PhysicsMaterial2D, SolidType> _solidTypes;
 
         public SolidType this[PhysicsMaterial2D material]

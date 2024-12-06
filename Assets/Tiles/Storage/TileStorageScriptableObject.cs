@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using Tiles.Generator;
@@ -25,9 +26,12 @@ namespace Tiles.Storage
         [SerializeField, HideInInspector] private StorageFolder _folder;
         
         private static readonly string[] FolderPathTransferArray = new string[1];
+        
+        private readonly List<(GeneratedTile tile, string index)> _tilesToSave = new();
+        private readonly List<GeneratedTile> _tilesToRemove = new();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GeneratedTile AddOrReplace(ref BitTile bitTile, SolidType solidType)
+        public GeneratedTile CreateIfDifferent(ref BitTile bitTile, SolidType solidType)
         {
             bool isOldSprite = _spriteStorage.TryGetOrCreate(ref bitTile, out Sprite sprite);
             if (isOldSprite && TryGet(new TileKey(sprite, solidType), out GeneratedTile tile)) return tile;
@@ -36,14 +40,37 @@ namespace Tiles.Storage
             int index = _freeSpaceMap.Take();
             index = index < 0 ? _tiles.Count : index;
             
-            AssetDatabase.CreateAsset(tile, $"{_folder.Path}\\tile{index.ToString()}.asset");
+            _tilesToSave.Add((tile, index.ToString()));
             _tiles.Add(new TileKey(tile.Sprite, solidType), new TileStorageData(1, index, tile));
             
-            AssetDatabase.Refresh();
             return tile;
         }
+
+        public void SaveAssets()
+        {
+            if (_tilesToSave.Count <= 0) return;
+            
+            foreach ((GeneratedTile tile, string index) in _tilesToSave)
+            {
+                AssetDatabase.CreateAsset(tile, $"{_folder.Path}\\tile{index}.asset");
+            }
+            
+            _tilesToSave.Clear();
+
+            foreach (GeneratedTile tile in _tilesToRemove)
+            {
+                Remove(tile);
+            }
+            _tilesToRemove.Clear();
+            
+            _spriteStorage.SaveAssets();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
         
-        public void Remove(GeneratedTile tile)
+        public void AddToRemove(GeneratedTile tile) => _tilesToRemove.Add(tile);
+        
+        private void Remove(GeneratedTile tile)
         {
             var key = new TileKey(tile.Sprite, tile.SolidType);
             if (!_tiles.TryGetValue(key, out TileStorageData data)) return;
@@ -60,7 +87,7 @@ namespace Tiles.Storage
             data.Tile.DeleteAsset();
             
             if (ContainsSprite(tile.Sprite)) return;
-            _spriteStorage.Remove(tile.Sprite);
+            _spriteStorage.AddToRemove(tile.Sprite);
         }
         
         public void Clear()

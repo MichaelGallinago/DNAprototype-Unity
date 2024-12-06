@@ -29,7 +29,6 @@ namespace Tiles.Editor
         private void Awake()
         {
             _tileShape = (TileShape)target;
-
             Tilemap tileMap = _tileShape.TileMap;
             if (!tileMap) return;
             
@@ -101,6 +100,8 @@ namespace Tiles.Editor
                 tiles[index++] = GenerateTile(ceilX, ceilY);
             }
 
+            _tileStorage.SaveAssets();
+
             var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 1);
             _tileShape.TileMap.SetTilesBlock(bounds, tiles);
         }
@@ -131,10 +132,10 @@ namespace Tiles.Editor
             var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(new Vector3Int(ceilX, ceilY));
             
             GeneratedTile newTile = bitTile.IsEmpty ? 
-                null : _tileStorage.AddOrReplace(ref bitTile, GetFrequentSolidType(typeCounters));
+                null : _tileStorage.CreateIfDifferent(ref bitTile, GetFrequentSolidType(typeCounters));
             
             if (ReferenceEquals(currentTile, null)) return newTile;
-            _tileStorage.Remove(currentTile);
+            _tileStorage.AddToRemove(currentTile);
             return newTile;
         }
         
