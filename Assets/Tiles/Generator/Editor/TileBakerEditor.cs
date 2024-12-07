@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
@@ -8,25 +6,22 @@ using static Utilities.Editor.CustomEditorUtilities;
 
 namespace Tiles.Generator.Editor
 {
-    [CustomEditor(typeof(TileGenerator))]
-    public class TileGeneratorEditor : UnityEditor.Editor
+    [CustomEditor(typeof(TileBaker))]
+    public class TileBakerEditor : UnityEditor.Editor
     {
         private static readonly Color CreationRectangleColor = new(0f, 0f, 1f, 0.1f);
         
-        private TileGenerator _tileGenerator;
+        private TileBaker _baker;
         private Handles.CapFunction _capFunction;
-
-        private List<Vector2> _vertices;
         
         private bool _isRectangleCreation;
         private Vector2Int _creationStartPosition;
         
         private void OnEnable()
         {
-            _tileGenerator = (TileGenerator)target;
+            _baker = (TileBaker)target;
             _capFunction = Handles.SphereHandleCap;
             _isRectangleCreation = false;
-            _vertices = new List<Vector2>();
         }
 
         private void OnDisable() => CursorUtilities.ShowInEditor(true);
@@ -46,6 +41,18 @@ namespace Tiles.Generator.Editor
 
             //Vector2 position = GetWorldMousePosition(Event.current);
             //DrawArc(new Vector2(0f, 0f), new Vector2(56f, 16f), position);
+        }
+        
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+            ClearButton();
+        }
+        
+        private void ClearButton()
+        {
+            if (!GUILayout.Button("Clear")) return;
+            _baker.TileMap.ClearAllTiles();
         }
 
         private void HandleInput(Event e)

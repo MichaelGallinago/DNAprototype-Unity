@@ -32,7 +32,7 @@ namespace Tiles.Storage
         public void Clear()
         {
             _sizeMaps.Clear();
-            EditorUtility.SetDirty(this);
+            AssetDatabaseUtilities.SetDirtyAndSave(this);
         }
 
         private static Vector4 CalculateAngles(SizeMap<byte> sizes)

@@ -43,8 +43,6 @@ namespace Tiles.Editor
         
         public override void OnInspectorGUI()
         {
-            OnTransformChanged();
-            
             EditorGUI.BeginChangeCheck();
             base.OnInspectorGUI();
             if (!EditorGUI.EndChangeCheck()) return;
@@ -53,6 +51,11 @@ namespace Tiles.Editor
             UpdateMaterial();
         }
 
+        private void UpdateColor() => Renderer.color = _tileShape.SolidType.ToColor();
+        
+        private void UpdateMaterial() => _tileShape.Collider.sharedMaterial = _solidTypes[_tileShape.SolidType];
+        
+        [Obsolete]
         private void OnTransformChanged()
         {
             if (!_tileShape.transform.hasChanged) return;
@@ -60,25 +63,22 @@ namespace Tiles.Editor
             OnShapeChanged();
             _tileShape.transform.hasChanged = false;
         }
-
-        private void UpdateColor() => Renderer.color = _tileShape.SolidType.ToColor();
         
-        private void UpdateMaterial()
-        {
-            _tileShape.Collider.sharedMaterial = _solidTypes[_tileShape.SolidType];
-        }
-        
+        [Obsolete]
         private void OnShapeChanged()
         {
             if (!_tileShape.TileMap) return;
             
-            UpdateTilesInRect(_rect);
-            
             RectInt rect = GetCeilRect(Renderer.bounds);
-            if (rect == _rect) return;
+            UpdateTilesInRect(rect);
+
+            if (rect != _rect)
+            {
+                UpdateTilesInRect(_rect);
+                _rect = rect;
+            }
             
-            UpdateTilesInRect(_rect = rect);
-            SceneView.RepaintAll();
+            _tileStorage.SaveAssets();
         }
         
         private RectInt GetCeilRect(Bounds bounds)
@@ -97,14 +97,12 @@ namespace Tiles.Editor
             for (int ceilY = rect.yMin; ceilY < rect.yMax; ceilY++)
             for (int ceilX = rect.xMin; ceilX < rect.xMax; ceilX++)
             {
-                tiles[index++] = GenerateTile(ceilX, ceilY);
+                tiles[index++] = GetTileInPosition(ceilX, ceilY);
             }
-
-            _tileStorage.SaveAssets();
 
             var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 1);
             _tileShape.TileMap.SetTilesBlock(bounds, tiles);
-        }
+        } 
 
         private GeneratedTile GenerateTile(int ceilX, int ceilY)
         {
@@ -128,11 +126,15 @@ namespace Tiles.Editor
                 
                 _colliders.Clear();
             }
-            
-            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(new Vector3Int(ceilX, ceilY));
-            
-            GeneratedTile newTile = bitTile.IsEmpty ? 
+
+            return bitTile.IsEmpty ? 
                 null : _tileStorage.CreateIfDifferent(ref bitTile, GetFrequentSolidType(typeCounters));
+        }
+
+        private GeneratedTile GetTileInPosition(int ceilX, int ceilY)
+        {
+            GeneratedTile newTile = GenerateTile(ceilX, ceilY);
+            var currentTile = _tileShape.TileMap.GetTile<GeneratedTile>(new Vector3Int(ceilX, ceilY));
             
             if (ReferenceEquals(currentTile, null)) return newTile;
             _tileStorage.AddToRemove(currentTile);

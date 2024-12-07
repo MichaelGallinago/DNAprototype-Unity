@@ -1,5 +1,4 @@
 #if UNITY_EDITOR
-using System;
 using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;

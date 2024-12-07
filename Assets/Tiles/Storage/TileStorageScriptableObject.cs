@@ -48,27 +48,35 @@ namespace Tiles.Storage
 
         public void SaveAssets()
         {
-            if (_tilesToSave.Count <= 0) return;
+            AssetDatabaseUtilities.BeginTransaction(SaveNewTiles);
+            AssetDatabaseUtilities.BeginTransaction(DeleteUnusedTiles);
             
+            _spriteStorage.SaveAssets();
+            
+            AssetDatabaseUtilities.SetDirtyAndSave(this);
+        }
+        
+        public void AddToRemove(GeneratedTile tile) => _tilesToRemove.Add(tile);
+
+        private void SaveNewTiles()
+        {
+            if (_tilesToSave.Count <= 0) return;
             foreach ((GeneratedTile tile, string index) in _tilesToSave)
             {
                 AssetDatabase.CreateAsset(tile, $"{_folder.Path}\\tile{index}.asset");
             }
-            
             _tilesToSave.Clear();
-
+        }
+        
+        private void DeleteUnusedTiles()
+        {
+            if (_tilesToRemove.Count <= 0) return;
             foreach (GeneratedTile tile in _tilesToRemove)
             {
                 Remove(tile);
             }
             _tilesToRemove.Clear();
-            
-            _spriteStorage.SaveAssets();
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
         }
-        
-        public void AddToRemove(GeneratedTile tile) => _tilesToRemove.Add(tile);
         
         private void Remove(GeneratedTile tile)
         {
@@ -96,12 +104,8 @@ namespace Tiles.Storage
             _sizeDataStorage.Clear();
             _tiles.Clear();
             
-            EditorUtility.SetDirty(this);
-            
-            ClearFolder();
-            
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
+            AssetDatabaseUtilities.BeginTransaction(ClearFolder);
+            AssetDatabaseUtilities.SetDirtyAndSave(this);
         }
         
         private void OnValidate() => _folder.Init(this, "GeneratedTiles");
