@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Tiles.Generators;
+using Tiles.Models;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static Tiles.TileUtilities;
@@ -13,12 +14,12 @@ namespace Tiles.Collision
 	    public Vector2Int Position { get; set; }
 	    public Quadrant Quadrant { get; set; }
 	    
-	    private readonly Tilemap _tileMap;
+	    private readonly Tilemap _tilemap;
 	    
 	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-	    public TileCollider(Tilemap tileMap, Quadrant quadrant, Vector2Int position)
+	    public TileCollider(Tilemap tilemap, Quadrant quadrant, Vector2Int position)
 	    {
-		    _tileMap = tileMap;
+		    _tilemap = tilemap;
 		    Quadrant = quadrant;
 		    Position = position;
 	    }
@@ -142,7 +143,7 @@ namespace Tiles.Collision
 				default: return null;
 			}
 			
-			return _tileMap.GetTile<GeneratedTile>(new Vector3Int(position.x, position.y));
+			return _tilemap.GetTile<GeneratedTile>(new Vector3Int(position.x, position.y));
 		}
 	}
 }

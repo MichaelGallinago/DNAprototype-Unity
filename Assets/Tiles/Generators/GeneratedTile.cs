@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using Tiles.Models;
 using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;

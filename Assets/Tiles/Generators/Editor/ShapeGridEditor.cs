@@ -1,6 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.U2D;
 using Utilities;
 using Utilities.Editor;
 
@@ -11,26 +12,31 @@ namespace Tiles.Generators.Editor
     {
         private static readonly Color CreationRectangleColor = new(0f, 0f, 1f, 0.1f);
         
+        [SerializeField] private GameObject _tileShapePrefab;
+        
+        private ShapeGrid _shapeGrid;
+        
         private bool _isRectangleCreation;
         private Vector2Int _creationStartPosition;
-
-        private void Awake()
-        {
-            _isRectangleCreation = false;
-        }
-
-        private void OnSceneGUI()
-        {
-            HandleInput(Event.current);
-            DrawCreationRectangle(Event.current);
-        }
+        private bool _isShiftPressed;
         
-        private void HandleInput(Event e)
+        private void OnEnable()
+        {
+            _shapeGrid = (ShapeGrid)target;
+            _shapeGrid.SetVisibility(true);
+        }
+
+        private void OnDisable() => _shapeGrid.SetVisibility(false);
+        private void OnSceneGUI() => HandleEvent(Event.current);
+        
+        private void HandleEvent(Event e)
         {
             switch (e.type)
             {
                 case EventType.KeyUp: HandleKeyUp(e); break;
                 case EventType.KeyDown: HandleKeyDown(e); break;
+                case EventType.Repaint: DrawCreationRectangle(e); break;
+                case EventType.MouseMove: SceneView.currentDrawingSceneView.Repaint(); break;
                 default: return;
             }
         }
@@ -39,7 +45,7 @@ namespace Tiles.Generators.Editor
         {
             switch (e.keyCode)
             {
-                case KeyCode.LeftShift: CreateRectangle(); break;
+                case KeyCode.LeftShift: CreateRectangle(e); break;
                 default: return;
             }
             
@@ -50,7 +56,6 @@ namespace Tiles.Generators.Editor
         {
             switch (e.keyCode)
             {
-                case KeyCode.Delete: DeleteSelectedVertex(); break;
                 case KeyCode.LeftShift: StartRectangleCreation(e); break;
                 default: return;
             }
@@ -64,11 +69,6 @@ namespace Tiles.Generators.Editor
             
             _creationStartPosition = GetGridPosition(e);
             _isRectangleCreation = true;
-        }
-        
-        private void DeleteSelectedVertex()
-        {
-            throw new NotImplementedException();
         }
         
         private void DrawCreationRectangle(Event e)
@@ -91,15 +91,34 @@ namespace Tiles.Generators.Editor
         private static Vector2Int GetGridPosition(Event e)
         {
             Vector2 mousePosition = CustomEditorUtilities.GetWorldMousePosition(e);
-            mousePosition.x = MathF.Round(mousePosition.x / 16f);
-            mousePosition.y = MathF.Round(mousePosition.y / 16f);
-            return mousePosition.ToInt() * 16;
+            mousePosition.x = MathF.Round(mousePosition.x / TileUtilities.HalfSize);
+            mousePosition.y = MathF.Round(mousePosition.y / TileUtilities.HalfSize);
+            return mousePosition.ToInt() * TileUtilities.HalfSize;
         }
 
-        private void CreateRectangle()
+        private void CreateRectangle(Event e)
         {
             if (!_isRectangleCreation) return;
             _isRectangleCreation = false;
+            
+            if (PrefabUtility.InstantiatePrefab(_tileShapePrefab) is not GameObject tileShape) return;
+            
+            Vector2Int position = _creationStartPosition;
+            Vector2Int endPosition = GetGridPosition(e);
+            Vector2Int halfSize = (endPosition - position).Abs() / 2;
+            
+            if (halfSize.x <= 0 || halfSize.y <= 0) return;
+            
+            var offset = new Vector2Int(halfSize.x % TileUtilities.HalfSize, halfSize.y % TileUtilities.HalfSize);
+
+            var controller = tileShape.GetComponent<SpriteShapeController>();
+            controller.spline.SetPosition(0, new Vector3(offset.x - halfSize.x, offset.y - halfSize.y));
+            controller.spline.SetPosition(1, new Vector3(offset.x - halfSize.x, offset.y + halfSize.y));
+            controller.spline.SetPosition(2, new Vector3(offset.x + halfSize.x, offset.y + halfSize.y));
+            controller.spline.SetPosition(3, new Vector3(offset.x + halfSize.x, offset.y - halfSize.y));
+            
+            tileShape.transform.position = ((position + endPosition) / 2).ToVector3();
+            tileShape.transform.parent = _shapeGrid.transform;
         }
     }
 }

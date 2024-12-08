@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -13,34 +12,21 @@ namespace Tiles.Generators
     {
 #if UNITY_EDITOR
         [SerializeField] private Grid _shapeGrid;
-        [field: SerializeField, HideInInspector] public Tilemap TileMap { get; private set; }
-        [field: SerializeField, HideInInspector] public TilemapRenderer TileMapRenderer { get; private set; }
+        [field: SerializeField, HideInInspector] public Tilemap Tilemap { get; private set; }
+        [field: SerializeField, HideInInspector] public TilemapRenderer TilemapRenderer { get; private set; }
         
         public TileShape[] TileShapes => GetComponentsInChildren<TileShape>();
         
         private void OnValidate()
         {
-            if (!TileMap)
+            if (!Tilemap)
             {
-                TileMap = GetComponent<Tilemap>();
+                Tilemap = GetComponent<Tilemap>();
             }
             
-            if (!TileMapRenderer)
+            if (!TilemapRenderer)
             {
-                TileMapRenderer = GetComponent<TilemapRenderer>();
-            }
-        }
-        
-        public void SetVisibility(bool isTilesVisible)
-        {
-            TileMapRenderer.enabled = isTilesVisible;
-            if (isTilesVisible)
-            {
-                SceneVisibilityManager.instance.Hide(_shapeGrid.gameObject, true);
-            }
-            else
-            {
-                SceneVisibilityManager.instance.Show(_shapeGrid.gameObject, true);
+                TilemapRenderer = GetComponent<TilemapRenderer>();
             }
         }
     }

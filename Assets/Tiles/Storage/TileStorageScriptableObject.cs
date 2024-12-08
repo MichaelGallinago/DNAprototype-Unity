@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using Tiles.Generators;
+using Tiles.Models;
 using Tiles.SolidTypes;
 using UnityEditor;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace Tiles.Storage
         {
             bool isOldSprite = _spriteStorage.TryGetOrCreate(ref bitTile, out Sprite sprite);
             if (isOldSprite && TryGet(new TileKey(sprite, solidType), out GeneratedTile tile)) return tile;
-            
+
             tile = Create(ref bitTile, solidType, sprite);
             int index = _freeSpaceMap.Take();
             index = index < 0 ? _tiles.Count : index;

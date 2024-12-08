@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Tiles.Models;
 using Tiles.SolidTypes;
 using Tiles.Storage;
 using UnityEditor;
@@ -17,8 +18,6 @@ namespace Tiles.Generators.Editor
         [SerializeField] private TileStorageScriptableObject _tileStorage;
         [SerializeField] private SolidTypesScriptableObject _solidTypes;
         
-        [SerializeField, HideInInspector] private VisibilitySwitcher _visibilitySwitcher;
-        
         private TileBaker _baker;
         
         private ContactFilter2D _contactFilter;
@@ -31,39 +30,30 @@ namespace Tiles.Generators.Editor
             _contactFilter.SetLayerMask(LayerMask.GetMask("CollisionGeneration"));
         }
 
-        private void OnEnable()
-        {
-            _visibilitySwitcher.OnVisibilityChanged = _baker.SetVisibility;
-            _visibilitySwitcher.IsTilesVisible = true;
-        }
-        
-        private void OnDisable() => _visibilitySwitcher.IsTilesVisible = false;
-        
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
             BakeButton();
-            SwitchVisibilityButton();
             ClearButton();
         }
         
         private void ClearButton()
         {
             if (!GUILayout.Button("Clear")) return;
-            _baker.TileMap.ClearAllTiles();
+            _baker.Tilemap.ClearAllTiles();
         }
 
         private void BakeButton()
         {
             if (!GUILayout.Button("Bake")) return;
             
-            foreach (TileBase tile in _baker.TileMap.GetTilesBlock(_baker.TileMap.cellBounds))
+            foreach (TileBase tile in _baker.Tilemap.GetTilesBlock(_baker.Tilemap.cellBounds))
             {
                 if (tile is not GeneratedTile generatedTile) continue;
                 _tileStorage.AddToRemove(generatedTile);
             }
-            _baker.TileMap.ClearAllTiles();
-            _baker.TileMap.CompressBounds();
+            _baker.Tilemap.ClearAllTiles();
+            _baker.Tilemap.CompressBounds();
             
             foreach (TileShape tileShape in _baker.TileShapes)
             {
@@ -71,14 +61,6 @@ namespace Tiles.Generators.Editor
             }
             
             _tileStorage.SaveAssets();
-            
-            _visibilitySwitcher.IsTilesVisible = true;
-        }
-        
-        private void SwitchVisibilityButton()
-        {
-            if (!GUILayout.Button(_visibilitySwitcher.IsTilesVisible ? "Visible: Tile" : "Visible: TileShape")) return;
-            _visibilitySwitcher.Switch();
         }
         
         private void SetTilesInRect(RectInt rect)
@@ -94,7 +76,7 @@ namespace Tiles.Generators.Editor
             }
 
             var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 1);
-            _baker.TileMap.SetTilesBlock(bounds, tiles);
+            _baker.Tilemap.SetTilesBlock(bounds, tiles);
         }
         
         private GeneratedTile GenerateTile(int ceilX, int ceilY)
@@ -126,8 +108,8 @@ namespace Tiles.Generators.Editor
         
         private RectInt GetCeilRect(Bounds bounds)
         {
-            var min = _baker.TileMap.WorldToCell(bounds.min).ToVector2Int();
-            var max = _baker.TileMap.WorldToCell(bounds.max).ToVector2Int();
+            var min = _baker.Tilemap.WorldToCell(bounds.min).ToVector2Int();
+            var max = _baker.Tilemap.WorldToCell(bounds.max).ToVector2Int();
             return new RectInt(min, max - min + Vector2Int.one);
         }
         

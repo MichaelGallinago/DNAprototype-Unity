@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
+using Tiles.Models;
 using UnityEditor;
 using UnityEditor.U2D;
 using UnityEngine;
@@ -34,8 +35,8 @@ namespace Tiles.Storage
         private static readonly string[] FolderPathTransferArray = new string[1];
         
         private readonly ushort[] _colorData = new ushort[TileUtilities.PixelNumber];
-        private readonly List<(Sprite sprite, string index)> _spritesToSave = new();
-        private readonly List<Sprite> _spritesToRemove = new();
+        private readonly HashSet<(Sprite sprite, string index)> _spritesToSave = new();
+        private readonly HashSet<Sprite> _spritesToRemove = new();
         
         private SpriteAtlasAsset _atlasAsset;
         
@@ -53,20 +54,17 @@ namespace Tiles.Storage
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetOrCreate(ref BitTile bitTile, out Sprite sprite)
         {
-            if (!_sprites.ContainsKey(bitTile))
+            if (_sprites.TryGetValue(bitTile, out SpriteStorageData data))
             {
-                sprite = Create(ref bitTile);
-                return false;
+                sprite = data.Sprite;
+                return true;
             }
-
-            sprite = _sprites[bitTile].Sprite;
-            return true;
+            
+            sprite = Create(ref bitTile);
+            return false;
         }
         
-        public void AddToRemove(Sprite sprite)
-        {
-            _spritesToRemove.Add(sprite);
-        }
+        public void AddToRemove(Sprite sprite) => _spritesToRemove.Add(sprite);
 
         public void SaveAssets()
         {
@@ -91,21 +89,25 @@ namespace Tiles.Storage
 
         private void ClearAtlas()
         {
+            var index = 0;
             var spritesToAtlasDeletion = new Object[_spritesToRemove.Count];
-            for (var i = 0; i < _spritesToRemove.Count; i++)
+            foreach (Sprite sprite in _spritesToRemove)
             {
-                spritesToAtlasDeletion[i] = _spritesToRemove[i];
+                spritesToAtlasDeletion[index++] = sprite;
             }
+            
             RemoveFromAtlas(spritesToAtlasDeletion);
         }
 
         private void FillAtlas()
         {
+            var index = 0;
             var spritesToAtlasInsertion = new Object[_spritesToSave.Count];
-            for (var i = 0; i < _spritesToSave.Count; i++)
+            foreach ((Sprite sprite, string _) in _spritesToSave)
             {
-                spritesToAtlasInsertion[i] = _spritesToSave[i].sprite;
+                spritesToAtlasInsertion[index++] = sprite;
             }
+            
             _spritesToSave.Clear();
             _atlasAsset.Add(spritesToAtlasInsertion);
         }
@@ -127,8 +129,9 @@ namespace Tiles.Storage
             _sprites.Remove(bitTile);
             _bitTiles.Remove(sprite);
             
+            Texture2D texture = sprite.texture;
             sprite.DeleteAsset();
-            sprite.texture.DeleteAsset();
+            texture.DeleteAsset();
         }
         
         private void OnValidate()
