@@ -234,7 +234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43745df06b70b0f46a1682567b1a475f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TileMap>k__BackingField: {fileID: 0}
   <SolidType>k__BackingField: 1
   <Controller>k__BackingField: {fileID: 1460458749299368290}
   <Collider>k__BackingField: {fileID: 1318113761840304038}

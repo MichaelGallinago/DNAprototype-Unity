@@ -4,7 +4,7 @@ using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Tiles.Generator
+namespace Tiles.Generators
 {
     [Serializable]
     public class GeneratedTile : TileBase

@@ -5,7 +5,7 @@ namespace Factories
     [RequireComponent(typeof(TileColliderFactory))]
     public class DependencyFactory : MonoBehaviour
     {
-        [field: SerializeField] public TileColliderFactory TileColliderFactory { get; private set; }
+        [field: SerializeField, HideInInspector] public TileColliderFactory TileColliderFactory { get; private set; }
         
         public static DependencyFactory Instance { get; private set; }
         
@@ -24,6 +24,14 @@ namespace Factories
         {
             if (Instance != this) return;
             Instance = null;
+        }
+        
+        private void OnValidate()
+        {
+            if (!TileColliderFactory)
+            {
+                TileColliderFactory = GetComponent<TileColliderFactory>();
+            }
         }
     }
 }

@@ -13,9 +13,281 @@ MonoBehaviour:
   m_Name: SpriteStorageScriptableObject
   m_EditorClassIdentifier: 
   _sprites:
-    _serializedList: []
+    _serializedList:
+    - Key:
+        _data:
+          data1: 9223512776490614784
+          data2: 16141112173949648896
+          data3: 17294068863465480192
+          data4: 17870556004450627584
+      Value:
+        <Index>k__BackingField: 0
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 07bcb8447e0e58f4c9ba9d2703dfa82a, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 1
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 9590f467a1b37cf45b679400327d4833, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709502463
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 2
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 9019c1c3ca075964fabe4a201ec15264, type: 2}
+    - Key:
+        _data:
+          data1: 2305563728967303168
+          data2: 18446744073709518847
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 3
+        <Sprite>k__BackingField: {fileID: 21300000, guid: cf0e09b641e868c4998cf8b048743baa, type: 2}
+    - Key:
+        _data:
+          data1: 0
+          data2: 4222154715496448
+          data3: 143834808324128831
+          data4: 1152648821562344447
+      Value:
+        <Index>k__BackingField: 4
+        <Sprite>k__BackingField: {fileID: 21300000, guid: a0d116b2990859148bd7711391e970f2, type: 2}
+    - Key:
+        _data:
+          data1: 18302905966791817216
+          data2: 18374965759886556672
+          data3: 18410996206198128384
+          data4: 18438018078844452736
+      Value:
+        <Index>k__BackingField: 5
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 99c8873658d2b404795f2acf15140127, type: 2}
+    - Key:
+        _data:
+          data1: 4611439724064612351
+          data2: 9223231297218887679
+          data3: 18446744071562035199
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 6
+        <Sprite>k__BackingField: {fileID: 21300000, guid: e48c941515c9c7f47969b5cde655fd3e, type: 2}
+    - Key:
+        _data:
+          data1: 18442521815912873952
+          data2: 18444773718807347184
+          data3: 18446462585847742460
+          data4: 18446744073709486078
+      Value:
+        <Index>k__BackingField: 7
+        <Sprite>k__BackingField: {fileID: 21300000, guid: e18affdd59bdc664db56662059742785, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 9223231297218904063
+          data4: 4611474910047338495
+      Value:
+        <Index>k__BackingField: 8
+        <Sprite>k__BackingField: {fileID: 21300000, guid: aa7f32f661ae84e4d80ea5d688fc8650, type: 2}
+    - Key:
+        _data:
+          data1: 18445899644484386815
+          data2: 18442521918993661948
+          data3: 18429011017030762480
+          data4: 18374967409179164608
+      Value:
+        <Index>k__BackingField: 9
+        <Sprite>k__BackingField: {fileID: 21300000, guid: f2315bddbfc55b84b8fb85e6f8ba40fd, type: 2}
+    - Key:
+        _data:
+          data1: 2305596715387797503
+          data2: 1152657617789591551
+          data3: 287953295060699135
+          data4: 71777214311367167
+      Value:
+        <Index>k__BackingField: 10
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 075963169e41e524381dd7d6ec0aa6e4, type: 2}
+    - Key:
+        _data:
+          data1: 18158792977772773120
+          data2: 17294095252147207168
+          data3: 13835304349644943360
+          data4: 140739635888128
+      Value:
+        <Index>k__BackingField: 11
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 31185d8cc90204a42bcc9ace846bcfc7, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 9223372036854775807
+          data4: 576214458477527039
+      Value:
+        <Index>k__BackingField: 12
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 1e3866d189297cd4383a24a9bfe14d83, type: 2}
+    - Key:
+        _data:
+          data1: 17733194124034175
+          data2: 1970354902728735
+          data3: 65539
+          data4: 0
+      Value:
+        <Index>k__BackingField: 13
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 579cf8e68dcbb8c4e865f51c6689f3dd, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 71846487805394943
+      Value:
+        <Index>k__BackingField: 14
+        <Sprite>k__BackingField: {fileID: 21300000, guid: be90576dd468ef94a8de5fe66c6c3aa5, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 71784911396110335
+          data4: 196671
+      Value:
+        <Index>k__BackingField: 15
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 545c9cfba0684d748be1c9c0196be2fa, type: 2}
+    - Key:
+        _data:
+          data1: 35748417292403711
+          data2: 281487862595615
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 16
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 22cc98399be2b3f41b4d78adc803100d, type: 2}
   _bitTiles:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 21300000, guid: 07bcb8447e0e58f4c9ba9d2703dfa82a, type: 2}
+      Value:
+        _data:
+          data1: 9223512776490614784
+          data2: 16141112173949648896
+          data3: 17294068863465480192
+          data4: 17870556004450627584
+    - Key: {fileID: 21300000, guid: 9590f467a1b37cf45b679400327d4833, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: 9019c1c3ca075964fabe4a201ec15264, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709502463
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: cf0e09b641e868c4998cf8b048743baa, type: 2}
+      Value:
+        _data:
+          data1: 2305563728967303168
+          data2: 18446744073709518847
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: a0d116b2990859148bd7711391e970f2, type: 2}
+      Value:
+        _data:
+          data1: 0
+          data2: 4222154715496448
+          data3: 143834808324128831
+          data4: 1152648821562344447
+    - Key: {fileID: 21300000, guid: 99c8873658d2b404795f2acf15140127, type: 2}
+      Value:
+        _data:
+          data1: 18302905966791817216
+          data2: 18374965759886556672
+          data3: 18410996206198128384
+          data4: 18438018078844452736
+    - Key: {fileID: 21300000, guid: e48c941515c9c7f47969b5cde655fd3e, type: 2}
+      Value:
+        _data:
+          data1: 4611439724064612351
+          data2: 9223231297218887679
+          data3: 18446744071562035199
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: e18affdd59bdc664db56662059742785, type: 2}
+      Value:
+        _data:
+          data1: 18442521815912873952
+          data2: 18444773718807347184
+          data3: 18446462585847742460
+          data4: 18446744073709486078
+    - Key: {fileID: 21300000, guid: aa7f32f661ae84e4d80ea5d688fc8650, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 9223231297218904063
+          data4: 4611474910047338495
+    - Key: {fileID: 21300000, guid: f2315bddbfc55b84b8fb85e6f8ba40fd, type: 2}
+      Value:
+        _data:
+          data1: 18445899644484386815
+          data2: 18442521918993661948
+          data3: 18429011017030762480
+          data4: 18374967409179164608
+    - Key: {fileID: 21300000, guid: 075963169e41e524381dd7d6ec0aa6e4, type: 2}
+      Value:
+        _data:
+          data1: 2305596715387797503
+          data2: 1152657617789591551
+          data3: 287953295060699135
+          data4: 71777214311367167
+    - Key: {fileID: 21300000, guid: 31185d8cc90204a42bcc9ace846bcfc7, type: 2}
+      Value:
+        _data:
+          data1: 18158792977772773120
+          data2: 17294095252147207168
+          data3: 13835304349644943360
+          data4: 140739635888128
+    - Key: {fileID: 21300000, guid: 1e3866d189297cd4383a24a9bfe14d83, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 9223372036854775807
+          data4: 576214458477527039
+    - Key: {fileID: 21300000, guid: 579cf8e68dcbb8c4e865f51c6689f3dd, type: 2}
+      Value:
+        _data:
+          data1: 17733194124034175
+          data2: 1970354902728735
+          data3: 65539
+          data4: 0
+    - Key: {fileID: 21300000, guid: be90576dd468ef94a8de5fe66c6c3aa5, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 71846487805394943
+    - Key: {fileID: 21300000, guid: 545c9cfba0684d748be1c9c0196be2fa, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 71784911396110335
+          data4: 196671
+    - Key: {fileID: 21300000, guid: 22cc98399be2b3f41b4d78adc803100d, type: 2}
+      Value:
+        _data:
+          data1: 35748417292403711
+          data2: 281487862595615
+          data3: 0
+          data4: 0
   <Atlas>k__BackingField: {fileID: 100100200, guid: 1ee3a68f1a09c38418b95d680a724aff, type: 3}
   _freeSpaceMap:
     _list: 

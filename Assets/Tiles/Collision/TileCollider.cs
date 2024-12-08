@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using Tiles.Generator;
+using Tiles.Generators;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static Tiles.TileUtilities;

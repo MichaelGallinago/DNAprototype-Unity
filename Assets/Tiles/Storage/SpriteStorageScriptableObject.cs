@@ -159,6 +159,7 @@ namespace Tiles.Storage
             SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
             AssetDatabaseUtilities.SetDirtyAndSave(Atlas);
             AssetDatabaseUtilities.SetDirtyAndSave(_atlasAsset);
+            AssetDatabase.ImportAsset(_atlasPath);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

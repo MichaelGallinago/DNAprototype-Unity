@@ -13,9 +13,128 @@ MonoBehaviour:
   m_Name: TileStorageScriptableObject
   m_EditorClassIdentifier: 
   _tiles:
-    _serializedList: []
+    _serializedList:
+    - Key:
+        Sprite: {fileID: 21300000, guid: 07bcb8447e0e58f4c9ba9d2703dfa82a, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 35
+        <Tile>k__BackingField: {fileID: 11400000, guid: 5598d142928037d47ae587ce3aebf071, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 9590f467a1b37cf45b679400327d4833, type: 2}
+        SolidType: 0
+      Value:
+        Count: 22
+        <Index>k__BackingField: 34
+        <Tile>k__BackingField: {fileID: 11400000, guid: a5a10e130e4298f4db43835eed68cfed, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 9019c1c3ca075964fabe4a201ec15264, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 33
+        <Tile>k__BackingField: {fileID: 11400000, guid: b34ce055265505b4e8ffdcd08ed5b4f2, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: cf0e09b641e868c4998cf8b048743baa, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 32
+        <Tile>k__BackingField: {fileID: 11400000, guid: c16f8288c4cc80f49b16b468e37b6ab8, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: a0d116b2990859148bd7711391e970f2, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 31
+        <Tile>k__BackingField: {fileID: 11400000, guid: c990b344d7ae07e42bacfbc2e97b1132, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 99c8873658d2b404795f2acf15140127, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 30
+        <Tile>k__BackingField: {fileID: 11400000, guid: c31e259313a0fda458e5a93fc254d83e, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: e48c941515c9c7f47969b5cde655fd3e, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 29
+        <Tile>k__BackingField: {fileID: 11400000, guid: aa582cc692f08564293d9ee67358728e, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: e18affdd59bdc664db56662059742785, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 28
+        <Tile>k__BackingField: {fileID: 11400000, guid: adc67782e2fe20146a440e4ac0f4c6ca, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: aa7f32f661ae84e4d80ea5d688fc8650, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 27
+        <Tile>k__BackingField: {fileID: 11400000, guid: a72e7c3ec1916284ba63683f94487428, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: f2315bddbfc55b84b8fb85e6f8ba40fd, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 26
+        <Tile>k__BackingField: {fileID: 11400000, guid: f14e11fefcdf1ad4bbb872387a7ea023, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 075963169e41e524381dd7d6ec0aa6e4, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 25
+        <Tile>k__BackingField: {fileID: 11400000, guid: 536919883738fae4d8ca9a02015085c6, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 31185d8cc90204a42bcc9ace846bcfc7, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 24
+        <Tile>k__BackingField: {fileID: 11400000, guid: 908fd28fff386c34ba7bc24cb580ee33, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 1e3866d189297cd4383a24a9bfe14d83, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 23
+        <Tile>k__BackingField: {fileID: 11400000, guid: a758f97cf6a27c94a8dd6d09d95b3d30, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 579cf8e68dcbb8c4e865f51c6689f3dd, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 22
+        <Tile>k__BackingField: {fileID: 11400000, guid: a62dace55ffb10e4d8c08a0be0f89e87, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: be90576dd468ef94a8de5fe66c6c3aa5, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 21
+        <Tile>k__BackingField: {fileID: 11400000, guid: 33577bcf71fffac4699abad796ec6228, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 545c9cfba0684d748be1c9c0196be2fa, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 20
+        <Tile>k__BackingField: {fileID: 11400000, guid: c99ff58bcada1b743996d1400ad2b077, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 22cc98399be2b3f41b4d78adc803100d, type: 2}
+        SolidType: 0
+      Value:
+        Count: 1
+        <Index>k__BackingField: 19
+        <Tile>k__BackingField: {fileID: 11400000, guid: 2920efebfacfcd7439143daa68bdb68f, type: 2}
   _freeSpaceMap:
-    _list: 
+    _list: 1100000012000000
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
   _spriteStorage: {fileID: 11400000, guid: 3b0c4f8686cf92b46ba066e24c44af4f, type: 2}
   _folder:

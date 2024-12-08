@@ -1,5 +1,5 @@
 using System;
-using Tiles.Generator;
+using Tiles.Generators;
 using UnityEngine;
 
 namespace Tiles.Storage
