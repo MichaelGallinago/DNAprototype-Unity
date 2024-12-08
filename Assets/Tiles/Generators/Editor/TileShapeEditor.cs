@@ -34,6 +34,7 @@ namespace Tiles.Generators.Editor
         private void OnDisable()
         {
             _shapeGrid?.SetVisibility(false);
+            _snapSwitcher.Disable();
             SceneView.duringSceneGui -= DuringSceneGUI;
         }
 

@@ -117,7 +117,7 @@ namespace Tiles.Generators.Editor
             controller.spline.SetPosition(2, new Vector3(offset.x + halfSize.x, offset.y + halfSize.y));
             controller.spline.SetPosition(3, new Vector3(offset.x + halfSize.x, offset.y - halfSize.y));
             
-            tileShape.transform.position = ((position + endPosition) / 2).ToVector3();
+            tileShape.transform.position = ((position + endPosition) / 2 - offset).ToVector3();
             tileShape.transform.parent = _shapeGrid.transform;
         }
     }

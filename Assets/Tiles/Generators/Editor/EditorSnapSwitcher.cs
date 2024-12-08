@@ -23,8 +23,7 @@ namespace Tiles.Generators.Editor
             
             if (_lastTool != Tool.Custom)
             {
-                EditorSnapSettings.move = _lastMoveSnap;
-                EditorSnapSettings.gridSnapEnabled = _lastGridSnapEnabled;
+                ApplySnapSettings();
                 return;
             }
 
@@ -32,6 +31,18 @@ namespace Tiles.Generators.Editor
             _lastGridSnapEnabled = EditorSnapSettings.gridSnapEnabled;
             EditorSnapSettings.move = new Vector3(8f, 8f, 8f);
             EditorSnapSettings.gridSnapEnabled = true;
+        }
+
+        public void Disable()
+        {
+            if (_lastTool != Tool.Custom) return;
+            ApplySnapSettings();
+        }
+
+        private void ApplySnapSettings()
+        {
+            EditorSnapSettings.move = _lastMoveSnap;
+            EditorSnapSettings.gridSnapEnabled = _lastGridSnapEnabled;
         }
     }
 }
