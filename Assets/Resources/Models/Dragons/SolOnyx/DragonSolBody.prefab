@@ -54,11 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 371333772664446079, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: _targetPosition.x
-      value: 40
+      value: -111
       objectReference: {fileID: 0}
     - target: {fileID: 371333772664446079, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: _targetPosition.y
-      value: 60
+      value: -68
       objectReference: {fileID: 0}
     - target: {fileID: 371333772664446079, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: <RotationLimit>k__BackingField
@@ -154,15 +154,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1623327021748996077, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1623327021748996077, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1623327021748996077, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1623327021748996077, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2674204611480079433, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9999999
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2674204611480079433, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalPosition.y
@@ -346,7 +346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3154200001503856713, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_Name
-      value: Dragon1Body
+      value: DragonSolBody
       objectReference: {fileID: 0}
     - target: {fileID: 3564964296801882670, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: _targetPosition.x
@@ -638,7 +638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352511853432296457, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.0000024
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7352511853432296457, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalPosition.z
