@@ -1,4 +1,3 @@
-using System;
 using BlobHashMaps;
 using Unity.Collections;
 using Unity.Entities;
@@ -18,7 +17,7 @@ namespace Tiles.Generators
         
         public TileShape[] TileShapes => GetComponentsInChildren<TileShape>();
         
-        private void Start() => Tilemap.RefreshAllTiles(); // Refresh fix (with [ExecuteAlways])
+        private void Start() => Tilemap.RefreshAllTiles(); // Color initialization fix (with [ExecuteAlways])
         
         private class TilemapBaker : Baker<TilemapAuthoring>
         {

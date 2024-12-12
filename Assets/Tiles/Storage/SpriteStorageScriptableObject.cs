@@ -30,11 +30,11 @@ namespace Tiles.Storage
         [SerializeField, HideInInspector] private string _atlasPath;
         [SerializeField, HideInInspector] private StorageFolder _folder;
         
-        private static readonly Rect SpriteRect = new(0f, 0f, TileUtilities.Size, TileUtilities.Size);
+        private static readonly Rect SpriteRect = new(0f, 0f, TileConstants.Size, TileConstants.Size);
         private static readonly Vector2 SpritePivot = new(0.5f, 0.5f);
         private static readonly string[] FolderPathTransferArray = new string[1];
         
-        private readonly ushort[] _colorData = new ushort[TileUtilities.PixelNumber];
+        private readonly ushort[] _colorData = new ushort[TileConstants.PixelNumber];
         private readonly HashSet<(Sprite sprite, string index)> _spritesToSave = new();
         private readonly HashSet<Sprite> _spritesToRemove = new();
         
@@ -177,17 +177,15 @@ namespace Tiles.Storage
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Sprite Create(ref BitTile bitTile)
         {
-            for (uint y = 0; y < TileUtilities.Size; y++) 
-            for (uint x = 0; x < TileUtilities.Size; x++)
+            for (uint y = 0; y < TileConstants.Size; y++) 
+            for (uint x = 0; x < TileConstants.Size; x++)
             {
-                _colorData[y * TileUtilities.Size + x] = bitTile[x, y] ? ushort.MaxValue : ushort.MinValue;
+                _colorData[y * TileConstants.Size + x] = bitTile[x, y] ? ushort.MaxValue : ushort.MinValue;
             }
             
             var sprite = Sprite.Create(CreateTexture(), SpriteRect, SpritePivot, 1f);
          
-            int index = _freeSpaceMap.Take();
-            index = index < 0 ? _sprites.Count : index;
-            
+            int index = _freeSpaceMap.Take(_sprites.Count);
             _spritesToSave.Add((sprite, index.ToString()));
             
             _sprites.Add(bitTile, new SpriteStorageData(index, sprite));
@@ -198,7 +196,7 @@ namespace Tiles.Storage
 
         private Texture2D CreateTexture()
         {
-            const int size = TileUtilities.Size;
+            const int size = TileConstants.Size;
             var texture = new Texture2D(size, size, TextureFormat.ARGB4444, false)
             {
                 filterMode = FilterMode.Point,

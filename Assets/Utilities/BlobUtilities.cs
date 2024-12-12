@@ -6,7 +6,8 @@ namespace Utilities
     public static class BlobUtilities
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Fill<T>(this ref BlobArray<T> pointer, BlobBuilder builder, T[] source) where T : unmanaged
+        public static void Fill<T>(this ref BlobBuilder builder, ref BlobArray<T> pointer, T[] source) 
+            where T : unmanaged
         {
             BlobBuilderArray<T> sizes = builder.Allocate(ref pointer, source.Length);
 
@@ -15,8 +16,5 @@ namespace Utilities
                 sizes[i] = source[i];
             }
         }
-        
-        //public static string GetPath() => 
-        //    Path.Combine(Application.streamingAssetsPath, SceneManager., "Sus");
     }
 }

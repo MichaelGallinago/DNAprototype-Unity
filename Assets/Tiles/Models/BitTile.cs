@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using static System.Runtime.CompilerServices.MethodImplOptions;
 
-[assembly: StructArrayAttributes.StructArray("SizeMap", nameof(Tiles), TileUtilities.Size)]
+[assembly: StructArrayAttributes.StructArray("SizeMap", nameof(Tiles), TileConstants.Size)]
 
 namespace Tiles.Models
 {
@@ -19,8 +19,8 @@ namespace Tiles.Models
         
         public bool this[uint x, uint y]
         {
-            [MethodImpl(AggressiveInlining)] get => _data[y * TileUtilities.Size + x];
-            [MethodImpl(AggressiveInlining)] set => _data[y * TileUtilities.Size + x] = value;
+            [MethodImpl(AggressiveInlining)] get => _data[y * TileConstants.Size + x];
+            [MethodImpl(AggressiveInlining)] set => _data[y * TileConstants.Size + x] = value;
         }
         
         public bool this[byte bitIndex]
@@ -53,8 +53,8 @@ namespace Tiles.Models
         {
             sizeMaps = new SizeDto();
             
-            for (byte y = 0; y < TileUtilities.Size; y++)
-            for (byte x = 0; x < TileUtilities.Size; x++)
+            for (byte y = 0; y < TileConstants.Size; y++)
+            for (byte x = 0; x < TileConstants.Size; x++)
             {
                 if (!this[x, y]) continue;
                 
@@ -63,14 +63,14 @@ namespace Tiles.Models
                     sizeMaps.Down[x] = (byte)(y + 1);
                 }
                 
-                if (sizeMaps.Right[y] < TileUtilities.Size - x)
+                if (sizeMaps.Right[y] < TileConstants.Size - x)
                 {
-                    sizeMaps.Right[y] = (byte)(TileUtilities.Size - x);
+                    sizeMaps.Right[y] = (byte)(TileConstants.Size - x);
                 }
                 
-                if (sizeMaps.Up[x] < TileUtilities.Size - y)
+                if (sizeMaps.Up[x] < TileConstants.Size - y)
                 {
-                    sizeMaps.Up[x] = (byte)(TileUtilities.Size - y);
+                    sizeMaps.Up[x] = (byte)(TileConstants.Size - y);
                 }
                 
                 if (sizeMaps.Left[y] < x + 1)
@@ -85,8 +85,8 @@ namespace Tiles.Models
         {
             sizeMaps = new SizeDto();
             
-            for (byte y = 0; y < TileUtilities.Size; y++)
-            for (byte x = 0; x < TileUtilities.Size; x++)
+            for (byte y = 0; y < TileConstants.Size; y++)
+            for (byte x = 0; x < TileConstants.Size; x++)
             {
                 if (!this[x, y]) continue;
                 
@@ -102,19 +102,19 @@ namespace Tiles.Models
         {
             sizeMaps = new SizeDto();
             
-            for (byte y = 0; y < TileUtilities.Size; y++)
-            for (byte x = 0; x < TileUtilities.Size; x++)
+            for (byte y = 0; y < TileConstants.Size; y++)
+            for (byte x = 0; x < TileConstants.Size; x++)
             {
                 if (!this[x, y]) continue;
                 
-                if (sizeMaps.Right[y] < TileUtilities.Size - x)
+                if (sizeMaps.Right[y] < TileConstants.Size - x)
                 {
-                    sizeMaps.Right[y] = (byte)(TileUtilities.Size - x);
+                    sizeMaps.Right[y] = (byte)(TileConstants.Size - x);
                 }
                 
-                if (sizeMaps.Up[x] < TileUtilities.Size - y)
+                if (sizeMaps.Up[x] < TileConstants.Size - y)
                 {
-                    sizeMaps.Up[x] = (byte)(TileUtilities.Size - y);
+                    sizeMaps.Up[x] = (byte)(TileConstants.Size - y);
                 }
                 
                 if (sizeMaps.Left[y] < x + 1)

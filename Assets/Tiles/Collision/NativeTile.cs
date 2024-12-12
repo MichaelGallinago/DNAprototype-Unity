@@ -4,7 +4,7 @@ using Unity.Mathematics;
 
 namespace Tiles.Collision
 {
-    public struct TileBlob
+    public struct NativeTile
     {
         public BlobArray<byte> HeightsDown;
         public BlobArray<byte> WidthsRight;

@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using Tiles.Models;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Tiles.TileUtilities;
+using static Tiles.TileConstants;
 
 namespace Tiles.Collision
 {

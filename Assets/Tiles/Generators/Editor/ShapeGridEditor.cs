@@ -91,9 +91,9 @@ namespace Tiles.Generators.Editor
         private static Vector2Int GetGridPosition(Event e)
         {
             Vector2 mousePosition = CustomEditorUtilities.GetWorldMousePosition(e);
-            mousePosition.x = MathF.Round(mousePosition.x / TileUtilities.HalfSize);
-            mousePosition.y = MathF.Round(mousePosition.y / TileUtilities.HalfSize);
-            return mousePosition.ToInt() * TileUtilities.HalfSize;
+            mousePosition.x = MathF.Round(mousePosition.x / TileConstants.HalfSize);
+            mousePosition.y = MathF.Round(mousePosition.y / TileConstants.HalfSize);
+            return mousePosition.ToInt() * TileConstants.HalfSize;
         }
 
         private void CreateRectangle(Event e)
@@ -109,7 +109,7 @@ namespace Tiles.Generators.Editor
             
             if (halfSize.x <= 0 || halfSize.y <= 0) return;
             
-            var offset = new Vector2Int(halfSize.x % TileUtilities.HalfSize, halfSize.y % TileUtilities.HalfSize);
+            var offset = new Vector2Int(halfSize.x % TileConstants.HalfSize, halfSize.y % TileConstants.HalfSize);
 
             var controller = tileShape.GetComponent<SpriteShapeController>();
             controller.spline.SetPosition(0, new Vector3(offset.x - halfSize.x, offset.y - halfSize.y));

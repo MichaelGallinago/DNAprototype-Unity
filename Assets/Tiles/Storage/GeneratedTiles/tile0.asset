@@ -15,7 +15,7 @@ MonoBehaviour:
   <SolidType>k__BackingField: 0
   <Sprite>k__BackingField: {fileID: 21300000, guid: 9d6264c306d486d4e8650d85c890220b, type: 2}
   <Index>k__BackingField: 0
-  <Count>k__BackingField: 204
+  <Count>k__BackingField: 194
   <CollisionData>k__BackingField:
     HeightsDown: 10101010101010101010101010101010
     WidthsRight: 10101010101010101010101010101010

@@ -10,6 +10,6 @@ namespace Tiles.Storage
 
     public struct TileStorageBlobData
     {
-        public BlobArray<TileBlob> UniqueTiles;
+        public BlobArray<NativeTile> UniqueTiles;
     }
 }

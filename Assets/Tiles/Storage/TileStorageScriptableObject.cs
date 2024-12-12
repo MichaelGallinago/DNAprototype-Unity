@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
-using BlobHashMaps;
 using Tiles.Collision;
 using Tiles.Generators;
 using Tiles.Models;
@@ -34,10 +33,10 @@ namespace Tiles.Storage
 
         [SerializeField, HideInInspector] private StorageFolder _folder;
         
-        private readonly List<(GeneratedTile tile, string index)> _tilesToSave = new();
+        private readonly List<GeneratedTile> _tilesToSave = new();
         private readonly List<GeneratedTile> _tilesToRemove = new();
         
-        public static string BlobPath => Path.Combine(Application.streamingAssetsPath, "Blobs", "TileStorage.blob");
+        private int MaxIndex => _tiles.Values.Select(tile => tile.Index).Prepend(0).Max();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GeneratedTile CreateIfDifferent(ref BitTile bitTile, SolidType solidType)
@@ -45,11 +44,10 @@ namespace Tiles.Storage
             bool isOldSprite = _spriteStorage.TryGetOrCreate(ref bitTile, out Sprite sprite);
             if (isOldSprite && TryGet(new TileKey(sprite, solidType), out GeneratedTile tile)) return tile;
 
-            int index = _freeSpaceMap.Take();
-            index = index < 0 ? _tiles.Count : index;
+            int index = _freeSpaceMap.Take(_tiles.Count);
             
             tile = Create(ref bitTile, solidType, sprite, index);
-            _tilesToSave.Add((tile, index.ToString()));
+            _tilesToSave.Add(tile);
             _tiles.Add(new TileKey(tile.Sprite, solidType), tile);
             
             return tile;
@@ -81,35 +79,31 @@ namespace Tiles.Storage
         private void SaveBlobData()
         {
             var builder = new BlobBuilder(Allocator.Temp);
-            var hashMap = new NativeParallelHashMap<int, TileBlob>(_tiles.Count, Allocator.Temp);
+            ref TilesBlob root = ref builder.ConstructRoot<TilesBlob>();
+            
+            BlobBuilderArray<NativeTile> arrayBuilder = builder.Allocate(ref root.Tiles, MaxIndex + 1);
+            
             foreach (GeneratedTile data in _tiles.Values)
             {
-                if (hashMap.ContainsKey(data.Index)) continue;
+                ref NativeTile tileRoot = ref arrayBuilder[data.Index];
                 
-                ref TileBlob tile = ref builder.ConstructRoot<TileBlob>();
-
-                tile.HeightsDown.Fill(builder, data.CollisionData.HeightsDown);
-                tile.WidthsRight.Fill(builder, data.CollisionData.WidthsRight);
-                tile.HeightsUp.Fill(builder, data.CollisionData.HeightsUp);
-                tile.WidthsLeft.Fill(builder, data.CollisionData.WidthsLeft);
-                tile.Angles = data.CollisionData.Angles;
-                
-                hashMap.Add(data.Index, tile);
+                builder.Fill(ref tileRoot.HeightsDown, data.CollisionData.HeightsDown);
+                builder.Fill(ref tileRoot.WidthsRight, data.CollisionData.WidthsRight);
+                builder.Fill(ref tileRoot.HeightsUp, data.CollisionData.HeightsUp);
+                builder.Fill(ref tileRoot.WidthsLeft, data.CollisionData.WidthsLeft);
+                tileRoot.Angles = data.CollisionData.Angles;
             }
             
-            builder.ConstructHashMap(ref builder.ConstructRoot<BlobHashMap<int, TileBlob>>(), ref hashMap);
-            hashMap.Dispose();
-            
-            BlobAssetReference<BlobArray<TileBlob>>.Write(builder, BlobPath, 0);
+            BlobAssetReference<TilesBlob>.Write(builder, TileConstants.BlobPath, 0);
             builder.Dispose();
         }
         
         private void SaveNewTiles()
         {
             if (_tilesToSave.Count <= 0) return;
-            foreach ((GeneratedTile tile, string index) in _tilesToSave)
+            foreach (GeneratedTile tile in _tilesToSave)
             {
-                AssetDatabase.CreateAsset(tile, $"{_folder.Path}\\tile{index}.asset");
+                AssetDatabase.CreateAsset(tile, $"{_folder.Path}\\tile{tile.Index.ToString()}.asset");
                 EditorUtility.SetDirty(tile);
             }
             _tilesToSave.Clear();
@@ -122,7 +116,9 @@ namespace Tiles.Storage
             {
                 Remove(tile);
             }
+            
             _tilesToRemove.Clear();
+            _freeSpaceMap.Shrink(MaxIndex);
         }
         
         private void Remove(GeneratedTile tile)
@@ -191,7 +187,6 @@ namespace Tiles.Storage
             return false;
         }
         
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool TryGet(in TileKey key, out GeneratedTile tile)
         {
             if (!_tiles.ContainsKey(key))

@@ -103,13 +103,13 @@ namespace Tiles.Generators.Editor
         
         private GeneratedTile GenerateTile(int ceilX, int ceilY)
         {
-            Vector2 worldPosition = new Vector2Int(ceilX, ceilY) * TileUtilities.CellSize + new Vector2(0.5f, 0.5f);
+            Vector2 worldPosition = new Vector2Int(ceilX, ceilY) * TileConstants.CellSize + new Vector2(0.5f, 0.5f);
             var bitTile = new BitTile();
             
             Span<int> typeCounters = stackalloc int[SolidTypeExtensions.Number];
             
-            for (uint y = 0; y < TileUtilities.Size; y++)
-            for (uint x = 0; x < TileUtilities.Size; x++)
+            for (uint y = 0; y < TileConstants.Size; y++)
+            for (uint x = 0; x < TileConstants.Size; x++)
             {
                 if (Physics2D.OverlapPoint(worldPosition + new Vector2(x, y), _contactFilter, Colliders) > 0)
                 {
