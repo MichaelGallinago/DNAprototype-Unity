@@ -22,12 +22,5 @@ namespace Utilities
                 AssetDatabase.AllowAutoRefresh();
             }
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetDirtyAndSave(UnityEngine.Object asset)
-        {
-            EditorUtility.SetDirty(asset);
-            AssetDatabase.SaveAssetIfDirty(asset);
-        }
     }
 }

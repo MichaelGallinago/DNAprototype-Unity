@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Tiles.Models;
 using Tiles.SolidTypes;
+using Tiles.Storage;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,55 +11,8 @@ namespace Tiles.Generators
     [Serializable]
     public class GeneratedTile : TileBase
     {
-        [field: SerializeField] public Sprite Sprite { get; private set; }
         [field: SerializeField] public SolidType SolidType { get; private set; }
-        
-        [SerializeReference] private byte[] _heightsDown;
-        [SerializeReference] private byte[] _widthsRight;
-        [SerializeReference] private byte[] _heightsUp;
-        [SerializeReference] private byte[] _widthsLeft;
-        [SerializeField] private Vector4 _angles;
-
-        public static GeneratedTile Create(
-            SolidType solidType, Sprite sprite, Vector4 angles,
-            byte[] heightsDown, byte[] widthsRight, byte[] heightsUp, byte[] widthsLeft)
-        {
-            var tile = CreateInstance<GeneratedTile>();
-            tile.Sprite = sprite;
-            tile.SolidType = solidType;
-            tile._heightsDown = heightsDown;
-            tile._widthsRight = widthsRight;
-            tile._heightsUp = heightsUp;
-            tile._widthsLeft = widthsLeft;
-            tile._angles = angles;
-            return tile;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public byte GetSize(Quadrant quadrant, int x, int y) => quadrant switch
-        {
-            Quadrant.Down => _heightsDown[x],
-            Quadrant.Right => _widthsRight[y],
-            Quadrant.Up => _heightsUp[x],
-            Quadrant.Left => _widthsLeft[y],
-            _ => default
-        };
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float GetAngle(Quadrant quadrant) => quadrant switch
-        {
-            Quadrant.Down => _angles.x,
-            Quadrant.Right => _angles.y,
-            Quadrant.Up => _angles.z,
-            Quadrant.Left => _angles.w,
-            _ => float.NaN
-        };
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public (byte, float) GetCollisionData(Quadrant quadrant, int x, int y)
-        {
-            return (GetSize(quadrant, x, y), GetAngle(quadrant));
-        }
+        [field: SerializeField] public Sprite Sprite { get; private set; }
         
         public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
         {
@@ -69,5 +23,33 @@ namespace Tiles.Generators
             tileData.flags = TileFlags.LockAll;
             tileData.colliderType = Tile.ColliderType.None;
         }
+        
+#if UNITY_EDITOR
+        [field: SerializeField] public int Index { get; private set; }
+        [field: SerializeField] public int Count { get; set; }
+        [field: SerializeField] public TileCollisionData CollisionData { get; private set; }
+
+        public static GeneratedTile Create(
+            SolidType solidType, Sprite sprite, int index, TileCollisionData collisionData)
+        {
+            var tile = CreateInstance<GeneratedTile>();
+            tile.Sprite = sprite;
+            tile.SolidType = solidType;
+            tile.Index = index;
+            tile.CollisionData = collisionData;
+            tile.Count = 1;
+            
+            return tile;
+        }
+#else
+        public static GeneratedTile Create(SolidType solidType, Sprite sprite)
+        {
+            var tile = CreateInstance<GeneratedTile>();
+            tile.Sprite = sprite;
+            tile.SolidType = solidType;
+            
+            return tile;
+        }
+#endif
     }
 }

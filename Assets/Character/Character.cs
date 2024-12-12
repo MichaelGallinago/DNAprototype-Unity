@@ -1,4 +1,3 @@
-using System;
 using IK2D.Bodies;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Character
 
         private void FixedUpdate()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

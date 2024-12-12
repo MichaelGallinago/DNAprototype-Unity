@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-using Tiles.Generators;
 using Tiles.Models;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -23,7 +22,7 @@ namespace Tiles.Collision
 		    Quadrant = quadrant;
 		    Position = position;
 	    }
-	    
+	    /*
 	    public (int distance, float angle) FindTile(int x, int y)
 	    {
 	        return GetTile(Position + new Vector2Int(x, y));
@@ -145,5 +144,6 @@ namespace Tiles.Collision
 			
 			return _tilemap.GetTile<GeneratedTile>(new Vector3Int(position.x, position.y));
 		}
+		*/
 	}
 }

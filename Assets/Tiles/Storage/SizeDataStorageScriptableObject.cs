@@ -2,7 +2,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
-using UnityEditor;
 using UnityEngine;
 using Utilities;
 using static Utilities.ScriptableObjectUtilities;
@@ -19,20 +18,45 @@ namespace Tiles.Storage
         [SerializeField, SerializedDictionary(nameof(SizeMap<byte>), nameof(SizeData))]
         private SerializedDictionary<SizeMap<byte>, SizeData> _sizeMaps;
         
+        [SerializeField, SerializedDictionary(nameof(SizeMap<byte>), nameof(SizeData))]
+        private SerializedDictionary<byte[], SizeMap<byte>> _sizeArrays;
+        
         public SizeData this[SizeMap<byte> key]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get
             {
-                if (_sizeMaps.TryGetValue(key, out SizeData result)) return result;
-                _sizeMaps.Add(key, result = new SizeData(key.ToArray(), CalculateAngles(key)));
+                if (_sizeMaps.TryGetValue(key, out SizeData result))
+                {
+                    result.Count++;
+                    return _sizeMaps[key] = result;
+                }
+                
+                _sizeMaps.Add(key, result = new SizeData(1, key.ToArray(), CalculateAngles(key)));
+                _sizeArrays.Add(result.Array, key);
                 return result;
             }
+        }
+
+        public void Remove(byte[] value)
+        {
+            if (!_sizeArrays.TryGetValue(value, out SizeMap<byte> key)) return;
+            if (!_sizeMaps.TryGetValue(key, out SizeData data)) return;
+            
+            if (data.Count > 1)
+            {
+                data.Count--;
+                _sizeMaps[key] = data;
+                return;
+            }
+            
+            _sizeMaps.Remove(key);
+            _sizeArrays.Remove(value);
         }
         
         public void Clear()
         {
             _sizeMaps.Clear();
-            AssetDatabaseUtilities.SetDirtyAndSave(this);
+            _sizeArrays.Clear();
         }
 
         private static Vector4 CalculateAngles(SizeMap<byte> sizes)

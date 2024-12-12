@@ -20,5 +20,7 @@ namespace Tiles.Storage
         }
         
         public void Add(int index) => _list.Add(index);
+        
+        public void Clear() => _list.Clear();
     }
 }

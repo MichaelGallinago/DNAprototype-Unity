@@ -44,11 +44,13 @@ namespace Tiles.Storage
         {
             RemoveFromAtlas(Atlas.GetPackables());
             
-            AssetDatabaseUtilities.BeginTransaction(ClearFolder);
+            _spritesToSave.Clear();
+            _spritesToRemove.Clear();
             _sprites.Clear();
+            _freeSpaceMap.Clear();
             _bitTiles.Clear();
             
-            AssetDatabaseUtilities.SetDirtyAndSave(this);
+            AssetDatabaseUtilities.BeginTransaction(ClearFolder);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -74,7 +76,6 @@ namespace Tiles.Storage
             ClearAtlas();
             
             AssetDatabaseUtilities.BeginTransaction(DeleteUnusedSprites);
-            AssetDatabaseUtilities.SetDirtyAndSave(this);
         }
 
         private void SaveNewSprites()
@@ -160,8 +161,6 @@ namespace Tiles.Storage
         {
             _atlasAsset.Remove(assets);
             SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
-            AssetDatabaseUtilities.SetDirtyAndSave(Atlas);
-            AssetDatabaseUtilities.SetDirtyAndSave(_atlasAsset);
             AssetDatabase.ImportAsset(_atlasPath);
         }
         

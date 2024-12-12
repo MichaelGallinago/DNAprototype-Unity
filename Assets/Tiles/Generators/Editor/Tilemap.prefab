@@ -150,9 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b4fdd546204b354c877c5322994d436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shapeGrid: {fileID: 3424649157204741903}
-  <TileMap>k__BackingField: {fileID: 577998435387357326}
-  <TileMapRenderer>k__BackingField: {fileID: 8467782305156395945}
+  <Tilemap>k__BackingField: {fileID: 577998435387357326}
+  <TilemapRenderer>k__BackingField: {fileID: 8467782305156395945}
 --- !u!1 &7853357830304907099
 GameObject:
   m_ObjectHideFlags: 0

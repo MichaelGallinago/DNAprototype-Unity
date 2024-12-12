@@ -13,32 +13,14 @@ MonoBehaviour:
   m_Name: TileStorageScriptableObject
   m_EditorClassIdentifier: 
   _tiles:
-    _serializedList:
-    - Key:
-        Sprite: {fileID: 21300000, guid: 833b8b157ece77f4c93fabf7255538a8, type: 2}
-        SolidType: 0
-      Value:
-        Count: 2
-        <Index>k__BackingField: 16
-        <Tile>k__BackingField: {fileID: 11400000, guid: 1426504175e7444498e4d8cab0548276, type: 2}
-    - Key:
-        Sprite: {fileID: 21300000, guid: 8fc3b0fbf12dde5409836195950e0e81, type: 2}
-        SolidType: 0
-      Value:
-        Count: 187
-        <Index>k__BackingField: 40
-        <Tile>k__BackingField: {fileID: 11400000, guid: 0a7db0650e98ad9438df9880d1830295, type: 2}
-    - Key:
-        Sprite: {fileID: 21300000, guid: e5d3781a0cd609544b946d7b8f374923, type: 2}
-        SolidType: 0
-      Value:
-        Count: 9
-        <Index>k__BackingField: 105
-        <Tile>k__BackingField: {fileID: 11400000, guid: 9db8680bd7eb2374db99066166f791cc, type: 2}
+    _serializedList: []
   _freeSpaceMap:
-    _list: 1b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000006400000065000000270000006700000068000000
+    _list: 
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
   _spriteStorage: {fileID: 11400000, guid: 3b0c4f8686cf92b46ba066e24c44af4f, type: 2}
   _folder:
     <StoragePath>k__BackingField: Assets\Tiles\Storage
     <Path>k__BackingField: Assets\Tiles\Storage\GeneratedTiles
+  _blobsFolder:
+    <StoragePath>k__BackingField: Assets\Tiles\Storage
+    <Path>k__BackingField: Assets\Tiles\Storage\TilemapBlobs
