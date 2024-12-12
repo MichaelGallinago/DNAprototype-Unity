@@ -62,9 +62,8 @@ namespace Tiles.Storage
             
             _spriteStorage.SaveAssets();
             SaveBlobData();
-            
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
+
+            EditorUtility.SetDirty(this);
         }
         
         public void AddToRemove(GeneratedTile tile) => _tilesToRemove.Add(tile);
@@ -111,6 +110,7 @@ namespace Tiles.Storage
             foreach ((GeneratedTile tile, string index) in _tilesToSave)
             {
                 AssetDatabase.CreateAsset(tile, $"{_folder.Path}\\tile{index}.asset");
+                EditorUtility.SetDirty(tile);
             }
             _tilesToSave.Clear();
         }
@@ -162,6 +162,8 @@ namespace Tiles.Storage
             _tilesToRemove.Clear();
             
             AssetDatabaseUtilities.BeginTransaction(ClearFolder);
+            
+            EditorUtility.SetDirty(this);
             
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

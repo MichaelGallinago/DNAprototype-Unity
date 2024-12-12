@@ -1,6 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
-using Tiles.Models;
 using Tiles.SolidTypes;
 using Tiles.Storage;
 using UnityEngine;
@@ -20,7 +18,7 @@ namespace Tiles.Generators
             tileData.color = SolidType.ToColor();
             tileData.transform = Matrix4x4.identity;
             tileData.gameObject = null;
-            tileData.flags = TileFlags.LockAll;
+            tileData.flags = TileFlags.None;
             tileData.colliderType = Tile.ColliderType.None;
         }
         

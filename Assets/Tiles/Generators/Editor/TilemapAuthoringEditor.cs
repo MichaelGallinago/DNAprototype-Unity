@@ -61,7 +61,11 @@ namespace Tiles.Generators.Editor
                 SetTilesInRect(GetCeilRect(tileShape.Controller.spriteShapeRenderer.bounds));
             }
             
+            EditorUtility.SetDirty(_baker.Tilemap);
             _tileStorage.SaveAssets();
+                        
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         private void RemoveTiles()

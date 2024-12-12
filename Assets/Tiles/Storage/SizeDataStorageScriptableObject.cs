@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
+using UnityEditor;
 using UnityEngine;
 using Utilities;
 using static Utilities.ScriptableObjectUtilities;
@@ -25,6 +26,8 @@ namespace Tiles.Storage
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get
             {
+                EditorUtility.SetDirty(this);
+                
                 if (_sizeMaps.TryGetValue(key, out SizeData result))
                 {
                     result.Count++;
@@ -42,6 +45,8 @@ namespace Tiles.Storage
             if (!_sizeArrays.TryGetValue(value, out SizeMap<byte> key)) return;
             if (!_sizeMaps.TryGetValue(key, out SizeData data)) return;
             
+            EditorUtility.SetDirty(this);
+            
             if (data.Count > 1)
             {
                 data.Count--;
@@ -57,6 +62,7 @@ namespace Tiles.Storage
         {
             _sizeMaps.Clear();
             _sizeArrays.Clear();
+            EditorUtility.SetDirty(this);
         }
 
         private static Vector4 CalculateAngles(SizeMap<byte> sizes)

@@ -13,9 +13,57 @@ MonoBehaviour:
   m_Name: SpriteStorageScriptableObject
   m_EditorClassIdentifier: 
   _sprites:
-    _serializedList: []
+    _serializedList:
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 0
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 9d6264c306d486d4e8650d85c890220b, type: 2}
+    - Key:
+        _data:
+          data1: 18374966859414961920
+          data2: 18374966859414961920
+          data3: 18374966859414961920
+          data4: 18374966859414961920
+      Value:
+        <Index>k__BackingField: 1
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 05eae00a1eac9344f8358ff453db303b, type: 2}
+    - Key:
+        _data:
+          data1: 71777214294589695
+          data2: 71777214294589695
+          data3: 71777214294589695
+          data4: 71777214294589695
+      Value:
+        <Index>k__BackingField: 2
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 6c49fc74a8e67f744809b65b52b28c3c, type: 2}
   _bitTiles:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 21300000, guid: 9d6264c306d486d4e8650d85c890220b, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: 05eae00a1eac9344f8358ff453db303b, type: 2}
+      Value:
+        _data:
+          data1: 18374966859414961920
+          data2: 18374966859414961920
+          data3: 18374966859414961920
+          data4: 18374966859414961920
+    - Key: {fileID: 21300000, guid: 6c49fc74a8e67f744809b65b52b28c3c, type: 2}
+      Value:
+        _data:
+          data1: 71777214294589695
+          data2: 71777214294589695
+          data3: 71777214294589695
+          data4: 71777214294589695
   <Atlas>k__BackingField: {fileID: 100100200, guid: 1ee3a68f1a09c38418b95d680a724aff, type: 3}
   _freeSpaceMap:
     _list: 

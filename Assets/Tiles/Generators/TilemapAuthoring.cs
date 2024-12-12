@@ -1,3 +1,4 @@
+using System;
 using BlobHashMaps;
 using Unity.Collections;
 using Unity.Entities;
@@ -7,6 +8,7 @@ using UnityEngine.Tilemaps;
 
 namespace Tiles.Generators
 {
+    [ExecuteAlways] 
     [RequireComponent(typeof(Tilemap))]
     [RequireComponent(typeof(TilemapRenderer))]
     public class TilemapAuthoring : MonoBehaviour
@@ -15,6 +17,8 @@ namespace Tiles.Generators
         [field: SerializeField] public TilemapRenderer TilemapRenderer { get; private set; }
         
         public TileShape[] TileShapes => GetComponentsInChildren<TileShape>();
+        
+        private void Start() => Tilemap.RefreshAllTiles(); // Refresh fix (with [ExecuteAlways])
         
         private class TilemapBaker : Baker<TilemapAuthoring>
         {

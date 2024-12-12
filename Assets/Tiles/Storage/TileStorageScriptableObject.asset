@@ -13,7 +13,19 @@ MonoBehaviour:
   m_Name: TileStorageScriptableObject
   m_EditorClassIdentifier: 
   _tiles:
-    _serializedList: []
+    _serializedList:
+    - Key:
+        Sprite: {fileID: 21300000, guid: 9d6264c306d486d4e8650d85c890220b, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: d62a41d0cea587849bb9ff08eeaf4bde, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 05eae00a1eac9344f8358ff453db303b, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 954441d75c1a82a418adf2de96dec9f4, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 6c49fc74a8e67f744809b65b52b28c3c, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 8c77f6d4c09a9084d8c21ca6648a876c, type: 2}
   _freeSpaceMap:
     _list: 
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
@@ -21,6 +33,3 @@ MonoBehaviour:
   _folder:
     <StoragePath>k__BackingField: Assets\Tiles\Storage
     <Path>k__BackingField: Assets\Tiles\Storage\GeneratedTiles
-  _blobsFolder:
-    <StoragePath>k__BackingField: Assets\Tiles\Storage
-    <Path>k__BackingField: Assets\Tiles\Storage\TilemapBlobs

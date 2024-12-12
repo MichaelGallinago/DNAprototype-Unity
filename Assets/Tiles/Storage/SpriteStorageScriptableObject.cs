@@ -51,6 +51,8 @@ namespace Tiles.Storage
             _bitTiles.Clear();
             
             AssetDatabaseUtilities.BeginTransaction(ClearFolder);
+
+            EditorUtility.SetDirty(this);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -76,6 +78,10 @@ namespace Tiles.Storage
             ClearAtlas();
             
             AssetDatabaseUtilities.BeginTransaction(DeleteUnusedSprites);
+            
+            EditorUtility.SetDirty(Atlas);
+            EditorUtility.SetDirty(_atlasAsset);
+            EditorUtility.SetDirty(this);
         }
 
         private void SaveNewSprites()
@@ -85,6 +91,8 @@ namespace Tiles.Storage
             {
                 AssetDatabase.CreateAsset(sprite.texture, $"{_folder.Path}\\texture{index}.asset");
                 AssetDatabase.CreateAsset(sprite, $"{_folder.Path}\\sprite{index}.asset");
+                EditorUtility.SetDirty(sprite.texture);
+                EditorUtility.SetDirty(sprite);
             }
         }
 
@@ -161,6 +169,8 @@ namespace Tiles.Storage
         {
             _atlasAsset.Remove(assets);
             SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
+            AssetDatabaseUtilities.SetDirtyAndSave(_atlasAsset);
+            AssetDatabaseUtilities.SetDirtyAndSave(Atlas);
             AssetDatabase.ImportAsset(_atlasPath);
         }
         
