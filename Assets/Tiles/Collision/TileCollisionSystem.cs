@@ -1,36 +1,29 @@
 using Tiles.Generators;
+using Unity.Burst;
 using Unity.Entities;
 using UnityEngine;
 
 namespace Tiles.Collision
 {
-    public partial class AbasSystem : SystemBase
+    [BurstCompile]
+    public partial struct TileCollisionSystem : ISystem, ISystemStartStop
     {
-        protected override void OnCreate()
-        {
-            RequireForUpdate<NativeTilemap>();
-        }
-
-        protected override void OnUpdate()
-        {
-            //throw new System.NotImplementedException();
-        }
-    }
-    
-    public partial struct TileCollisionSystem : ISystem
-    {
-        private BlobAssetReference<TilesBlob> _tiles;
+        private BlobAssetReference<TilesBlob> _tilesBlob;
+        private NativeTilemap _tilemap;
 
         public void OnCreate(ref SystemState state)
         {
-            if (!BlobAssetReference<TilesBlob>.TryRead(TileConstants.BlobPath, 0, out _tiles))
+            if (!BlobAssetReference<TilesBlob>.TryRead(TileConstants.BlobPath, 0, out _tilesBlob))
             {
-                Debug.LogError("Fuck");
+                Debug.LogError(nameof(TilesBlob) + " not loaded");
+            }
+
+            if (!SystemAPI.TryGetSingleton(out _tilemap))
+            {
+                Debug.LogError("No " + nameof(NativeTilemap) + " found");
             }
             
-            Debug.Log(SystemAPI.TryGetSingleton(out NativeTilemap tilemap)
-                ? tilemap.IndexesReference.Value.Count.ToString()
-                : "No data found");
+            state.RequireForUpdate<NativeTilemap>();
         }
         
         public void OnUpdate(ref SystemState state)
@@ -40,10 +33,20 @@ namespace Tiles.Collision
         
         public void OnDestroy(ref SystemState state)
         {
-            if (_tiles.IsCreated)
+            if (_tilesBlob.IsCreated)
             {
-                _tiles.Dispose();
+                _tilesBlob.Dispose();
             }
+        }
+
+        public void OnStartRunning(ref SystemState state)
+        {
+            //throw new System.NotImplementedException();
+        }
+
+        public void OnStopRunning(ref SystemState state)
+        {
+            //throw new System.NotImplementedException();
         }
     }
 }
