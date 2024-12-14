@@ -9,7 +9,7 @@ namespace Tiles.SolidTypes
 {
     [CreateAssetMenu(
         fileName = nameof(SolidTypesScriptableObject), 
-        menuName = ScriptableObjectsFolder + nameof(SolidTypesScriptableObject))]
+        menuName = Folder + nameof(SolidTypesScriptableObject))]
     public class SolidTypesScriptableObject : ScriptableObject
     {
         [SerializeField, SerializedDictionary("Surrogate material key", nameof(SolidType))]

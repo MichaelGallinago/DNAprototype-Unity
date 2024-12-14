@@ -1,5 +1,6 @@
 using Tiles.SolidTypes;
 using Tiles.Storage;
+using Tiles.Storage.Editor;
 using UnityEditor;
 using UnityEngine;
 

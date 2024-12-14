@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace AYellowpaper.SerializedCollections
 {
@@ -13,8 +15,9 @@ namespace AYellowpaper.SerializedCollections
             {
                 return !(obj == null || (obj is Object unityObject && unityObject == null));
             }
-            catch
+            catch(Exception e)
             {
+                Debug.LogException(e);
                 return false;
             }
         }

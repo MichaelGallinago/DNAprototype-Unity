@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Runtime.CompilerServices;
 using UnityEditor;
@@ -29,6 +30,9 @@ namespace Utilities
             EditorUtility.SetDirty(asset);
             AssetDatabase.SaveAssetIfDirty(asset);
         }
-
+        
+        public static void DeleteAsset(this UnityEngine.Object assetObject) => 
+            AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(assetObject));
     }
 }
+#endif

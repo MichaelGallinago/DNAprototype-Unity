@@ -5,6 +5,7 @@ namespace Tiles.Generators
 {
     public class ShapeGrid : MonoBehaviour
     {
+#if UNITY_EDITOR
         public void SetVisibility(bool isVisible)
         {
             var baker = GetComponentInParent<TilemapAuthoring>();
@@ -20,5 +21,6 @@ namespace Tiles.Generators
                 SceneVisibilityManager.instance.Hide(gameObject, true);
             }
         }
+#endif
     }
 }

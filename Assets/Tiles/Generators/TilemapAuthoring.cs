@@ -7,43 +7,59 @@ using UnityEngine.Tilemaps;
 
 namespace Tiles.Generators
 {
-    [ExecuteAlways] 
+    [ExecuteAlways]
     [RequireComponent(typeof(Tilemap))]
     [RequireComponent(typeof(TilemapRenderer))]
     public class TilemapAuthoring : MonoBehaviour
     {
         [field: SerializeField] public Tilemap Tilemap { get; private set; }
         [field: SerializeField] public TilemapRenderer TilemapRenderer { get; private set; }
-        
+
         public TileShape[] TileShapes => GetComponentsInChildren<TileShape>();
-        
+
         private void Start() => Tilemap.RefreshAllTiles(); // Color initialization fix (with [ExecuteAlways])
-        
+
         private class Baker : Baker<TilemapAuthoring>
         {
             public override void Bake(TilemapAuthoring authoring)
             {
                 DependsOn(authoring.Tilemap);
-                
-                var builder = new BlobBuilder(Allocator.Temp);
+
                 NativeParallelHashMap<int2, int> source = GetTilePositions(authoring.Tilemap);
+                if (source.IsEmpty)
+                {
+                    source.Dispose();
+                    return;
+                }
+
+                var builder = new BlobBuilder(Allocator.Temp);
                 builder.ConstructHashMap(ref builder.ConstructRoot<BlobHashMap<int2, int>>(), ref source);
                 source.Dispose();
-                
-                AddComponent(GetEntity(TransformUsageFlags.None), new NativeTilemap
+
+                Entity entity = GetEntity(TransformUsageFlags.None);
+                AddComponent(entity, new NativeTilemap
                 {
                     IndexesReference = builder.CreateBlobAssetReference<BlobHashMap<int2, int>>(Allocator.Persistent)
                 });
+
+                if (IsBakingForEditor())
+                {
+                    AddComponentObject(entity, new TilemapRenderComponent
+                    {
+                        GameObject = authoring.TilemapRenderer.gameObject
+                    });
+
+                }
                 
                 builder.Dispose();
             }
-            
+
             private static NativeParallelHashMap<int2, int> GetTilePositions(Tilemap tilemap)
             {
                 BoundsInt bounds = tilemap.cellBounds;
                 TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
                 var tilePositions = new NativeParallelHashMap<int2, int>(allTiles.Length, Allocator.Temp);
-            
+
                 Vector3Int size = bounds.size;
                 var index = 0;
                 for (var y = 0; y < size.y; y++)
@@ -52,10 +68,15 @@ namespace Tiles.Generators
                     if (allTiles[index++] is not GeneratedTile tile) continue;
                     tilePositions.Add(new int2(x, y), tile.Index);
                 }
-                
+
                 return tilePositions;
             }
         }
+    }
+
+    public class TilemapRenderComponent : IComponentData
+    {
+        public GameObject GameObject;
     }
     
     public struct NativeTilemap : IComponentData

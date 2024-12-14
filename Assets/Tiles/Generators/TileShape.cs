@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -27,4 +26,3 @@ namespace Tiles.Generators
         }
     }
 }
-#endif

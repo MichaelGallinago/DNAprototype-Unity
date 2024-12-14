@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System;
 using UnityEngine;
 
@@ -20,4 +19,3 @@ namespace Tiles.SolidTypes
         };
     }
 }
-#endif

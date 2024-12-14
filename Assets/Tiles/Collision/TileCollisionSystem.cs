@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Tiles.Collision
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct TileCollisionSystem : ISystem, ISystemStartStop
     {
         private BlobAssetReference<TilesBlob> _tilesBlob;
@@ -42,7 +43,7 @@ namespace Tiles.Collision
             }
             else
             {
-                Debug.LogError("Cool");
+                Debug.Log(_tilemap.IndexesReference.Value.Count);
             }
         }
 
