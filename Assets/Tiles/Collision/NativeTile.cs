@@ -1,9 +1,11 @@
 using Tiles.Models;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 
 namespace Tiles.Collision
 {
+    [BurstCompile]
     public struct NativeTile
     {
         public BlobArray<byte> HeightsDown;

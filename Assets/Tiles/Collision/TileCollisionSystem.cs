@@ -17,11 +17,6 @@ namespace Tiles.Collision
             {
                 Debug.LogError(nameof(TilesBlob) + " not loaded");
             }
-
-            if (!SystemAPI.TryGetSingleton(out _tilemap))
-            {
-                Debug.LogError("No " + nameof(NativeTilemap) + " found");
-            }
             
             state.RequireForUpdate<NativeTilemap>();
         }
@@ -41,7 +36,14 @@ namespace Tiles.Collision
 
         public void OnStartRunning(ref SystemState state)
         {
-            //throw new System.NotImplementedException();
+            if (!SystemAPI.TryGetSingleton(out _tilemap))
+            {
+                Debug.LogError("No " + nameof(NativeTilemap) + " found");
+            }
+            else
+            {
+                Debug.LogError("Cool");
+            }
         }
 
         public void OnStopRunning(ref SystemState state)

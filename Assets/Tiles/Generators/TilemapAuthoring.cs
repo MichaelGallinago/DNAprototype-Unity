@@ -19,7 +19,7 @@ namespace Tiles.Generators
         
         private void Start() => Tilemap.RefreshAllTiles(); // Color initialization fix (with [ExecuteAlways])
         
-        private class TilemapBaker : Baker<TilemapAuthoring>
+        private class Baker : Baker<TilemapAuthoring>
         {
             public override void Bake(TilemapAuthoring authoring)
             {

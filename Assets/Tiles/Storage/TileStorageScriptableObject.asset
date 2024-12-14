@@ -26,6 +26,14 @@ MonoBehaviour:
         Sprite: {fileID: 21300000, guid: 6c49fc74a8e67f744809b65b52b28c3c, type: 2}
         SolidType: 0
       Value: {fileID: 11400000, guid: 8c77f6d4c09a9084d8c21ca6648a876c, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 0049587c19735a146b17bf55e8e400bc, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 49b94c3891043114dbde15d943483907, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 9e29a9c9473b4154aa799d42a5f9c1f9, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 4f1419b967956814b902ac303379f7ad, type: 2}
   _freeSpaceMap:
     _list: 
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
