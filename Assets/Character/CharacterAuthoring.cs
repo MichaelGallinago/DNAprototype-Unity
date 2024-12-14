@@ -1,3 +1,4 @@
+using Character.Input;
 using IK2D.Bodies;
 using Unity.Entities;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace Character
             public override void Bake(CharacterAuthoring authoring)
             {
                 Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-                new BakerQuery(this, entity).AddComponents<GroundSpeed, Velocity, Gravity>();
+                new BakerQuery(this, entity).AddComponents<GroundSpeed, Velocity, Gravity, PlayerInput>();
             }
         }
     }

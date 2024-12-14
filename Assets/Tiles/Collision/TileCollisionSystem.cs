@@ -22,19 +22,6 @@ namespace Tiles.Collision
             state.RequireForUpdate<NativeTilemap>();
         }
         
-        public void OnUpdate(ref SystemState state)
-        {
-            
-        }
-        
-        public void OnDestroy(ref SystemState state)
-        {
-            if (_tilesBlob.IsCreated)
-            {
-                _tilesBlob.Dispose();
-            }
-        }
-
         public void OnStartRunning(ref SystemState state)
         {
             if (!SystemAPI.TryGetSingleton(out _tilemap))
@@ -46,10 +33,20 @@ namespace Tiles.Collision
                 Debug.Log(_tilemap.IndexesReference.Value.Count);
             }
         }
-
-        public void OnStopRunning(ref SystemState state)
+        
+        public void OnUpdate(ref SystemState state)
         {
-            //throw new System.NotImplementedException();
+            
+        }
+        
+        public void OnStopRunning(ref SystemState state) {}
+        
+        public void OnDestroy(ref SystemState state)
+        {
+            if (_tilesBlob.IsCreated)
+            {
+                _tilesBlob.Dispose();
+            }
         }
     }
 }
