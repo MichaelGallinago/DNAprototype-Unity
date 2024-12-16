@@ -14,12 +14,12 @@ namespace Tiles.Collision
         public BlobArray<byte> WidthsLeft;
         public float4 Angles;
         
-        public byte GetSize(Quadrant quadrant, int x, int y) => quadrant switch
+        public byte GetSize(Quadrant quadrant, int2 position) => quadrant switch
         {
-            Quadrant.Down => HeightsDown[x],
-            Quadrant.Right => WidthsRight[y],
-            Quadrant.Up => HeightsUp[x],
-            Quadrant.Left => WidthsLeft[y],
+            Quadrant.Down => HeightsDown[position.x],
+            Quadrant.Right => WidthsRight[position.y],
+            Quadrant.Up => HeightsUp[position.x],
+            Quadrant.Left => WidthsLeft[position.y],
             _ => default
         };
 

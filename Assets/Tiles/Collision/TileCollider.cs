@@ -8,7 +8,7 @@ namespace Tiles.Collision
 {
 	public struct TileCollider
 	{
-		/*
+		
 		private const int MaxDistance = Size * 2;
 		
 	    public Vector2Int Position { get; set; }
@@ -145,6 +145,5 @@ namespace Tiles.Collision
 			
 			return _tilemap.GetTile<GeneratedTile>(new Vector3Int(position.x, position.y));
 		}
-		*/
 	}
 }

@@ -58,89 +58,96 @@ namespace Tiles.Collision
     [BurstCompile]
     public partial struct TileCollisionJob : IJobEntity
     {
+	    private const int MaxDistance = Size * 2;
+	    
         public BlobAssetReference<TilesBlob> TilesBlob;
         public NativeTilemap Tilemap;
         
         private void Execute(in LocalTransform transform, ref TileSensor sensor)
         {
-            sensor.Distance = 4;
-
-            //transform.Position.xy += velocity.Vector.GetValueDelta(Speed);
-            //velocity.Vector.ResetInstanceValue();
+	        FindTileData((int2)transform.Position.xy + sensor.Offset, ref sensor);
         }
         
-		private bool FindTileData(int2 targetPosition, out int distance, out GeneratedTile tile)
+		private void FindTileData(int2 targetPosition, ref TileSensor sensor)
 		{
-			var inTilePosition = new int2(targetPosition.x & ModSize, targetPosition.y & ModSize);
-			targetPosition = new int2(inTilePosition.x >> 4, inTilePosition.y >> 4);
+			int2 inTilePosition = targetPosition & ModSize;
+			targetPosition >>= DivSize;
 			
-			tile = Search(targetPosition, 0);
+			if (!TrySearch(targetPosition, 0, sensor.Quadrant, out int index))
+			{
+				FindFurtherTile(targetPosition, inTilePosition, ref sensor);
+				return;
+			}
 			
-			distance = tile.GetSize(Quadrant, inTilePosition.x, inTilePosition.y);
-			
+			ref NativeTile tile = ref GetTile(index);
+			byte distance = tile.GetSize(sensor.Quadrant, inTilePosition);
+				
 			switch (distance)
 			{
-				case 0: return CheckFurtherTile(targetPosition, inTilePosition, out distance, out tile);
-				case Size: return CheckCloserTile(targetPosition, inTilePosition, out distance, ref tile);
+				case 0: 
+					FindFurtherTile(targetPosition, inTilePosition, ref sensor); 
+					break;
+				case Size: 
+					FindCloserTile(targetPosition, inTilePosition, ref sensor); 
+					break;
 				default:
-					distance = CalculateInTilePosition(inTilePosition) - distance;
-					return true;
+					sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance;
+					break;
 			}
 		}
 		
-		private bool CheckFurtherTile(
-			int2 targetPosition, int2 inTilePosition, out int distance, ref NativeTile tile)
+		private void FindFurtherTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
 		{
-			if (TrySearch(targetPosition, 1, out int index))
+			if (TrySearch(targetPosition, 1, sensor.Quadrant, out int index))
 			{
 				ref NativeTile closerTile = ref GetTile(index);
-			}
-			
-			distance = tile.GetSize(Quadrant, inTilePosition.x, inTilePosition.y);
-					
-			if (distance == 0)
-			{
-				tile = null;
-				return false;
-			}
-					
-			distance = CalculateInTilePosition(inTilePosition) - distance + Size;
-			return true;
-		}
-		
-		private bool CheckCloserTile(int2 targetPosition, int2 inTilePosition, out int distance, ref NativeTile tile)
-		{
-			if (TrySearch(targetPosition, -1, out int index))
-			{
-				ref NativeTile closerTile = ref GetTile(index);
-				distance = closerTile.GetSize(Quadrant, inTilePosition.x, inTilePosition.y);
+				byte distance = closerTile.GetSize(sensor.Quadrant, inTilePosition);
 				
 				if (distance > 0)
+				{
+					sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance + Size;
+					sensor.Angle = closerTile.GetAngle(sensor.Quadrant);
+					return;
+				}
+			}
+			
+			sensor.Distance = MaxDistance;
+			sensor.Angle = float.NaN;
+		}
+		
+		private void FindCloserTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
+		{
+			if (TrySearch(targetPosition, -1, sensor.Quadrant, out int index))
+			{
+				ref NativeTile closerTile = ref GetTile(index);
+				sensor.Distance = closerTile.GetSize(sensor.Quadrant, inTilePosition);
+				
+				if (sensor.Distance > 0)
 				{
 					tile = closerTile;
 				}
 			}
 			else
 			{
-				distance = 0;
+				sensor.Distance = 0;
 			}
 			
-			distance = CalculateInTilePosition(inTilePosition) - distance - Size;
+			sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - sensor.Distance - Size;
 			return true;
 		}
 		
-		private int CalculateInTilePosition(int2 inTilePosition) => Quadrant switch
+		private static int CalculateInTilePosition(int2 inTilePosition, Quadrant quadrant) => quadrant switch
 		{
-			Quadrant.Down => inTilePosition.y & ModSize,
-			Quadrant.Right => ModSize - (inTilePosition.x & ModSize),
-			Quadrant.Up => ModSize - (inTilePosition.y & ModSize),
-			Quadrant.Left => inTilePosition.x & ModSize,
+			Quadrant.Down => inTilePosition.y,
+			Quadrant.Right => ModSize - inTilePosition.x,
+			Quadrant.Up => ModSize - inTilePosition.y,
+			Quadrant.Left => inTilePosition.x,
 			_ => 0
 		};
 		
-		private bool TrySearch(int2 position, sbyte shift, out int index)
+		private bool TrySearch(int2 position, sbyte shift, Quadrant quadrant, out int index)
 		{
-			switch (Quadrant)
+			switch (quadrant)
 			{
 				case Quadrant.Down: position.y -= shift; break;
 				case Quadrant.Right: position.x += shift; break;
