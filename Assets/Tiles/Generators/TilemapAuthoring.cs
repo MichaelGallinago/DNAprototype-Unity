@@ -31,7 +31,7 @@ namespace Tiles.Generators
                     source.Dispose();
                     return;
                 }
-
+                
                 var builder = new BlobBuilder(Allocator.Temp);
                 builder.ConstructHashMap(ref builder.ConstructRoot<BlobHashMap<int2, int>>(), ref source);
                 source.Dispose();
@@ -59,11 +59,11 @@ namespace Tiles.Generators
                 BoundsInt bounds = tilemap.cellBounds;
                 TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
                 var tilePositions = new NativeParallelHashMap<int2, int>(allTiles.Length, Allocator.Temp);
-
-                Vector3Int size = bounds.size;
+                
                 var index = 0;
-                for (var y = 0; y < size.y; y++)
-                for (var x = 0; x < size.x; x++)
+                var boundsMax = new int2(bounds.xMax, bounds.yMax);
+                for (int y = bounds.yMin; y < boundsMax.y; y++)
+                for (int x = bounds.xMin; x < boundsMax.x; x++)
                 {
                     if (allTiles[index++] is not GeneratedTile tile) continue;
                     tilePositions.Add(new int2(x, y), tile.Index);
@@ -77,6 +77,8 @@ namespace Tiles.Generators
     public class TilemapRenderComponent : IComponentData
     {
         public GameObject GameObject;
+
+        ~TilemapRenderComponent() => Object.Destroy(GameObject); //TODO: test that it fix tilemap drawing in editor
     }
     
     public struct NativeTilemap : IComponentData

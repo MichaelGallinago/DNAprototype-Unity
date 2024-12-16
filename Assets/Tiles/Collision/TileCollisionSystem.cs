@@ -1,4 +1,4 @@
-using Character;
+using Character.TileSensor;
 using Tiles.Generators;
 using Tiles.Models;
 using Unity.Burst;
@@ -33,10 +33,6 @@ namespace Tiles.Collision
             {
                 Debug.LogError("No " + nameof(NativeTilemap) + " found");
             }
-            else
-            {
-                Debug.Log(_tilemap.IndexesReference.Value.Count);
-            }
         }
         
         public void OnUpdate(ref SystemState state)
@@ -62,102 +58,107 @@ namespace Tiles.Collision
 	    
         public BlobAssetReference<TilesBlob> TilesBlob;
         public NativeTilemap Tilemap;
-        
-        private void Execute(in LocalTransform transform, ref TileSensor sensor)
+
+        private void Execute(ref LocalToWorld transform, ref TileSensor sensor)
         {
-	        FindTileData((int2)transform.Position.xy + sensor.Offset, ref sensor);
+	        FindTileData((int2)math.floor(transform.Position.xy), ref sensor);
+	        //FindTileData((int2)math.floor(new float2(0f, 160f)), ref sensor);
+	        Debug.Log($"{transform.Position.x}: {sensor.Distance}");
         }
-        
-		private void FindTileData(int2 targetPosition, ref TileSensor sensor)
-		{
-			int2 inTilePosition = targetPosition & ModSize;
-			targetPosition >>= DivSize;
-			
-			if (!TrySearch(targetPosition, 0, sensor.Quadrant, out int index))
-			{
-				FindFurtherTile(targetPosition, inTilePosition, ref sensor);
-				return;
-			}
-			
-			ref NativeTile tile = ref GetTile(index);
-			byte distance = tile.GetSize(sensor.Quadrant, inTilePosition);
-				
-			switch (distance)
-			{
-				case 0: 
-					FindFurtherTile(targetPosition, inTilePosition, ref sensor); 
-					break;
-				case Size: 
-					FindCloserTile(targetPosition, inTilePosition, ref sensor); 
-					break;
-				default:
-					sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance;
-					break;
-			}
-		}
-		
-		private void FindFurtherTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
-		{
-			if (TrySearch(targetPosition, 1, sensor.Quadrant, out int index))
-			{
-				ref NativeTile closerTile = ref GetTile(index);
-				byte distance = closerTile.GetSize(sensor.Quadrant, inTilePosition);
-				
-				if (distance > 0)
-				{
-					sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance + Size;
-					sensor.Angle = closerTile.GetAngle(sensor.Quadrant);
-					return;
-				}
-			}
-			
-			sensor.Distance = MaxDistance;
-			sensor.Angle = float.NaN;
-		}
-		
-		private void FindCloserTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
-		{
-			if (TrySearch(targetPosition, -1, sensor.Quadrant, out int index))
-			{
-				ref NativeTile closerTile = ref GetTile(index);
-				sensor.Distance = closerTile.GetSize(sensor.Quadrant, inTilePosition);
-				
-				if (sensor.Distance > 0)
-				{
-					tile = closerTile;
-				}
-			}
-			else
-			{
-				sensor.Distance = 0;
-			}
-			
-			sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - sensor.Distance - Size;
-			return true;
-		}
-		
-		private static int CalculateInTilePosition(int2 inTilePosition, Quadrant quadrant) => quadrant switch
-		{
-			Quadrant.Down => inTilePosition.y,
-			Quadrant.Right => ModSize - inTilePosition.x,
-			Quadrant.Up => ModSize - inTilePosition.y,
-			Quadrant.Left => inTilePosition.x,
-			_ => 0
-		};
-		
-		private bool TrySearch(int2 position, sbyte shift, Quadrant quadrant, out int index)
-		{
-			switch (quadrant)
-			{
-				case Quadrant.Down: position.y -= shift; break;
-				case Quadrant.Right: position.x += shift; break;
-				case Quadrant.Up: position.y += shift; break;
-				case Quadrant.Left: position.x -= shift; break;
-				default: index = default; return false;
-			}
-			
-			return Tilemap.IndexesReference.Value.TryGetValue(position, out index);
-		}
+
+        private void FindTileData(int2 targetPosition, ref TileSensor sensor)
+        {
+	        int2 inTilePosition = targetPosition % Size;
+	        targetPosition /= Size;
+
+	        if (!TrySearch(targetPosition, 0, sensor.Quadrant, out int index))
+	        {
+		        //Debug.Log($"{Tilemap.IndexesReference.Value[new int2(0, 10)]}");
+		        FindFurtherTile(targetPosition, inTilePosition, ref sensor);
+		        return;
+	        }
+
+	        ref NativeTile tile = ref GetTile(index);
+	        byte distance = tile.GetSize(sensor.Quadrant, inTilePosition);
+
+	        switch (distance)
+	        {
+		        case 0:
+			        FindFurtherTile(targetPosition, inTilePosition, ref sensor);
+			        break;
+		        case Size:
+			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+			        FindCloserTile(targetPosition, inTilePosition, ref sensor);
+			        break;
+		        default:
+			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance;
+			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+			        break;
+	        }
+        }
+
+        private void FindFurtherTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
+        {
+	        if (TrySearch(targetPosition, 1, sensor.Quadrant, out int index))
+	        {
+		        ref NativeTile tile = ref GetTile(index);
+		        byte distance = tile.GetSize(sensor.Quadrant, inTilePosition);
+
+		        if (distance > 0)
+		        {
+			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance + Size;
+			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+			        return;
+		        }
+	        }
+
+	        sensor.Distance = MaxDistance;
+	        sensor.Angle = float.NaN;
+        }
+
+        private void FindCloserTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
+        {
+	        byte distance;
+	        if (TrySearch(targetPosition, -1, sensor.Quadrant, out int index))
+	        {
+		        ref NativeTile tile = ref GetTile(index);
+		        distance = tile.GetSize(sensor.Quadrant, inTilePosition);
+
+		        if (distance > 0)
+		        {
+			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+		        }
+	        }
+	        else
+	        {
+		        distance = 0;
+	        }
+
+	        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance - Size;
+        }
+
+        private static int CalculateInTilePosition(int2 inTilePosition, Quadrant quadrant) => quadrant switch
+        {
+	        Quadrant.Down => inTilePosition.y,
+	        Quadrant.Right => ModSize - inTilePosition.x,
+	        Quadrant.Up => ModSize - inTilePosition.y,
+	        Quadrant.Left => inTilePosition.x,
+	        _ => 0
+        };
+
+        private bool TrySearch(int2 position, sbyte shift, Quadrant quadrant, out int index)
+        {
+	        switch (quadrant)
+	        {
+		        case Quadrant.Down: position.y -= shift; break;
+		        case Quadrant.Right: position.x += shift; break;
+		        case Quadrant.Up: position.y += shift; break;
+		        case Quadrant.Left: position.x -= shift; break;
+		        default: index = default; return false;
+	        }
+
+	        return Tilemap.IndexesReference.Value.TryGetValue(position, out index);
+        }
 		
 		private ref NativeTile GetTile(int index) => ref TilesBlob.Value.Tiles[index];
     }

@@ -13,7 +13,15 @@ namespace Utilities
             _baker = baker;
         }
         
-        public BakerQuery AddComponent<T>(in T component) where T : unmanaged, IComponentData
+        public BakerQuery(IBaker baker, TransformUsageFlags flags)
+        {
+            _entity = baker.GetEntity(flags);
+            _baker = baker;
+        }
+        
+        public BakerQuery AddComponents<T>(
+            in T component) 
+            where T : unmanaged, IComponentData
         {
             _baker.AddComponent(_entity, component);
             return this;
@@ -61,7 +69,9 @@ namespace Utilities
             return this;
         }
         
-        public BakerQuery AddComponentObject<T>(in T component) where T : class, IComponentData
+        public BakerQuery AddComponentObject<T>(
+            in T component) 
+            where T : class, IComponentData
         {
             _baker.AddComponentObject(_entity, component);
             return this;
@@ -109,7 +119,7 @@ namespace Utilities
             return this;
         }
         
-        public BakerQuery AddComponent<T>()
+        public BakerQuery AddComponents<T>()
         {
             _baker.AddComponent<T>(_entity);
             return this;
