@@ -6,29 +6,39 @@ namespace Character.Input
 {
     public struct PlayerInput : IComponentData
     {
-        public Button Up;
-        public Button Down;
-        public Button Left;
-        public Button Right;
-        public Button Jump;
-        public Button Sprint;
-        public Button Attack;
-        public Button Interact;
-        public Button Crouch;
-        public Button Pause;
+        public Buttons Down;
+        public Buttons Press;
         public float2 LookVector;
     }
-    
+
     [BurstCompile]
-    public struct Button
+    public struct Buttons
     {
+        public bool Up;
         public bool Down;
-        public bool Press;
-        
-        public void Set(bool value)
+        public bool Left;
+        public bool Right;
+        public bool Jump;
+        public bool Sprint;
+        public bool Attack;
+        public bool Interact;
+        public bool Crouch;
+        public bool Pause;
+
+        public Buttons ApplyPressBuffer(Buttons pressBuffer)
         {
-            Press = value && !Down;
-            Down = value;
+            Buttons copy = this;
+            copy.Up &= !pressBuffer.Up;
+            copy.Down &= !pressBuffer.Down;
+            copy.Left &= !pressBuffer.Left;
+            copy.Right &= !pressBuffer.Right;
+            copy.Jump &= !pressBuffer.Jump;
+            copy.Sprint &= !pressBuffer.Sprint;
+            copy.Attack &= !pressBuffer.Attack;
+            copy.Interact &= !pressBuffer.Interact;
+            copy.Crouch &= !pressBuffer.Crouch;
+            copy.Pause &= !pressBuffer.Pause;
+            return copy;
         }
     }
 }

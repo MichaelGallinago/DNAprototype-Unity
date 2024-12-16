@@ -4,7 +4,7 @@ namespace Character
 {
     public struct GroundSpeed : IComponentData
     {
-        public float Value;
+        public AcceleratedValue Value;
         public float Angle;
     }
 }

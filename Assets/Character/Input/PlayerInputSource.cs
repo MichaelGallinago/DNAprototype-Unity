@@ -7,8 +7,29 @@ namespace Character.Input
     {
         private readonly InputActions _inputActions = new();
         
-        private PlayerInput _playerInput;
-        public PlayerInput PlayerInput => _playerInput;
+        private Buttons _pressBuffer;
+        private Buttons _fixedPressBuffer;
+        private PlayerInput _input;
+        
+        public PlayerInput FixedInput
+        {
+            get
+            {
+                _input.Press = _input.Down.ApplyPressBuffer(_fixedPressBuffer);
+                _fixedPressBuffer = _input.Down;
+                return _input;
+            }
+        }
+        
+        public PlayerInput Input
+        {
+            get
+            {
+                _input.Press = _input.Down.ApplyPressBuffer(_pressBuffer);
+                _pressBuffer = _input.Down;
+                return _input;
+            }
+        }
 
         public PlayerInputSource() => _inputActions.Player.SetCallbacks(this);
         
@@ -17,22 +38,23 @@ namespace Character.Input
         
         ~PlayerInputSource() => _inputActions.Dispose();
 
+        public void OnLook(CallbackContext context) => _input.LookVector = context.ReadValue<Vector2>();
+        
         public void OnMove(CallbackContext context)
         {
             var vector = context.ReadValue<Vector2>();
             
-            _playerInput.Up.Set(vector.y > 0f);
-            _playerInput.Down.Set(vector.y < 0f);
-            _playerInput.Right.Set(vector.x > 0f);
-            _playerInput.Left.Set(vector.x < 0f);
+            _input.Down.Up = vector.y > 0f;
+            _input.Down.Down = vector.y < 0f;
+            _input.Down.Right = vector.x > 0f;
+            _input.Down.Left = vector.x < 0f;
         }
-
-        public void OnLook(CallbackContext context) => _playerInput.LookVector = context.ReadValue<Vector2>();
-        public void OnAttack(CallbackContext context) => _playerInput.Attack.Set(context.ReadValue<bool>());
-        public void OnInteract(CallbackContext context) => _playerInput.Interact.Set(context.ReadValue<bool>());
-        public void OnJump(CallbackContext context) => _playerInput.Jump.Set(context.ReadValue<bool>());
-        public void OnSprint(CallbackContext context) => _playerInput.Sprint.Set(context.ReadValue<bool>());
-        public void OnCrouch(CallbackContext context) => _playerInput.Crouch.Set(context.ReadValue<bool>());
-        public void OnPause(CallbackContext context) => _playerInput.Pause.Set(context.ReadValue<bool>());
+        
+        public void OnAttack(CallbackContext context) => _input.Down.Attack = context.ReadValue<float>() > 0f;
+        public void OnInteract(CallbackContext context) => _input.Down.Interact = context.ReadValue<float>() > 0f;
+        public void OnJump(CallbackContext context) => _input.Down.Jump = context.ReadValue<float>() > 0f;
+        public void OnSprint(CallbackContext context) => _input.Down.Sprint = context.ReadValue<float>() > 0f;
+        public void OnCrouch(CallbackContext context) => _input.Down.Crouch = context.ReadValue<float>() > 0f;
+        public void OnPause(CallbackContext context) => _input.Down.Pause = context.ReadValue<float>() > 0f;
     }
 }

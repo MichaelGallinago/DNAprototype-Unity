@@ -8,6 +8,7 @@ namespace Tiles.Collision
 {
 	public struct TileCollider
 	{
+		/*
 		private const int MaxDistance = Size * 2;
 		
 	    public Vector2Int Position { get; set; }
@@ -22,7 +23,7 @@ namespace Tiles.Collision
 		    Quadrant = quadrant;
 		    Position = position;
 	    }
-	    /*
+	    
 	    public (int distance, float angle) FindTile(int x, int y)
 	    {
 	        return GetTile(Position + new Vector2Int(x, y));
