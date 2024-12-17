@@ -13,10 +13,12 @@ namespace Character
 
         private class Baker : Baker<CharacterAuthoring>
         {
-            public override void Bake(CharacterAuthoring authoring) => 
+            public override void Bake(CharacterAuthoring authoring)
+            {
                 new BakerQuery(this, TransformUsageFlags.Dynamic)
                     .AddComponents<GroundSpeed, Velocity, PlayerInput>()
                     .AddComponents(new Gravity { Vector = new float2(0f, -0.21875f) });
+            }
         }
     }
 }

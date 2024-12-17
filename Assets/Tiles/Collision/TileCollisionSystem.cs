@@ -1,3 +1,4 @@
+using System;
 using Character.TileSensor;
 using Tiles.Generators;
 using Tiles.Models;
@@ -51,7 +52,7 @@ namespace Tiles.Collision
         }
     }
     
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct TileCollisionJob : IJobEntity
     {
 	    private const int MaxDistance = Size * 2;
@@ -61,15 +62,14 @@ namespace Tiles.Collision
 
         private void Execute(ref LocalToWorld transform, ref TileSensor sensor)
         {
+	        sensor.Distance = 0;
 	        FindTileData((int2)math.floor(transform.Position.xy), ref sensor);
-	        //FindTileData((int2)math.floor(new float2(0f, 160f)), ref sensor);
-	        Debug.Log($"{transform.Position.x}: {sensor.Distance}");
         }
 
         private void FindTileData(int2 targetPosition, ref TileSensor sensor)
         {
-	        int2 inTilePosition = targetPosition % Size;
-	        targetPosition /= Size;
+	        int2 inTilePosition = targetPosition & ModSize;
+	        targetPosition >>= DivSize;
 
 	        if (!TrySearch(targetPosition, 0, sensor.Quadrant, out int index))
 	        {
