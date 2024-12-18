@@ -1,7 +1,7 @@
-using Tiles.Models;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Utilities;
 
 namespace Tiles.Collision
 {

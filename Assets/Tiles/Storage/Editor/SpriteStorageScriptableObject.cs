@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
-using Tiles.Models;
+using Tiles.Generators.Editor;
 using UnityEditor;
 using UnityEditor.U2D;
 using UnityEngine;

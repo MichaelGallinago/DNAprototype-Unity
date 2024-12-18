@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using Tiles.Collision;
 using Tiles.Generators;
-using Tiles.Models;
+using Tiles.Generators.Editor;
 using Tiles.SolidTypes;
 using Unity.Collections;
 using Unity.Entities;

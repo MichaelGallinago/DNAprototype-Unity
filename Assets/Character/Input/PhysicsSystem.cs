@@ -7,7 +7,7 @@ using Utilities;
 namespace Character.Input
 {
     [BurstCompile]
-    [UpdateAfter(typeof(TileCollisionSystem))]
+    [UpdateAfter(typeof(TileSenseSystem))]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct PhysicsSystem : ISystem, ISystemStartStop
     {

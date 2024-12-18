@@ -8,7 +8,7 @@ using static System.Runtime.CompilerServices.MethodImplOptions;
 
 [assembly: StructArrayAttributes.StructArray("SizeMap", nameof(Tiles), TileConstants.Size)]
 
-namespace Tiles.Models
+namespace Tiles.Generators.Editor
 {
     [Serializable]
     public struct BitTile

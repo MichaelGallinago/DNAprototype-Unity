@@ -1,19 +1,18 @@
-using System;
-using Character.TileSensor;
 using Tiles.Generators;
-using Tiles.Models;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Tiles.Collision.TileSensorEntity;
+using Utilities;
 using static Tiles.TileConstants;
 
 namespace Tiles.Collision
 {
     [BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    public partial struct TileCollisionSystem : ISystem, ISystemStartStop
+    public partial struct TileSenseSystem : ISystem, ISystemStartStop
     {
         private BlobAssetReference<TilesBlob> _tilesBlob;
         private NativeTilemap _tilemap;
@@ -38,7 +37,7 @@ namespace Tiles.Collision
         
         public void OnUpdate(ref SystemState state)
         {
-            new TileCollisionJob { TilesBlob = _tilesBlob, Tilemap = _tilemap }.ScheduleParallel();
+            new TileSenseJob { TilesBlob = _tilesBlob, Tilemap = _tilemap }.ScheduleParallel();
         }
         
         public void OnStopRunning(ref SystemState state) {}
@@ -52,17 +51,16 @@ namespace Tiles.Collision
         }
     }
     
-    //[BurstCompile]
-    public partial struct TileCollisionJob : IJobEntity
+    [BurstCompile]
+    public partial struct TileSenseJob : IJobEntity
     {
 	    private const int MaxDistance = Size * 2;
 	    
-        public BlobAssetReference<TilesBlob> TilesBlob;
-        public NativeTilemap Tilemap;
+	    public BlobAssetReference<TilesBlob> TilesBlob;
+	    public NativeTilemap Tilemap;
 
         private void Execute(ref LocalToWorld transform, ref TileSensor sensor)
         {
-	        sensor.Distance = 0;
 	        FindTileData((int2)math.floor(transform.Position.xy), ref sensor);
         }
 
