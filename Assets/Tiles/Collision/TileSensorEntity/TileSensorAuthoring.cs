@@ -10,9 +10,8 @@ namespace Tiles.Collision.TileSensorEntity
         
         private class Baker : Baker<TileSensorAuthoring>
         {
-            public override void Bake(TileSensorAuthoring authoring) =>
-                new BakerQuery(this, TransformUsageFlags.Dynamic)
-                    .AddComponents(new TileSensor { Quadrant = authoring._quadrant });
+            public override void Bake(TileSensorAuthoring authoring) => new BakerQuery(this, TransformUsageFlags.Dynamic)
+                .AddComponents(new TileSensor { Quadrant = authoring._quadrant });
         }
     }
 }

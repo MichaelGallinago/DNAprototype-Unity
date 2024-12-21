@@ -11,6 +11,8 @@ namespace Tiles.Collision.TileSensorEntity
         public Quadrant Quadrant;
         public int Distance;
         public float Angle;
+        
+        public bool IsInside => Distance < 0;
 
         public float2 OffsetVector => Quadrant switch
         {
@@ -20,5 +22,7 @@ namespace Tiles.Collision.TileSensorEntity
             Quadrant.Left => new float2(-Distance, 0f),
             _ => float2.zero
         };
+
+        public float2 EjectionVector => IsInside ? OffsetVector : float2.zero;
     }
 }
