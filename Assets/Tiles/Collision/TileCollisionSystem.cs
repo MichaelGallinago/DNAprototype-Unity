@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using Tiles.Collision.TileSensorEntity;
+using Unity.Collections;
 using Utilities;
 using static Tiles.TileConstants;
 
@@ -56,8 +57,8 @@ namespace Tiles.Collision
     {
 	    private const int MaxDistance = Size * 2;
 	    
-	    public BlobAssetReference<TilesBlob> TilesBlob;
-	    public NativeTilemap Tilemap;
+	    [ReadOnly] public BlobAssetReference<TilesBlob> TilesBlob;
+	    [ReadOnly] public NativeTilemap Tilemap;
 
         private void Execute(ref LocalToWorld transform, ref TileSensor sensor)
         {

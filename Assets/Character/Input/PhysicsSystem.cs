@@ -1,5 +1,6 @@
 using Tiles.Collision;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using Utilities;
@@ -40,7 +41,7 @@ namespace Character.Input
     [BurstCompile]
     public partial struct AccelerationJob : IJobEntity
     {
-        public float Speed;
+        [ReadOnly] public float Speed;
         
         private void Execute(ref Velocity velocity, in Acceleration gravity) => 
             velocity.Vector.AddAcceleration(gravity.Vector, Speed);
@@ -49,7 +50,7 @@ namespace Character.Input
     [BurstCompile]
     public partial struct GravityJob : IJobEntity
     {
-        public float Speed;
+        [ReadOnly] public float Speed;
         
         private void Execute(ref Velocity velocity, in Gravity gravity) => 
             velocity.Vector.AddAcceleration(gravity.Vector, Speed);
@@ -58,7 +59,7 @@ namespace Character.Input
     [BurstCompile]
     public partial struct MovementJob : IJobEntity
     {
-        public float Speed;
+        [ReadOnly] public float Speed;
 
         private void Execute(ref LocalTransform transform, ref Velocity velocity)
         {

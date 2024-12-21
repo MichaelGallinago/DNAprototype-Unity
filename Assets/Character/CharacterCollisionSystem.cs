@@ -1,6 +1,7 @@
 using Character.Input;
 using Tiles.Collision.TileSensorEntity;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
@@ -18,8 +19,10 @@ namespace Character
 
         public void OnUpdate(ref SystemState state)
         {
-            new CharacterCollisionJob { EntityManager = state.EntityManager }.Schedule(state.Dependency);
-            //state.Dependency = JobHandle.CombineDependencies(state.Dependency, state.GetJobHandle<PhysicsSystem>());
+            state.Dependency = new CharacterCollisionJob 
+            {
+                Sensors = state.GetComponentLookup<TileSensor>(true),
+            }.Schedule(state.Dependency);
         }
         
         public void OnDestroy(ref SystemState state) {}
@@ -28,12 +31,12 @@ namespace Character
     [BurstCompile]
     public partial struct CharacterCollisionJob : IJobEntity 
     {
-        public EntityManager EntityManager;
+        [ReadOnly] public ComponentLookup<TileSensor> Sensors;
         
         private void Execute(ref LocalTransform transform, in CharacterSensors sensor)
         {
-            var firstSensor = EntityManager.GetComponentData<TileSensor>(sensor.First);
-            var secondSensor = EntityManager.GetComponentData<TileSensor>(sensor.Second);
+            TileSensor firstSensor = Sensors[sensor.First];
+            TileSensor secondSensor = Sensors[sensor.Second];
             
             TileSensor targetSensor = firstSensor.Distance <= secondSensor.Distance ? firstSensor : secondSensor;
             
