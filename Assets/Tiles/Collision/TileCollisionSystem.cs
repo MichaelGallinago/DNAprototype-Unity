@@ -71,7 +71,6 @@ namespace Tiles.Collision
 
 	        if (!TrySearch(targetPosition, 0, sensor.Quadrant, out int index))
 	        {
-		        //Debug.Log($"{Tilemap.IndexesReference.Value[new int2(0, 10)]}");
 		        FindFurtherTile(targetPosition, inTilePosition, ref sensor);
 		        return;
 	        }
@@ -143,7 +142,7 @@ namespace Tiles.Collision
 	        Quadrant.Left => inTilePosition.x,
 	        _ => 0
         };
-
+        
         private bool TrySearch(int2 position, sbyte shift, Quadrant quadrant, out int index)
         {
 	        switch (quadrant)
