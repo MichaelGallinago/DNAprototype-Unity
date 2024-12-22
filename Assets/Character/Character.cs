@@ -9,6 +9,8 @@ namespace Character
     [BurstCompile]
     public readonly partial struct Character : IAspect
     {
+        public readonly Entity Entity;
+        
         private readonly RefRW<BehaviourTree> _behaviourTree;
         private readonly RefRW<LocalTransform> _transform;
         private readonly RefRW<GroundSpeed> _groundSpeed;
@@ -40,12 +42,20 @@ namespace Character
             get => _rotation.ValueRO.Quadrant;
             set => _rotation.ValueRW.Quadrant = value;
         }
-
-        public bool IsGrounded
+        
+        public bool IsBehaviourChanged
         {
-            get => _behaviourTree.ValueRO.IsGrounded;
-            set => _behaviourTree.ValueRW.IsGrounded = value;
+            get => _behaviourTree.ValueRO.IsChanged;
+            set => _behaviourTree.ValueRW.IsChanged = value;
         }
+
+        public Behaviours Behaviour
+        {
+            get => _behaviourTree.ValueRO.Behaviour;
+            set => _behaviourTree.ValueRW.Behaviour = value;
+        }
+        
+        public Behaviours PreviousBehaviour => _behaviourTree.ValueRO.PreviousBehaviour;
 
         public FloorSensors FloorSensor => _sensors.ValueRO;
 
@@ -57,9 +67,28 @@ namespace Character
             public Entity Second;
         }
         
+        [BurstCompile]
         public struct BehaviourTree : IComponentData
         {
-            public bool IsGrounded;
+            public bool IsChanged;
+
+            public Behaviours Behaviour
+            {
+                get => _behaviour;
+                set
+                {
+                    if (_behaviour == value) return;
+                    IsChanged = true;
+                    _previousBehaviour = _behaviour;
+                    _behaviour = value;
+                }
+            }
+            private Behaviours _behaviour;
+            
+            public Behaviours PreviousBehaviour => _previousBehaviour;
+            private Behaviours _previousBehaviour;
         }
+        
+        public enum Behaviours : byte { None, Ground, Airborne }
     }
 }

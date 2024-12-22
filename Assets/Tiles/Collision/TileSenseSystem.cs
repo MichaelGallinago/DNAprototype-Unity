@@ -1,3 +1,5 @@
+using Character;
+using Character.Input;
 using Tiles.Generators;
 using Unity.Burst;
 using Unity.Entities;
@@ -12,6 +14,7 @@ using static Tiles.TileConstants;
 namespace Tiles.Collision
 {
     [BurstCompile]
+    [UpdateAfter(typeof(PhysicsSystem))]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct TileSenseSystem : ISystem, ISystemStartStop
     {
@@ -38,7 +41,7 @@ namespace Tiles.Collision
         
         public void OnUpdate(ref SystemState state)
         {
-            new TileSenseJob { TilesBlob = _tilesBlob, Tilemap = _tilemap }.ScheduleParallel();
+            new TileSenseJob { TilesBlob = _tilesBlob, Tilemap = _tilemap }.ScheduleParallel(state.Dependency).Complete();
         }
         
         public void OnStopRunning(ref SystemState state) {}

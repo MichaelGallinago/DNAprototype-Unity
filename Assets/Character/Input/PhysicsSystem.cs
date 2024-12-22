@@ -1,4 +1,3 @@
-using Tiles.Collision;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -8,7 +7,6 @@ using Utilities;
 namespace Character.Input
 {
     [BurstCompile]
-    [UpdateAfter(typeof(TileSenseSystem))]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct PhysicsSystem : ISystem, ISystemStartStop
     {
@@ -26,9 +24,9 @@ namespace Character.Input
         {
             SetPhysicsSpeed(SystemAPI.Time.DeltaTime);
             
-            new AccelerationJob { Speed = _speed }.ScheduleParallel();
-            new GravityJob { Speed = _speed }.ScheduleParallel();
-            new MovementJob { Speed = _speed }.ScheduleParallel();
+            new AccelerationJob { Speed = _speed }.ScheduleParallel(state.Dependency).Complete();
+            new GravityJob { Speed = _speed }.ScheduleParallel(state.Dependency).Complete();
+            new MovementJob { Speed = _speed }.ScheduleParallel(state.Dependency).Complete();
         }
 
         public void OnStopRunning(ref SystemState state) {}
@@ -43,8 +41,8 @@ namespace Character.Input
     {
         [ReadOnly] public float Speed;
         
-        private void Execute(ref Velocity velocity, in Acceleration gravity) => 
-            velocity.Vector.AddAcceleration(gravity.Vector, Speed);
+        private void Execute(ref Velocity velocity, in Acceleration acceleration) => 
+            velocity.Vector.AddAcceleration(acceleration.Vector, Speed);
     }
     
     [BurstCompile]
@@ -52,7 +50,7 @@ namespace Character.Input
     {
         [ReadOnly] public float Speed;
         
-        private void Execute(ref Velocity velocity, in Gravity gravity) => 
+        private void Execute(ref Velocity velocity, in Gravity gravity) =>
             velocity.Vector.AddAcceleration(gravity.Vector, Speed);
     }
     

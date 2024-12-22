@@ -18,15 +18,13 @@ namespace Character
             public override void Bake(CharacterAuthoring authoring) => new BakerQuery(this, TransformUsageFlags.Dynamic)
                 .AddComponents<PlayerInput>() //TODO: move to player
                 .AddComponents<GroundSpeed, Velocity, Rotation>()
-                .AddDisabledComponents(new Gravity { Vector = PhysicsConstants.GravityVector })
+                .AddComponents(new Gravity { Vector = PhysicsConstants.GravityVector })
                 .AddComponents(new Character.FloorSensors
                 {
                     First = GetEntity(DependsOn(authoring._tileSensorFloor1), TransformUsageFlags.Dynamic),
                     Second = GetEntity(DependsOn(authoring._tileSensorFloor2), TransformUsageFlags.Dynamic)
-                }, new Character.BehaviourTree
-                {
-                    IsGrounded = true
-                });
+                }, 
+                new Character.BehaviourTree { Behaviour = Character.Behaviours.Ground });
         }
     }
 }
