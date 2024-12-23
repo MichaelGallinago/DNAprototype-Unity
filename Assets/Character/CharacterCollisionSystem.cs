@@ -25,10 +25,10 @@ namespace Character
         public void OnUpdate(ref SystemState state)
         {
             _tileSensorLookup.Update(ref state);
-            new CharacterCollisionJob
+            state.Dependency = new CharacterCollisionJob
             {
                 SensorLookup = _tileSensorLookup,
-            }.Schedule(state.Dependency).Complete();
+            }.Schedule(state.Dependency);
         }
         
         public void OnDestroy(ref SystemState state) {}
@@ -99,7 +99,7 @@ namespace Character
         private static void ApplySensorData(in Character character, in TileSensor sensor)
         {
             character.Angle = sensor.Angle;
-            character.Position += sensor.OffsetVector;
+            character.Position = sensor.AddOffset(character.Position);
         }
     }
 }

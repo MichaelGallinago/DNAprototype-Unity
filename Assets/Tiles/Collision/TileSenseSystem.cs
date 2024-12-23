@@ -1,4 +1,3 @@
-using Character;
 using Character.Input;
 using Tiles.Generators;
 using Unity.Burst;
@@ -41,7 +40,11 @@ namespace Tiles.Collision
         
         public void OnUpdate(ref SystemState state)
         {
-            new TileSenseJob { TilesBlob = _tilesBlob, Tilemap = _tilemap }.ScheduleParallel(state.Dependency).Complete();
+	        state.Dependency = new TileSenseJob
+	        {
+		        TilesBlob = _tilesBlob, 
+		        Tilemap = _tilemap
+	        }.ScheduleParallel(state.Dependency);
         }
         
         public void OnStopRunning(ref SystemState state) {}
@@ -65,7 +68,7 @@ namespace Tiles.Collision
 
         private void Execute(ref LocalToWorld transform, ref TileSensor sensor)
         {
-	        FindTileData((int2)math.floor(transform.Position.xy), ref sensor);
+	        FindTileData((int2)transform.Position.xy, ref sensor);
         }
 
         private void FindTileData(int2 targetPosition, ref TileSensor sensor)
@@ -80,9 +83,9 @@ namespace Tiles.Collision
 	        }
 
 	        ref NativeTile tile = ref GetTile(index);
-	        byte distance = tile.GetSize(sensor.Quadrant, inTilePosition);
+	        byte size = tile.GetSize(sensor.Quadrant, inTilePosition);
 
-	        switch (distance)
+	        switch (size)
 	        {
 		        case 0:
 			        FindFurtherTile(targetPosition, inTilePosition, ref sensor);
@@ -92,7 +95,7 @@ namespace Tiles.Collision
 			        FindCloserTile(targetPosition, inTilePosition, ref sensor);
 			        break;
 		        default:
-			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance;
+			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - size;
 			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
 			        break;
 	        }
@@ -103,11 +106,11 @@ namespace Tiles.Collision
 	        if (TrySearch(targetPosition, 1, sensor.Quadrant, out int index))
 	        {
 		        ref NativeTile tile = ref GetTile(index);
-		        byte distance = tile.GetSize(sensor.Quadrant, inTilePosition);
+		        byte size = tile.GetSize(sensor.Quadrant, inTilePosition);
 
-		        if (distance > 0)
+		        if (size > 0)
 		        {
-			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance + Size;
+			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - size + Size;
 			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
 			        return;
 		        }
@@ -119,23 +122,23 @@ namespace Tiles.Collision
 
         private void FindCloserTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
         {
-	        byte distance;
+	        byte size;
 	        if (TrySearch(targetPosition, -1, sensor.Quadrant, out int index))
 	        {
 		        ref NativeTile tile = ref GetTile(index);
-		        distance = tile.GetSize(sensor.Quadrant, inTilePosition);
+		        size = tile.GetSize(sensor.Quadrant, inTilePosition);
 
-		        if (distance > 0)
+		        if (size > 0)
 		        {
 			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
 		        }
 	        }
 	        else
 	        {
-		        distance = 0;
+		        size = 0;
 	        }
 
-	        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - distance - Size;
+	        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - size - Size;
         }
 
         private static int CalculateInTilePosition(int2 inTilePosition, Quadrant quadrant) => quadrant switch

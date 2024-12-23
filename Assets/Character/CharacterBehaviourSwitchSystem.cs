@@ -19,10 +19,10 @@ namespace Character
             var singleton = SystemAPI.GetSingleton<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
             EntityCommandBuffer ecb = singleton.CreateCommandBuffer(state.WorldUnmanaged);
             
-            new CharacterBehaviourSwitchJob
+            state.Dependency = new CharacterBehaviourSwitchJob
             {
                 Ecb = ecb.AsParallelWriter()
-            }.Schedule(state.Dependency).Complete();
+            }.Schedule(state.Dependency);
         }
 
         public void OnDestroy(ref SystemState state) {}

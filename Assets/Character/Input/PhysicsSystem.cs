@@ -24,9 +24,14 @@ namespace Character.Input
         {
             SetPhysicsSpeed(SystemAPI.Time.DeltaTime);
             
-            new AccelerationJob { Speed = _speed }.ScheduleParallel(state.Dependency).Complete();
-            new GravityJob { Speed = _speed }.ScheduleParallel(state.Dependency).Complete();
-            new MovementJob { Speed = _speed }.ScheduleParallel(state.Dependency).Complete();
+            state.Dependency = new AccelerationJob { Speed = _speed }.ScheduleParallel(state.Dependency);
+            state.Dependency = new GravityJob { Speed = _speed }.ScheduleParallel(state.Dependency);
+            state.Dependency = new MovementJob { Speed = _speed }.ScheduleParallel(state.Dependency);
+            state.Dependency.Complete();
+            
+            var world = World.DefaultGameObjectInjectionWorld;
+            var transformSystemGroup = world.GetOrCreateSystemManaged<TransformSystemGroup>();
+            transformSystemGroup.Update();
         }
 
         public void OnStopRunning(ref SystemState state) {}
