@@ -22,7 +22,7 @@ namespace Character
                 .AddComponents<PlayerInput>() //TODO: move to player
                 .AddComponents<GroundSpeed, Velocity, Rotation>()
                 .AddComponents(new Gravity { Vector = Constants.GravityVector })
-                .AddComponents(new CharacterAspect.FloorSensors
+                .AddComponents(new FloorSensors
                 {
                     First = GetEntity(DependsOn(authoring._tileSensorFloor1), TransformUsageFlags.Dynamic),
                     Second = GetEntity(DependsOn(authoring._tileSensorFloor2), TransformUsageFlags.Dynamic)

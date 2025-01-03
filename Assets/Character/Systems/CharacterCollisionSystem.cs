@@ -1,4 +1,5 @@
 using Character.Components;
+using PhysicsEcs2D.Components;
 using PhysicsEcs2D.Tiles.Collision;
 using PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using Unity.Burst;
@@ -20,7 +21,7 @@ namespace Character.Systems
         public void OnCreate(ref SystemState state)
         {
             _tileSensorLookup = state.GetComponentLookup<TileSensor>(true);
-            state.RequireForUpdate<CharacterAspect.FloorSensors>();
+            state.RequireForUpdate<FloorSensors>();
         }
         
         public void OnUpdate(ref SystemState state)
@@ -90,7 +91,7 @@ namespace Character.Systems
             ApplySensorData(characterAspect, sensor);
         }
 
-        private TileSensor FindClosestSensor(in CharacterAspect.FloorSensors floorSensor)
+        private TileSensor FindClosestSensor(in FloorSensors floorSensor)
         {
             TileSensor firstSensor = SensorLookup[floorSensor.First];
             TileSensor secondSensor = SensorLookup[floorSensor.Second];

@@ -21,9 +21,9 @@ namespace Character.Input
 
         public void OnUpdate(ref SystemState state)
         {
-            //state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
-            //state.Dependency = new GravityJob().ScheduleParallel(state.Dependency); 
-            //state.Dependency = new MovementJob().ScheduleParallel(state.Dependency);
+            state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
+            state.Dependency = new GravityJob().ScheduleParallel(state.Dependency); 
+            state.Dependency = new MovementJob().ScheduleParallel(state.Dependency);
             state.Dependency.Complete();
 
             UpdateTransformSystemGroup();

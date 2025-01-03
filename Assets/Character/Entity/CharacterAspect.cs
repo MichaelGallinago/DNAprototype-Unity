@@ -1,3 +1,4 @@
+using Character.Components;
 using PhysicsEcs2D.Components;
 using PhysicsEcs2D.DeltaTimeHelpers;
 using Unity.Burst;
@@ -37,11 +38,5 @@ namespace Character
         public FloorSensors FloorSensor => _sensors.ValueRO;
         
         public ref AcceleratedVector2 Velocity => ref _velocity.ValueRW.Vector;
-        
-        public struct FloorSensors : IComponentData
-        {
-            public Entity First;
-            public Entity Second;
-        }
     }
 }
