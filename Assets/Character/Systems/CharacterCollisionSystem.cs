@@ -37,6 +37,7 @@ namespace Character.Systems
     }
     
     [BurstCompile]
+    [WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
     public partial struct CharacterCollisionJob : IJobEntity 
     {
         private const int MinTolerance = 4;

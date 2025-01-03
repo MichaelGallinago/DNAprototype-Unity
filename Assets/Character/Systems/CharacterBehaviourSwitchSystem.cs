@@ -26,11 +26,11 @@ namespace Character.Systems
     }
 
     [BurstCompile]
+    [WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
     public partial struct CharacterBehaviourSwitchJob : IJobEntity
     {
         private void Execute(CharacterAspect character)
         {
-            Debug.Log("Switching");
             if (!character.Behaviour.IsChanged) return;
             character.Behaviour.IsChanged = false;
 
