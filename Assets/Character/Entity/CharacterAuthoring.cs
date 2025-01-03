@@ -20,7 +20,7 @@ namespace Character
         {
             public override void Bake(CharacterAuthoring authoring) => new BakerQuery(this, TransformUsageFlags.Dynamic)
                 .AddComponents<PlayerInput>() //TODO: move to player
-                .AddComponents<GroundSpeed, Velocity, Rotation>()
+                .AddComponents<GroundSpeed, Velocity, Rotation, Jump>()
                 .AddComponents(new Gravity { Vector = Constants.GravityVector })
                 .AddComponents(new FloorSensors
                 {

@@ -1,8 +1,6 @@
-using System;
 using Character.Components;
 using Character.Input;
 using PhysicsEcs2D;
-using PhysicsEcs2D.Components;
 using PhysicsEcs2D.Tiles.Collision;
 using Unity.Burst;
 using Unity.Entities;
@@ -22,21 +20,19 @@ namespace Character.Systems
 
         public void OnUpdate(ref SystemState state)
         {
-            //state.Dependency = new JumpJob().Schedule(state.Dependency);
+            state.Dependency = new JumpJob().Schedule(state.Dependency);
         }
         
         public void OnDestroy(ref SystemState state) {}
     }
 
     [BurstCompile]
-    [WithAll(typeof(Jump))]
+    [WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
     public partial struct JumpJob : IJobEntity
     {
-        private static void Execute(
-            BehaviourAspect behaviour, JumpAspect jump, GroundSpeedAspect groundSpeed, 
-            ref Velocity velocity, in PlayerInput input)
+        private static void Execute(CharacterAspect character, JumpAspect jump, in PlayerInput input)
         {
-            switch (behaviour.Current)
+            switch (character.Behaviour.Current)
             {
                 case Behaviours.Air:
                 {
@@ -59,10 +55,10 @@ namespace Character.Systems
             {
                 jump.CoyoteTime = 0f;
                 jump.IsEnabled = false;
-                behaviour.Current = Behaviours.Air;
-                float radians = math.radians(groundSpeed.Angle);
+                character.Behaviour.Current = Behaviours.Air;
+                float radians = math.radians(character.GroundSpeed.Angle);
                 var direction = new float2(math.sin(radians), math.cos(radians));
-                velocity.Vector += Constants.JumpSpeed * direction;
+                character.Velocity += Constants.JumpSpeed * direction;
             }
         }
     }
