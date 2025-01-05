@@ -13,21 +13,16 @@ namespace Character.Systems
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct JumpSystem : ISystem
     {
-        public void OnCreate(ref SystemState state)
-        {
+        public void OnCreate(ref SystemState state) => 
             state.RequireForUpdate<Jump>();
-        }
 
-        public void OnUpdate(ref SystemState state)
-        {
-            state.Dependency = new JumpJob().Schedule(state.Dependency);
-        }
+        public void OnUpdate(ref SystemState state) =>
+            state.Dependency = new JumpJob().ScheduleParallel(state.Dependency);
         
         public void OnDestroy(ref SystemState state) {}
     }
 
     [BurstCompile]
-    [WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
     public partial struct JumpJob : IJobEntity
     {
         private static void Execute(CharacterAspect character, JumpAspect jump, in PlayerInput input)
@@ -37,11 +32,7 @@ namespace Character.Systems
                 case Behaviours.Air:
                 {
                     jump.CoyoteTime -= Constants.Speed;
-                    if (jump.CoyoteTime <= 0f)
-                    {
-                        jump.IsEnabled = false;
-                        return;
-                    }
+                    if (jump.CoyoteTime <= 0f) return;
                     break;
                 }
                 case Behaviours.Ground:
@@ -54,9 +45,8 @@ namespace Character.Systems
             if (input.Press.Jump)
             {
                 jump.CoyoteTime = 0f;
-                jump.IsEnabled = false;
                 character.Behaviour.Current = Behaviours.Air;
-                float radians = math.radians(character.GroundSpeed.Angle);
+                float radians = math.radians(character.Rotation.Angle);
                 var direction = new float2(math.sin(radians), math.cos(radians));
                 character.Velocity += Constants.JumpSpeed * direction;
             }

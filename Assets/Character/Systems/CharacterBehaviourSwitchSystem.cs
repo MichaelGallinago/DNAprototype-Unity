@@ -1,5 +1,4 @@
 using Character.Components;
-using PhysicsEcs2D.Components;
 using Unity.Burst;
 using Unity.Entities;
 using UnityEngine;
@@ -14,7 +13,6 @@ namespace Character.Systems
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
-            state.RequireForUpdate<BehaviourTree>();
         }
 
         public void OnUpdate(ref SystemState state)
@@ -26,25 +24,32 @@ namespace Character.Systems
     }
 
     [BurstCompile]
-    [WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
+    [WithPresent(typeof(AirLock), typeof(GroundSpeed))]
+    //[WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
     public partial struct CharacterBehaviourSwitchJob : IJobEntity
     {
-        private void Execute(CharacterAspect character)
+        private static void Execute(
+            in BehaviourTree behaviour,
+            AirBehaviourAspect airBehaviour,
+            GroundBehaviourAspect groundBehaviour)
         {
-            if (!character.Behaviour.IsChanged) return;
-            character.Behaviour.IsChanged = false;
+            Debug.Log($"{(int)behaviour.Current}");
+            //if (!behaviour.IsChanged) return;
+            //behaviour.IsChanged = false;
 
-            switch (character.Behaviour.Previous)
+            switch (behaviour.Previous)
             {
-                case Behaviours.Air: character.Gravity.IsEnabled = false; break;
-                case Behaviours.Ground: character.GroundSpeed.IsEnabled = false; break;
+                case Behaviours.Air: airBehaviour.IsEnabled = false; break;
+                case Behaviours.Ground: groundBehaviour.IsEnabled = false; break;
             }
             
-            switch (character.Behaviour.Current)
+            switch (behaviour.Current)
             {
-                case Behaviours.Air: character.Gravity.IsEnabled = true; break;
-                case Behaviours.Ground: character.GroundSpeed.IsEnabled = true; break;
+                case Behaviours.Air: airBehaviour.IsEnabled = true; break;
+                case Behaviours.Ground: groundBehaviour.IsEnabled = true; break;
             }
         }
+        
+        
     }
 }

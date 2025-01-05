@@ -15,10 +15,10 @@ namespace Character
 
         public Behaviours Current
         {
-            get => _behaviourTree.ValueRO.Behaviour;
-            set => _behaviourTree.ValueRW.Behaviour = value;
+            get => _behaviourTree.ValueRO.Current;
+            set =>  _behaviourTree.ValueRW.Current = value;
         }
         
-        public Behaviours Previous => _behaviourTree.ValueRO.PreviousBehaviour;
+        public Behaviours Previous => _behaviourTree.ValueRO.Previous;
     }
 }

@@ -20,10 +20,10 @@ namespace PhysicsEcs2D.DeltaTimeHelpers
             _instantValue = value;
         }
         
-        public readonly float GetValueDelta(float deltaTime) =>
-            ((deltaTime - 1f) * _instantValue + (deltaTime + 1f) * _value) * 0.5f;
+        public readonly float GetValueDelta(float speed) =>
+            ((speed - 1f) * _instantValue + (speed + 1f) * _value) * 0.5f;
         
-        public void AddAcceleration(float acceleration, float deltaTime) => _value += acceleration * deltaTime;
+        public void AddAcceleration(float acceleration, float speed) => _value += acceleration * speed;
         public void ResetInstantValue() => _instantValue = _value;
         
         public void SetClamp(float min, float max)
@@ -50,10 +50,10 @@ namespace PhysicsEcs2D.DeltaTimeHelpers
             _value = _instantValue = value;
         }
         
-        public void ApplyFriction(float friction, float deltaTime)
+        public void ApplyFriction(float friction, float speed)
         {
             float sign = math.sign(_value);
-            AddAcceleration(-sign * friction, deltaTime);
+            AddAcceleration(-sign * friction, speed);
 		    
             switch (sign)
             {

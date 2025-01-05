@@ -8,20 +8,20 @@ namespace Character.Components
     {
         public bool IsChanged;
 
-        public Behaviours Behaviour
+        public Behaviours Current
         {
-            get => _behaviour;
+            get => _current;
             set
             {
-                if (_behaviour == value) return;
+                if (_current == value) return;
                 IsChanged = true;
-                PreviousBehaviour = _behaviour;
-                _behaviour = value;
+                Previous = _current;
+                _current = value;
             }
         }
-        private Behaviours _behaviour;
+        private Behaviours _current;
         
-        public Behaviours PreviousBehaviour { get; private set; }
+        public Behaviours Previous { get; private set; }
     }
     
     public enum Behaviours : byte { None, Ground, Air }

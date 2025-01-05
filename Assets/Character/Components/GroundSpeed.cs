@@ -6,6 +6,5 @@ namespace Character.Components
     public struct GroundSpeed : IComponentData, IEnableableComponent
     {
         public AcceleratedValue Value;
-        public float Angle;
     }
 }
