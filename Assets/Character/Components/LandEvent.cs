@@ -3,7 +3,7 @@ using Unity.Entities;
 
 namespace Character.Components
 {
-    public struct LandEvent : IComponentData
+    public struct LandEvent : IComponentData, IEnableableComponent
     {
         public TileSensor Sensor;
     }

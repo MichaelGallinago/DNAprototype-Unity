@@ -1,6 +1,7 @@
 using Character.Components;
 using Character.Input;
 using PhysicsEcs2D;
+using PhysicsEcs2D.Components;
 using PhysicsEcs2D.Tiles.Collision;
 using Unity.Burst;
 using Unity.Entities;
@@ -25,9 +26,11 @@ namespace Character.Systems
     [BurstCompile]
     public partial struct JumpJob : IJobEntity
     {
-        private static void Execute(CharacterAspect character, JumpAspect jump, in PlayerInput input)
+        private static void Execute(
+            ref BehaviourTree behaviour, ref Jump jump, ref Velocity velocity,
+            in Rotation rotation, in PlayerInput input)
         {
-            switch (character.Behaviour.Current)
+            switch (behaviour.Current)
             {
                 case Behaviours.Air:
                 {
@@ -45,10 +48,10 @@ namespace Character.Systems
             if (input.Press.Jump)
             {
                 jump.CoyoteTime = 0f;
-                character.Behaviour.Current = Behaviours.Air;
-                float radians = math.radians(character.Rotation.Angle);
+                behaviour.Current = Behaviours.Air;
+                float radians = math.radians(rotation.Angle);
                 var direction = new float2(math.sin(radians), math.cos(radians));
-                character.Velocity += Constants.JumpSpeed * direction;
+                velocity.Vector += Constants.JumpSpeed * direction;
             }
         }
     }

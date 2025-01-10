@@ -1,5 +1,7 @@
+using Character.Components;
 using Character.Input;
 using PhysicsEcs2D;
+using PhysicsEcs2D.Components;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -23,125 +25,124 @@ namespace Character.Systems
     }
 
     [BurstCompile]
+    [WithAll(typeof(AirTag))]
     public partial struct AirMoveJob : IJobEntity
     {
-        private static void Execute(CharacterAspect character, AirBehaviourAspect air, in PlayerInput input)
+        private static void Execute(
+            ref Rotation rotation, ref Velocity velocity, 
+            in AirLock airLock, in PlayerInput input)
         {
-            Rotate(character);
-            character.Velocity.Clamp(-Constants.VelocityCap, Constants.VelocityCap);
-            MoveHorizontally(character, air, input);
-            ApplyDrag(character);
+            Rotate(ref rotation);
+            velocity.Vector.Clamp(-Constants.VelocityCap, Constants.VelocityCap);
+            MoveHorizontally(ref velocity, ref rotation, airLock, input);
+            ApplyDrag(ref velocity);
         }
         
-        private static void Rotate(in CharacterAspect character)
+        private static void Rotate(ref Rotation rotation)
         {
-            if (Mathf.Approximately(character.Rotation.Angle, 0f)) return;
+            if (Mathf.Approximately(rotation.Angle, 0f)) return;
 		
             float speed = Circle.ByteStep * Constants.Speed;
-            character.Rotation.Angle += character.Rotation.Angle >= Circle.Half ? speed : -speed;
+            rotation.Angle += rotation.Angle >= Circle.Half ? speed : -speed;
 		
-            if (character.Rotation.Angle is < 0f or >= Circle.Full)
+            if (rotation.Angle is < 0f or >= Circle.Full)
             {
-                character.Rotation.Angle = 0f;
+                rotation.Angle = 0f;
             }
         }
         
         private static void MoveHorizontally(
-            in CharacterAspect character, in AirBehaviourAspect air, in PlayerInput input)
+            ref Velocity velocity, ref Rotation rotation, 
+            in AirLock airLock, in PlayerInput input)
         {
-            if (air.IsLocked) return;
+            if (airLock.IsLocked) return;
 		
             if (input.Down.Left)
             {
-                MoveTo(character, Direction.Negative);
+                MoveTo(ref velocity, ref rotation, Direction.Negative);
             }
             else if (input.Down.Right)
             {
-                MoveTo(character, Direction.Positive);
+                MoveTo(ref velocity, ref rotation, Direction.Positive);
             }
         }
         
-        private static void MoveTo(in CharacterAspect character, Direction direction)
+        private static void MoveTo(ref Velocity velocity, ref Rotation rotation, Direction direction)
         {
             var sign = (int)direction;
-            float speed = sign * character.Velocity.X;
+            float speed = sign * velocity.Vector.X;
             float acceleration = sign * Constants.AccelerationAir;
 		
             switch (speed)
             {
                 case < 0f:
-                    character.Velocity.X.AddAcceleration(acceleration, Constants.Speed);
+                    velocity.Vector.X.AddAcceleration(acceleration, Constants.Speed);
                     break;
                 case < Constants.AccelerationTop:
-                    character.Velocity.X.AddAcceleration(acceleration, Constants.Speed);
-                    character.Velocity.X.Limit(sign * Constants.AccelerationTop, direction);
+                    velocity.Vector.X.AddAcceleration(acceleration, Constants.Speed);
+                    velocity.Vector.X.Limit(sign * Constants.AccelerationTop, direction);
                     break;
             }
 
-            character.Rotation.Facing = direction;
+            rotation.Facing = direction;
         }
 
-        private static void ApplyDrag(in CharacterAspect character)
+        private static void ApplyDrag(ref Velocity velocity)
         {
-            if ((float)character.Velocity.Y is < 0f and > -4f)
-            {
-                float acceleration = math.floor(character.Velocity.X * 8f) / -256f;
-                character.Velocity.X.AddAcceleration(acceleration, Constants.Speed);
-            }
+            if ((float)velocity.Vector.Y is >= 0f or <= -4f) return;
+            
+            float acceleration = math.floor(velocity.Vector.X * 8f) / -256f;
+            velocity.Vector.X.AddAcceleration(acceleration, Constants.Speed);
         }
     }
 
     [BurstCompile]
+    [WithAll(typeof(GroundTag))]
     public partial struct GroundMoveJob : IJobEntity
     {
-        private static void Execute(CharacterAspect character, GroundBehaviourAspect ground, in PlayerInput input)
+        private static void Execute(
+            ref Rotation rotation, ref GroundSpeed groundSpeed, ref Velocity velocity,
+            in PlayerInput input)
         {
             if (input.Down.Right)
             {
-                WalkOnGround(character, ground, Direction.Positive);
+                WalkOnGround(ref rotation, ref groundSpeed, Direction.Positive);
             }
             else if (input.Down.Left)
             {
-                WalkOnGround(character, ground, Direction.Negative);
+                WalkOnGround(ref rotation, ref groundSpeed, Direction.Negative);
             }
             else
             {
-                ground.Speed.ApplyFriction(Constants.Friction, Constants.Speed);
+                groundSpeed.Value.ApplyFriction(Constants.Friction, Constants.Speed);
             }
             
-            character.Velocity.SetDirectionalValue(ground.Speed, character.Rotation.Angle);
+            velocity.Vector.SetDirectionalValue(groundSpeed.Value, rotation.Angle);
         }
         
-        private static void WalkOnGround(
-            in CharacterAspect character, in GroundBehaviourAspect ground, Direction direction)
+        private static void WalkOnGround(ref Rotation rotation, ref GroundSpeed groundSpeed, Direction direction)
         {
             var sign = (float)direction;
         
-            if (ground.Speed * sign < 0f)
+            if (groundSpeed.Value * sign < 0f)
             {
-                ground.Speed.AddAcceleration(sign * Constants.Deceleration, Constants.Speed);
-                if (direction == Direction.Positive == ground.Speed >= 0f)
+                groundSpeed.Value.AddAcceleration(sign * Constants.Deceleration, Constants.Speed);
+                if (direction == Direction.Positive == groundSpeed.Value >= 0f)
                 {
-                    ground.Speed = 0.5f * sign;
+                    groundSpeed.Value = 0.5f * sign;
                 }
                 return;
             }
             
-            ground.Speed.AddAcceleration(Constants.Acceleration * sign, Constants.Speed);
+            groundSpeed.Value.AddAcceleration(Constants.Acceleration * sign, Constants.Speed);
         
             switch (direction)
             {
-                case Direction.Positive: ground.Speed.SetMin( Constants.AccelerationTop); break;
-                case Direction.Negative: ground.Speed.SetMax(-Constants.AccelerationTop); break;
+                case Direction.Positive: groundSpeed.Value.SetMin( Constants.AccelerationTop); break;
+                case Direction.Negative: groundSpeed.Value.SetMax(-Constants.AccelerationTop); break;
             }
             
-            TurnAround(character, direction);
-        }
-        
-        private static void TurnAround(in CharacterAspect character, Direction direction)
-        {
-            if (character.Rotation.Facing == direction) return;
-            character.Rotation.Facing = direction;
+            rotation.Facing = direction;
         }
     }
 }

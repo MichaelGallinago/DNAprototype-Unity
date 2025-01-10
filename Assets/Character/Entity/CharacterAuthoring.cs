@@ -20,14 +20,15 @@ namespace Character
         {
             public override void Bake(CharacterAuthoring authoring) => new BakerQuery(this, TransformUsageFlags.Dynamic)
                 .AddComponents<PlayerInput>() //TODO: move to player
-                .AddComponents<GroundSpeed, Velocity, Rotation, Jump, LandEvent, AirLock>()
-                .AddComponents(new Gravity { Vector = Constants.GravityVector })
+                .AddComponents<GroundTag, GroundSpeed, Velocity, Rotation, Jump, LandEvent, AirLock>()
+                .AddDisabledComponents<AirTag>()
                 .AddComponents(new FloorSensors
                 {
                     First = GetEntity(DependsOn(authoring._tileSensorFloor1), TransformUsageFlags.Dynamic),
                     Second = GetEntity(DependsOn(authoring._tileSensorFloor2), TransformUsageFlags.Dynamic)
-                }, 
-                new BehaviourTree { Current = Behaviours.Ground });
+                },
+                new BehaviourTree { Current = Behaviours.Ground },
+                new Gravity { Vector = Constants.GravityVector });
         }
     }
 }

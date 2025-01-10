@@ -3,7 +3,7 @@ using Unity.Entities;
 
 namespace Character.Components
 {
-    public struct GroundSpeed : IComponentData, IEnableableComponent
+    public struct GroundSpeed : IComponentData
     {
         public AcceleratedValue Value;
     }

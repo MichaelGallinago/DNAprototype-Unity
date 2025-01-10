@@ -1,11 +1,12 @@
 using Character.Components;
+using PhysicsEcs2D.Components;
 using PhysicsEcs2D.Tiles.Collision;
 using PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
+using Unity.Transforms;
 using Utilities;
 using static Character.Systems.CollisionJobUtilities;
 
@@ -36,23 +37,30 @@ namespace Character.Systems
     }
 
     [BurstCompile]
+    [WithAll(typeof(AirTag))]
+    [WithPresent(typeof(LandEvent))]
     public partial struct AirCollisionJob : IJobEntity
     {
         [ReadOnly] public ComponentLookup<TileSensor> SensorLookup;
         
-        private void Execute(CharacterAspect character, AirBehaviourAspect air, ref LandEvent landEvent)
+        private void Execute(
+            ref BehaviourTree behaviour, ref LandEvent landEvent,
+            in FloorSensors floorSensors,
+            EnabledRefRW<LandEvent> isLandEventEnabled)
         {
-            TileSensor sensor = FindClosest(character.FloorSensor, ref SensorLookup);
+            TileSensor sensor = FindClosest(ref SensorLookup, floorSensors);
             
             if (sensor.IsInside)
             {
-                character.Behaviour.Current = Behaviours.Ground;
+                behaviour.Current = Behaviours.Ground;
                 landEvent.Sensor = sensor;
+                isLandEventEnabled.ValueRW = true;
             }
         }
     }
 
     [BurstCompile]
+    [WithAll(typeof(GroundTag))]
     public partial struct GroundCollisionJob : IJobEntity 
     {
         private const int MinTolerance = 4;
@@ -60,24 +68,26 @@ namespace Character.Systems
         
         [ReadOnly] public ComponentLookup<TileSensor> SensorLookup;
         
-        private void Execute(CharacterAspect character, GroundBehaviourAspect ground)
+        private void Execute(
+            ref Rotation rotation, ref LocalTransform transform, ref BehaviourTree behaviour,
+            in Velocity velocity, in FloorSensors floorSensors)
         {
-            TileSensor sensor = FindClosest(character.FloorSensor, ref SensorLookup);
+            TileSensor sensor = FindClosest(ref SensorLookup, floorSensors);
             
             if (sensor.Distance < -MaxTolerance) return;
             
-            if (TryGoAirborne(character, sensor.Distance))
+            if (TryGoAirborne(velocity.Vector, sensor.Distance))
             {
-                character.Behaviour.Current = Behaviours.Air;
+                behaviour.Current = Behaviours.Air;
                 return;
             }
             
-            ApplySensorData(character, sensor);
+            ApplySensorData(ref rotation, ref transform, sensor);
         }
         
-        private static bool TryGoAirborne(in CharacterAspect characterAspect, int distance)
+        private static bool TryGoAirborne(float2 velocityVector, int distance)
         {
-            var toleranceCheckSpeed = (int)math.length(characterAspect.Velocity);
+            var toleranceCheckSpeed = (int)math.length(velocityVector);
             int tolerance = math.min(MinTolerance + toleranceCheckSpeed, MaxTolerance);
             return distance > tolerance;
         }
@@ -86,30 +96,33 @@ namespace Character.Systems
     [BurstCompile]
     public partial struct LandJob : IJobEntity
     {
-        private static void Execute(CharacterAspect character, GroundBehaviourAspect ground, [WithChangeFilter] in LandEvent landEvent)
+        private static void Execute(
+            ref Velocity velocity, ref Rotation rotation, ref LocalTransform transform, ref GroundSpeed groundSpeed,
+            in LandEvent landEvent, 
+            EnabledRefRW<LandEvent> isLandEventEnabled)
         {
             //TODO: check if deltaTime transition needed
-            //Debug.Log("Hello");
-            ground.Speed = MathUtilities.ProjectOnPlane(character.Velocity, landEvent.Sensor.Angle);
-            character.Velocity = default;
-            ApplySensorData(character, landEvent.Sensor);
+            groundSpeed.Value = MathUtilities.ProjectOnPlane(velocity.Vector, landEvent.Sensor.Angle);
+            velocity.Vector = default;
+            ApplySensorData(ref rotation, ref transform, landEvent.Sensor);
+            isLandEventEnabled.ValueRW = false;
         }
     }
     
     [BurstCompile]
     public static class CollisionJobUtilities
     {
-        public static TileSensor FindClosest(in FloorSensors floorSensors, ref ComponentLookup<TileSensor> sensorLookup)
+        public static TileSensor FindClosest(ref ComponentLookup<TileSensor> sensorLookup, in FloorSensors floorSensors)
         {
             TileSensor firstSensor = sensorLookup[floorSensors.First];
             TileSensor secondSensor = sensorLookup[floorSensors.Second];
             return firstSensor.Distance <= secondSensor.Distance ? firstSensor : secondSensor;
         }
         
-        public static void ApplySensorData(in CharacterAspect character, in TileSensor sensor)
+        public static void ApplySensorData(ref Rotation rotation, ref LocalTransform transform, in TileSensor sensor)
         {
-            character.Rotation.Angle = sensor.Angle;
-            character.Position = sensor.AddOffset(character.Position);
+            rotation.Angle = sensor.Angle;
+            transform.Position.xy = sensor.AddOffset(transform.Position.xy);
         }
     }
 }

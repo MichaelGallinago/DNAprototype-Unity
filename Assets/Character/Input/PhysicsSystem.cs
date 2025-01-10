@@ -1,3 +1,4 @@
+using Character.Components;
 using PhysicsEcs2D;
 using PhysicsEcs2D.Components;
 using Unity.Burst;
@@ -49,6 +50,7 @@ namespace Character.Input
     }
     
     [BurstCompile]
+    [WithAll(typeof(AirTag))]
     public partial struct GravityJob : IJobEntity
     {
         private static void Execute(ref Velocity velocity, in Gravity gravity) =>

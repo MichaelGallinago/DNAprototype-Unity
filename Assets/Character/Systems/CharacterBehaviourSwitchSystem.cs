@@ -1,7 +1,6 @@
 using Character.Components;
 using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
 
 namespace Character.Systems
 {
@@ -10,46 +9,37 @@ namespace Character.Systems
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct CharacterBehaviourSwitchSystem : ISystem
     {
-        public void OnCreate(ref SystemState state) 
-        {
+        public void OnCreate(ref SystemState state) =>
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
-        }
 
-        public void OnUpdate(ref SystemState state)
-        {
+        public void OnUpdate(ref SystemState state) =>
             state.Dependency = new CharacterBehaviourSwitchJob().Schedule(state.Dependency);
-        }
 
         public void OnDestroy(ref SystemState state) {}
     }
 
     [BurstCompile]
-    [WithPresent(typeof(GroundSpeed))]
-    //[WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
+    [WithPresent(typeof(GroundTag), typeof(AirTag))]
     public partial struct CharacterBehaviourSwitchJob : IJobEntity
     {
         private static void Execute(
-            in BehaviourTree behaviour,
-            ref AirLock airLock,
-            //AirBehaviourAspect airBehaviour,
-            GroundBehaviourAspect groundBehaviour)
+            ref BehaviourTree behaviour, 
+            EnabledRefRW<GroundTag> groundTag, EnabledRefRW<AirTag> airTag)
         {
-            //Debug.Log($"{(int)behaviour.Current}");
-            //if (!behaviour.IsChanged) return;
-            //behaviour.IsChanged = false;
-            /*
+            if (!behaviour.IsChanged) return;
+            behaviour.IsChanged = false;
+            
             switch (behaviour.Previous)
             {
-                //case Behaviours.Air: airBehaviour.IsEnabled = false; break;
-                case Behaviours.Ground: groundBehaviour.IsEnabled = false; break;
+                case Behaviours.Air: airTag.ValueRW = false; break;
+                case Behaviours.Ground: groundTag.ValueRW = false; break;
             }
             
             switch (behaviour.Current)
             {
-                //case Behaviours.Air: airBehaviour.IsEnabled = true; break;
-                case Behaviours.Ground: groundBehaviour.IsEnabled = true; break;
+                case Behaviours.Air: airTag.ValueRW = true; break;
+                case Behaviours.Ground: groundTag.ValueRW = true; break;
             }
-            */
         }
     }
 }
