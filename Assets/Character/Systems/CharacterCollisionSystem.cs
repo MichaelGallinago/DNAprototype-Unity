@@ -96,9 +96,13 @@ namespace Character.Systems
     [BurstCompile]
     public partial struct LandJob : IJobEntity
     {
+        // LandEvent with ref because of EnabledRefRW
         private static void Execute(
-            ref Velocity velocity, ref Rotation rotation, ref LocalTransform transform, ref GroundSpeed groundSpeed,
-            in LandEvent landEvent, 
+            ref Velocity velocity, 
+            ref Rotation rotation, 
+            ref LocalTransform transform, 
+            ref GroundSpeed groundSpeed,
+            ref LandEvent landEvent,
             EnabledRefRW<LandEvent> isLandEventEnabled)
         {
             //TODO: check if deltaTime transition needed
