@@ -10,7 +10,7 @@ namespace Character.Systems
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct CharacterBehaviourSwitchSystem : ISystem
     {
-        public void OnCreate(ref SystemState state)
+        public void OnCreate(ref SystemState state) 
         {
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
         }
@@ -24,32 +24,32 @@ namespace Character.Systems
     }
 
     [BurstCompile]
-    [WithPresent(typeof(AirLock), typeof(GroundSpeed))]
+    [WithPresent(typeof(GroundSpeed))]
     //[WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
     public partial struct CharacterBehaviourSwitchJob : IJobEntity
     {
         private static void Execute(
             in BehaviourTree behaviour,
-            AirBehaviourAspect airBehaviour,
+            ref AirLock airLock,
+            //AirBehaviourAspect airBehaviour,
             GroundBehaviourAspect groundBehaviour)
         {
-            Debug.Log($"{(int)behaviour.Current}");
+            //Debug.Log($"{(int)behaviour.Current}");
             //if (!behaviour.IsChanged) return;
             //behaviour.IsChanged = false;
-
+            /*
             switch (behaviour.Previous)
             {
-                case Behaviours.Air: airBehaviour.IsEnabled = false; break;
+                //case Behaviours.Air: airBehaviour.IsEnabled = false; break;
                 case Behaviours.Ground: groundBehaviour.IsEnabled = false; break;
             }
             
             switch (behaviour.Current)
             {
-                case Behaviours.Air: airBehaviour.IsEnabled = true; break;
+                //case Behaviours.Air: airBehaviour.IsEnabled = true; break;
                 case Behaviours.Ground: groundBehaviour.IsEnabled = true; break;
             }
+            */
         }
-        
-        
     }
 }
