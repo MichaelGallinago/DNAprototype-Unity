@@ -2,6 +2,7 @@ using Character.Components;
 using Character.Input;
 using PhysicsEcs2D;
 using PhysicsEcs2D.Components;
+using PhysicsEcs2D.DeltaTimeHelpers;
 using PhysicsEcs2D.Tiles.Collision;
 using Unity.Burst;
 using Unity.Entities;
@@ -51,7 +52,7 @@ namespace Character.Systems
                 behaviour.Current = Behaviours.Air;
                 float radians = math.radians(rotation.Angle);
                 var direction = new float2(math.sin(radians), math.cos(radians));
-                velocity.Vector += Constants.JumpSpeed * direction;
+                velocity.Vector = Constants.JumpSpeed * direction;
             }
         }
     }

@@ -1,11 +1,10 @@
 using Character.Components;
-using PhysicsEcs2D;
 using PhysicsEcs2D.Components;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
 
-namespace Character.Input
+namespace PhysicsEcs2D.Systems
 {
     [BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]

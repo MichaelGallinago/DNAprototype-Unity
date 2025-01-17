@@ -11,6 +11,7 @@ using Utilities;
 namespace Character.Systems
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct MoveSystem : ISystem
     {
         public void OnCreate(ref SystemState state) {}
@@ -52,7 +53,7 @@ namespace Character.Systems
         }
         
         private static void MoveHorizontally(
-            ref Velocity velocity, ref Rotation rotation, 
+            ref Velocity velocity, ref Rotation rotation,
             in AirLock airLock, in PlayerInput input)
         {
             if (airLock.IsLocked) return;
@@ -89,7 +90,7 @@ namespace Character.Systems
 
         private static void ApplyDrag(ref Velocity velocity)
         {
-            if ((float)velocity.Vector.Y is >= 0f or <= -4f) return;
+            if ((float)velocity.Vector.Y is <= 0f or >= 4f) return;
             
             float acceleration = math.floor(velocity.Vector.X * 8f) / -256f;
             velocity.Vector.X.AddAcceleration(acceleration, Constants.Speed);

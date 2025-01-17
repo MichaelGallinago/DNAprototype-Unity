@@ -16,5 +16,33 @@ SpriteAtlasAsset:
     - {fileID: 21300000, guid: 6c49fc74a8e67f744809b65b52b28c3c, type: 2}
     - {fileID: 21300000, guid: 0049587c19735a146b17bf55e8e400bc, type: 2}
     - {fileID: 21300000, guid: 9e29a9c9473b4154aa799d42a5f9c1f9, type: 2}
+    - {fileID: 21300000, guid: 323bd55d17a06df458935533dbcd11cc, type: 2}
+    - {fileID: 21300000, guid: a300bdc295cb5a04a82cd459b20f5ad6, type: 2}
+    - {fileID: 21300000, guid: dfa7a40f67b83cc47969b03ce68b1de0, type: 2}
+    - {fileID: 21300000, guid: f929e75a0285c30418705a9e53d6d028, type: 2}
+    - {fileID: 21300000, guid: a240889d1e63c08449b10d19f14c4bce, type: 2}
+    - {fileID: 21300000, guid: 018921a5c93c8bd45a96aed7c0441e86, type: 2}
+    - {fileID: 21300000, guid: a3dbca0d60330f0459f405097d25e23b, type: 2}
+    - {fileID: 21300000, guid: 5317233ca8b91a24a91d7c9ea924f924, type: 2}
+    - {fileID: 21300000, guid: c329815abc187444bb89da08a7b18825, type: 2}
+    - {fileID: 21300000, guid: f0b4b7661f732354a9e6d57646bbc1c4, type: 2}
+    - {fileID: 21300000, guid: b452a8a9fe6c2ed42bab487609fad03c, type: 2}
+    - {fileID: 21300000, guid: 4599911319b59ed4e913266fd8788ecf, type: 2}
+    - {fileID: 21300000, guid: 147090d161ed7a547b5b04bc274876fb, type: 2}
+    - {fileID: 21300000, guid: bafcc558aa6125d4da5cd3d39093961f, type: 2}
+    - {fileID: 21300000, guid: 265345f787e1870438a1eb7e032ce55a, type: 2}
+    - {fileID: 21300000, guid: 701052c9319709d47b16d24674f43a11, type: 2}
+    - {fileID: 21300000, guid: 7389f5a4f27be1446888941e0aced03f, type: 2}
+    - {fileID: 21300000, guid: fbc889bc62962924ba3af371bfffb447, type: 2}
+    - {fileID: 21300000, guid: 8ea42d708f58b1c4488400dd597a254c, type: 2}
+    - {fileID: 21300000, guid: a41cea5a50e16914f9ad795864f42101, type: 2}
+    - {fileID: 21300000, guid: 5ef0c0962ae4f0b44aafcbd2f6c8b59f, type: 2}
+    - {fileID: 21300000, guid: 2bd6d92dc5a5a4448bdb26d74121d89c, type: 2}
+    - {fileID: 21300000, guid: 50ea50d95d0b62946b1c2296a2ea8b3a, type: 2}
+    - {fileID: 21300000, guid: e72473ab76159904eaf9015ff6d2adb9, type: 2}
+    - {fileID: 21300000, guid: a607253e25549b74384b59b1f3bc1c21, type: 2}
+    - {fileID: 21300000, guid: de66654fce6b38e45b1856e751c53d03, type: 2}
+    - {fileID: 21300000, guid: b42ddb051a7f2504fbb1d26a96755b6e, type: 2}
+    - {fileID: 21300000, guid: 97ba0dc13edba9e4ca247d47dbdc7820, type: 2}
   m_IsVariant: 0
   m_ScriptablePacker: {fileID: 0}

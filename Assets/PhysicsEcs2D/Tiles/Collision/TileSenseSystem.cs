@@ -9,6 +9,7 @@ using Unity.Transforms;
 using UnityEngine;
 using Utilities;
 using static PhysicsEcs2D.Tiles.TileConstants;
+using PhysicsSystem = PhysicsEcs2D.Systems.PhysicsSystem;
 
 namespace PhysicsEcs2D.Tiles.Collision
 {
