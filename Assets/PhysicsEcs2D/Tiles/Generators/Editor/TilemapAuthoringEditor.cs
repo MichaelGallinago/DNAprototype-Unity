@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using PhysicsEcs2D.Tiles.Storage.Editor;
-using Tiles;
 using Tiles.Generators;
 using Tiles.SolidTypes;
 using UnityEditor;

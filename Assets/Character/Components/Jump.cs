@@ -7,5 +7,6 @@ namespace Character.Components
         public const float DefaultCoyoteTime = 10f;
         
         public float CoyoteTime;
+        public float Speed;
     }
 }

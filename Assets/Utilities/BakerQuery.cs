@@ -74,6 +74,171 @@ namespace Utilities
             return this;
         }
         
+        public BakerQuery AddComponents<T1, T2, T3, T4, T5>(
+            in T1 component1, 
+            in T2 component2,
+            in T3 component3, 
+            in T4 component4,
+            in T5 component5) 
+            where T1 : unmanaged, IComponentData 
+            where T2 : unmanaged, IComponentData
+            where T3 : unmanaged, IComponentData
+            where T4 : unmanaged, IComponentData
+            where T5 : unmanaged, IComponentData
+        {
+            _baker.AddComponent(_entity, component1);
+            _baker.AddComponent(_entity, component2);
+            _baker.AddComponent(_entity, component3);
+            _baker.AddComponent(_entity, component4);
+            _baker.AddComponent(_entity, component5);
+            return this;
+        }
+        
+        public BakerQuery AddComponents<T1, T2, T3, T4, T5, T6>(
+            in T1 component1, 
+            in T2 component2,
+            in T3 component3, 
+            in T4 component4,
+            in T5 component5,
+            in T6 component6) 
+            where T1 : unmanaged, IComponentData 
+            where T2 : unmanaged, IComponentData
+            where T3 : unmanaged, IComponentData
+            where T4 : unmanaged, IComponentData
+            where T5 : unmanaged, IComponentData
+            where T6 : unmanaged, IComponentData
+        {
+            _baker.AddComponent(_entity, component1);
+            _baker.AddComponent(_entity, component2);
+            _baker.AddComponent(_entity, component3);
+            _baker.AddComponent(_entity, component4);
+            _baker.AddComponent(_entity, component5);
+            _baker.AddComponent(_entity, component6);
+            return this;
+        }
+        
+        public BakerQuery AddComponents<T1, T2, T3, T4, T5, T6, T7>(
+            in T1 component1, 
+            in T2 component2,
+            in T3 component3, 
+            in T4 component4,
+            in T5 component5,
+            in T6 component6,
+            in T7 component7) 
+            where T1 : unmanaged, IComponentData 
+            where T2 : unmanaged, IComponentData
+            where T3 : unmanaged, IComponentData
+            where T4 : unmanaged, IComponentData
+            where T5 : unmanaged, IComponentData
+            where T6 : unmanaged, IComponentData
+            where T7 : unmanaged, IComponentData
+        {
+            _baker.AddComponent(_entity, component1);
+            _baker.AddComponent(_entity, component2);
+            _baker.AddComponent(_entity, component3);
+            _baker.AddComponent(_entity, component4);
+            _baker.AddComponent(_entity, component5);
+            _baker.AddComponent(_entity, component6);
+            _baker.AddComponent(_entity, component7);
+            return this;
+        }
+        
+        public BakerQuery AddComponents<T1, T2, T3, T4, T5, T6, T7, T8>(
+            in T1 component1, 
+            in T2 component2,
+            in T3 component3, 
+            in T4 component4,
+            in T5 component5,
+            in T6 component6,
+            in T7 component7,
+            in T8 component8) 
+            where T1 : unmanaged, IComponentData 
+            where T2 : unmanaged, IComponentData
+            where T3 : unmanaged, IComponentData
+            where T4 : unmanaged, IComponentData
+            where T5 : unmanaged, IComponentData
+            where T6 : unmanaged, IComponentData
+            where T7 : unmanaged, IComponentData
+            where T8 : unmanaged, IComponentData
+        {
+            _baker.AddComponent(_entity, component1);
+            _baker.AddComponent(_entity, component2);
+            _baker.AddComponent(_entity, component3);
+            _baker.AddComponent(_entity, component4);
+            _baker.AddComponent(_entity, component5);
+            _baker.AddComponent(_entity, component6);
+            _baker.AddComponent(_entity, component7);
+            _baker.AddComponent(_entity, component8);
+            return this;
+        }
+        
+        public BakerQuery AddComponents<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+            in T1 component1, 
+            in T2 component2,
+            in T3 component3, 
+            in T4 component4,
+            in T5 component5,
+            in T6 component6,
+            in T7 component7,
+            in T8 component8,
+            in T9 component9) 
+            where T1 : unmanaged, IComponentData 
+            where T2 : unmanaged, IComponentData
+            where T3 : unmanaged, IComponentData
+            where T4 : unmanaged, IComponentData
+            where T5 : unmanaged, IComponentData
+            where T6 : unmanaged, IComponentData
+            where T7 : unmanaged, IComponentData
+            where T8 : unmanaged, IComponentData
+            where T9 : unmanaged, IComponentData
+        {
+            _baker.AddComponent(_entity, component1);
+            _baker.AddComponent(_entity, component2);
+            _baker.AddComponent(_entity, component3);
+            _baker.AddComponent(_entity, component4);
+            _baker.AddComponent(_entity, component5);
+            _baker.AddComponent(_entity, component6);
+            _baker.AddComponent(_entity, component7);
+            _baker.AddComponent(_entity, component8);
+            _baker.AddComponent(_entity, component9);
+            return this;
+        }
+        
+        public BakerQuery AddComponents<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+            in T1 component1, 
+            in T2 component2,
+            in T3 component3, 
+            in T4 component4,
+            in T5 component5,
+            in T6 component6,
+            in T7 component7,
+            in T8 component8,
+            in T9 component9,
+            in T10 component10) 
+            where T1 : unmanaged, IComponentData 
+            where T2 : unmanaged, IComponentData
+            where T3 : unmanaged, IComponentData
+            where T4 : unmanaged, IComponentData
+            where T5 : unmanaged, IComponentData
+            where T6 : unmanaged, IComponentData
+            where T7 : unmanaged, IComponentData
+            where T8 : unmanaged, IComponentData
+            where T9 : unmanaged, IComponentData
+            where T10 : unmanaged, IComponentData
+        {
+            _baker.AddComponent(_entity, component1);
+            _baker.AddComponent(_entity, component2);
+            _baker.AddComponent(_entity, component3);
+            _baker.AddComponent(_entity, component4);
+            _baker.AddComponent(_entity, component5);
+            _baker.AddComponent(_entity, component6);
+            _baker.AddComponent(_entity, component7);
+            _baker.AddComponent(_entity, component8);
+            _baker.AddComponent(_entity, component9);
+            _baker.AddComponent(_entity, component10);
+            return this;
+        }
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddDisabledComponent<T>(in T component) where T : unmanaged, IComponentData, IEnableableComponent
         {

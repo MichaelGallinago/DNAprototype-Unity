@@ -2,6 +2,7 @@ using Character.Components;
 using PhysicsEcs2D.Components;
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace PhysicsEcs2D.Systems
@@ -24,6 +25,7 @@ namespace PhysicsEcs2D.Systems
             state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
             state.Dependency = new GravityJob().ScheduleParallel(state.Dependency); 
             state.Dependency = new MovementJob().ScheduleParallel(state.Dependency);
+            state.Dependency = new RotationJob().ScheduleParallel(state.Dependency);
             state.Dependency.Complete();
 
             UpdateTransformSystemGroup();
@@ -45,7 +47,7 @@ namespace PhysicsEcs2D.Systems
     public partial struct AccelerationJob : IJobEntity
     {
         private static void Execute(ref Velocity velocity, in Acceleration acceleration) => 
-            velocity.Vector.AddAcceleration(acceleration.Vector, Constants.Speed);
+            velocity.Vector.AddAcceleration(acceleration.Vector, TimeSystem.Speed);
     }
     
     [BurstCompile]
@@ -53,7 +55,7 @@ namespace PhysicsEcs2D.Systems
     public partial struct GravityJob : IJobEntity
     {
         private static void Execute(ref Velocity velocity, in Gravity gravity) =>
-            velocity.Vector.AddAcceleration(gravity.Vector, Constants.Speed);
+            velocity.Vector.AddAcceleration(gravity.Vector, TimeSystem.Speed);
     }
     
     [BurstCompile]
@@ -61,8 +63,17 @@ namespace PhysicsEcs2D.Systems
     {
         private static void Execute(ref LocalTransform transform, ref Velocity velocity)
         {
-            transform.Position.xy += velocity.Vector.GetValueDelta(Constants.Speed);
+            transform.Position.xy += velocity.Vector.GetValueDelta(TimeSystem.Speed);
             velocity.Vector.ResetInstanceValue();
+        }
+    }
+    
+    [BurstCompile]
+    public partial struct RotationJob : IJobEntity
+    {
+        private static void Execute(ref LocalTransform transform, in Rotation rotation)
+        {
+            transform.Rotation = quaternion.RotateZ(rotation.Angle);
         }
     }
 }

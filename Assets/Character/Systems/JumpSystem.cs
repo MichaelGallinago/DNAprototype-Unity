@@ -2,7 +2,7 @@ using Character.Components;
 using Character.Input;
 using PhysicsEcs2D;
 using PhysicsEcs2D.Components;
-using PhysicsEcs2D.DeltaTimeHelpers;
+using PhysicsEcs2D.Systems;
 using PhysicsEcs2D.Tiles.Collision;
 using Unity.Burst;
 using Unity.Entities;
@@ -35,7 +35,7 @@ namespace Character.Systems
             {
                 case Behaviours.Air:
                 {
-                    jump.CoyoteTime -= Constants.Speed;
+                    jump.CoyoteTime -= TimeSystem.Speed;
                     if (jump.CoyoteTime <= 0f) return;
                     break;
                 }
@@ -46,14 +46,22 @@ namespace Character.Systems
                 }
             }
 
-            if (input.Press.Jump)
-            {
-                jump.CoyoteTime = 0f;
-                behaviour.Current = Behaviours.Air;
-                float radians = math.radians(rotation.Angle);
-                var direction = new float2(math.sin(radians), math.cos(radians));
-                velocity.Vector = Constants.JumpSpeed * direction;
-            }
+            if (!input.Press.Jump) return;
+            PerformJump(ref behaviour, ref jump, ref velocity, rotation);
+        }
+
+        private static void PerformJump(
+            ref BehaviourTree behaviour, ref Jump jump, ref Velocity velocity, 
+            in Rotation rotation)
+        {
+            jump.CoyoteTime = 0f;
+            behaviour.Current = Behaviours.Air;
+            float radians = math.radians(rotation.Angle);
+            float2 jumpVector = jump.Speed * new float2(math.sin(radians), math.cos(radians));
+
+            float2 trueValue = velocity.Vector + jumpVector;
+            bool2 test = math.abs(jumpVector) < math.abs(trueValue);
+            velocity.Vector = math.select(jumpVector, trueValue, test);
         }
     }
 }

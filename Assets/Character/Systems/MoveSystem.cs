@@ -1,7 +1,7 @@
 using Character.Components;
 using Character.Input;
-using PhysicsEcs2D;
 using PhysicsEcs2D.Components;
+using PhysicsEcs2D.Systems;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -31,11 +31,11 @@ namespace Character.Systems
     {
         private static void Execute(
             ref Rotation rotation, ref Velocity velocity, 
-            in AirLock airLock, in PlayerInput input)
+            in AirLock airLock, in PlayerInput input, in PhysicsData physicsData)
         {
             Rotate(ref rotation);
-            velocity.Vector.Clamp(-Constants.VelocityCap, Constants.VelocityCap);
-            MoveHorizontally(ref velocity, ref rotation, airLock, input);
+            velocity.Vector.Clamp(-physicsData.VelocityCap, physicsData.VelocityCap);
+            MoveHorizontally(ref velocity, ref rotation, airLock, input, physicsData);
             ApplyDrag(ref velocity);
         }
         
@@ -43,7 +43,7 @@ namespace Character.Systems
         {
             if (Mathf.Approximately(rotation.Angle, 0f)) return;
 		
-            float speed = Circle.ByteStep * Constants.Speed;
+            float speed = Circle.ByteStep * TimeSystem.Speed;
             rotation.Angle += rotation.Angle >= Circle.Half ? speed : -speed;
 		
             if (rotation.Angle is < 0f or >= Circle.Full)
@@ -54,38 +54,41 @@ namespace Character.Systems
         
         private static void MoveHorizontally(
             ref Velocity velocity, ref Rotation rotation,
-            in AirLock airLock, in PlayerInput input)
+            in AirLock airLock, in PlayerInput input, in PhysicsData physicsData)
         {
             if (airLock.IsLocked) return;
 		
             if (input.Down.Left)
             {
-                MoveTo(ref velocity, ref rotation, Direction.Negative);
+                MoveTo(ref velocity, ref rotation, physicsData, Direction.Negative);
             }
             else if (input.Down.Right)
             {
-                MoveTo(ref velocity, ref rotation, Direction.Positive);
+                MoveTo(ref velocity, ref rotation, physicsData, Direction.Positive);
             }
         }
         
-        private static void MoveTo(ref Velocity velocity, ref Rotation rotation, Direction direction)
+        private static void MoveTo(
+            ref Velocity velocity, ref Rotation rotation, 
+            in PhysicsData physicsData,
+            Direction direction)
         {
             var sign = (int)direction;
             float speed = sign * velocity.Vector.X;
-            float acceleration = sign * Constants.AccelerationAir;
-		
-            switch (speed)
-            {
-                case < 0f:
-                    velocity.Vector.X.AddAcceleration(acceleration, Constants.Speed);
-                    break;
-                case < Constants.AccelerationTop:
-                    velocity.Vector.X.AddAcceleration(acceleration, Constants.Speed);
-                    velocity.Vector.X.Limit(sign * Constants.AccelerationTop, direction);
-                    break;
-            }
+            float acceleration = sign * physicsData.AccelerationAir;
 
             rotation.Facing = direction;
+            
+            if (speed < 0f)
+            {
+                velocity.Vector.X.AddAcceleration(acceleration, TimeSystem.Speed);
+                return;
+            }
+
+            if (speed >= physicsData.AccelerationTop) return;
+            
+            velocity.Vector.X.AddAcceleration(acceleration, TimeSystem.Speed);
+            velocity.Vector.X.Limit(sign * physicsData.AccelerationTop, direction);
         }
 
         private static void ApplyDrag(ref Velocity velocity)
@@ -93,7 +96,7 @@ namespace Character.Systems
             if ((float)velocity.Vector.Y is <= 0f or >= 4f) return;
             
             float acceleration = math.floor(velocity.Vector.X * 8f) / -256f;
-            velocity.Vector.X.AddAcceleration(acceleration, Constants.Speed);
+            velocity.Vector.X.AddAcceleration(acceleration, TimeSystem.Speed);
         }
     }
 
@@ -103,31 +106,34 @@ namespace Character.Systems
     {
         private static void Execute(
             ref Rotation rotation, ref GroundSpeed groundSpeed, ref Velocity velocity,
-            in PlayerInput input)
+            in PlayerInput input, in PhysicsData physicsData)
         {
             if (input.Down.Right)
             {
-                WalkOnGround(ref rotation, ref groundSpeed, Direction.Positive);
+                WalkOnGround(ref rotation, ref groundSpeed, physicsData, Direction.Positive);
             }
             else if (input.Down.Left)
             {
-                WalkOnGround(ref rotation, ref groundSpeed, Direction.Negative);
+                WalkOnGround(ref rotation, ref groundSpeed, physicsData, Direction.Negative);
             }
             else
             {
-                groundSpeed.Value.ApplyFriction(Constants.Friction, Constants.Speed);
+                groundSpeed.Value.ApplyFriction(physicsData.Friction, TimeSystem.Speed);
             }
             
             velocity.Vector.SetDirectionalValue(groundSpeed.Value, rotation.Angle);
         }
         
-        private static void WalkOnGround(ref Rotation rotation, ref GroundSpeed groundSpeed, Direction direction)
+        private static void WalkOnGround(
+            ref Rotation rotation, ref GroundSpeed groundSpeed, 
+            in PhysicsData physicsData,
+            Direction direction)
         {
             var sign = (float)direction;
         
             if (groundSpeed.Value * sign < 0f)
             {
-                groundSpeed.Value.AddAcceleration(sign * Constants.Deceleration, Constants.Speed);
+                groundSpeed.Value.AddAcceleration(sign * physicsData.Deceleration, TimeSystem.Speed);
                 if (direction == Direction.Positive == groundSpeed.Value >= 0f)
                 {
                     groundSpeed.Value = 0.5f * sign;
@@ -135,12 +141,12 @@ namespace Character.Systems
                 return;
             }
             
-            groundSpeed.Value.AddAcceleration(Constants.Acceleration * sign, Constants.Speed);
+            groundSpeed.Value.AddAcceleration(sign * physicsData.Acceleration, TimeSystem.Speed);
         
             switch (direction)
             {
-                case Direction.Positive: groundSpeed.Value.SetMin( Constants.AccelerationTop); break;
-                case Direction.Negative: groundSpeed.Value.SetMax(-Constants.AccelerationTop); break;
+                case Direction.Positive: groundSpeed.Value.SetMin( physicsData.AccelerationTop); break;
+                case Direction.Negative: groundSpeed.Value.SetMax(-physicsData.AccelerationTop); break;
             }
             
             rotation.Facing = direction;

@@ -49,13 +49,11 @@ namespace Character.Systems
             EnabledRefRW<LandEvent> isLandEventEnabled)
         {
             TileSensor sensor = FindClosest(ref SensorLookup, floorSensors);
-            
-            if (sensor.IsInside)
-            {
-                behaviour.Current = Behaviours.Ground;
-                landEvent.Sensor = sensor;
-                isLandEventEnabled.ValueRW = true;
-            }
+
+            if (!sensor.IsInside) return;
+            behaviour.Current = Behaviours.Ground;
+            landEvent.Sensor = sensor;
+            isLandEventEnabled.ValueRW = true;
         }
     }
 
