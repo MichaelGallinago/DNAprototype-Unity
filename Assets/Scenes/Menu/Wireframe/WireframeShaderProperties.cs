@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scenes.Menu
+namespace Scenes.Menu.Wireframe
 {
     public static class WireframeShaderProperties
     {
