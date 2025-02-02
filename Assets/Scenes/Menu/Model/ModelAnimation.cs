@@ -14,8 +14,19 @@ namespace Scenes.Menu.Model
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private AudioClip _audioClip;
         [SerializeField] private MenuAudioSource _audioSource;
-        
+
         private void Start() => _ = PlayAnimation();
+
+        public async UniTask StartRotation()
+        {
+            await LMotion.Create(0f, 60f, _rotationDuration)
+                .WithEase(Ease.InBack)
+                .BindToLocalEulerAnglesY(transform);
+            
+            await LMotion.Create(60f, 360f, _rotationDuration).BindToLocalEulerAnglesY(transform);
+            
+            LMotion.Create(0f, 360f, _rotationDuration).WithLoops(-1).BindToLocalEulerAnglesY(transform);
+        }
         
         private async UniTask PlayAnimation()
         {
@@ -26,8 +37,6 @@ namespace Scenes.Menu.Model
             LMotion.Create(0f, WireframeShaderProperties.SnapMaximum, _snappingDuration)
                 .WithEase(Ease.InQuad)
                 .Bind(UpdateSnapping);
-            
-            LMotion.Create(0f, 360f, _rotationDuration).WithLoops(-1).BindToLocalEulerAnglesY(transform);
             
             await UniTask.WaitForSeconds(1.2f);
             _audioSource.Play(_audioClip, 0.5f);

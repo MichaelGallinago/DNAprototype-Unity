@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using Scenes.Menu.Audio;
+using Scenes.Menu.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ namespace Scenes.Menu.Tube
         [SerializeField] private AudioClip _audioClip;
         [SerializeField] private MenuAudioSource _audioSource;
         [SerializeField] private MenuThemeAudioSource _menuThemeAudioSource;
+        [SerializeField] private ModelAnimation _modelAnimation;
         
         private void Start() => _ = PlayAnimation();
         
@@ -35,6 +37,8 @@ namespace Scenes.Menu.Tube
             
             await UniTask.WaitForSeconds(MathF.Max(_audioClip.length - 1f, 0f));
             _menuThemeAudioSource.PlayTheme();
+
+            _ = _modelAnimation.StartRotation();
         }
         
         private void UpdateScale(float value) => _image.material.SetFloat(TubeShaderProperties.ScaleId, value);
