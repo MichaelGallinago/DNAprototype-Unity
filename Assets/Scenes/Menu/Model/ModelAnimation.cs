@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
 using Scenes.Menu.Wireframe;
@@ -9,17 +10,27 @@ namespace Scenes.Menu.Model
     {
         [SerializeField] private float _rotationDuration = 15f;
         [SerializeField] private float _snappingDuration = 15f;
-        [SerializeField] private float _snappingDelay = 3f;
+        [SerializeField] private float _delay = 5f;
         [SerializeField] private MeshRenderer _meshRenderer;
-
-        private void Start()
+        [SerializeField] private AudioClip _audioClip;
+        [SerializeField] private MenuAudioSource _audioSource;
+        
+        private void Start() => _ = PlayAnimation();
+        
+        private async UniTask PlayAnimation()
         {
+            UpdateSnapping(0f);
+            
+            await UniTask.WaitForSeconds(_delay);
+            
             LMotion.Create(0f, WireframeShaderProperties.SnapMaximum, _snappingDuration)
-                .WithDelay(_snappingDelay)
                 .WithEase(Ease.InQuad)
                 .Bind(UpdateSnapping);
             
             LMotion.Create(0f, 360f, _rotationDuration).WithLoops(-1).BindToLocalEulerAnglesY(transform);
+            
+            await UniTask.WaitForSeconds(1.2f);
+            _audioSource.Play(_audioClip, 0.5f);
         }
         
         private void UpdateSnapping(float value)
