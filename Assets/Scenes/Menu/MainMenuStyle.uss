@@ -1,0 +1,28 @@
+.header {
+}
+
+.logo {
+    background-image: url("project://database/Assets/Scenes/Menu/Logo/Logo.png?fileID=2800000&guid=b036debead32e00409d5b0ea1a93e300&type=3#Logo");
+    background-size: 100% 100%;
+    background-position-x: left 0;
+    -unity-background-scale-mode: scale-to-fit;
+    width: 235px;
+    height: 37px;
+    min-width: auto;
+    min-height: auto;
+    max-width: none;
+    max-height: none;
+    background-position-y: top 0;
+    top: 16px;
+    left: 16px;
+    bottom: 0;
+    transform-origin: center;
+    translate: 0 0;
+    rotate: 0;
+}
+
+.cardText {
+    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/Prototype%20Bitmap.asset?fileID=11400000&guid=831218e0de19df942bd9c5838ab1c225&type=2#Prototype Bitmap");
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+}

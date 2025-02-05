@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/Menu/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=ead0049837d7f8f4b87596bba8d34462&amp;type=3#MainMenuStyle" />
+    <engine:VisualElement name="Container" style="flex-grow: 1;">
+        <engine:VisualElement name="Logo" class="logo" style="flex-grow: 1; position: absolute; bottom: auto; top: 16px; left: 16px; right: auto; flex-shrink: 1;" />
+        <engine:Label text="SUKA BLYAT" name="Labelf" enable-rich-text="false" emoji-fallback-support="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" class="cardText" />
+        <engine:Label text="SUKA BLYAT" name="Labelf" enable-rich-text="false" emoji-fallback-support="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" class="cardText" />
+    </engine:VisualElement>
+</engine:UXML>

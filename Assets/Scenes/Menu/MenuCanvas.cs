@@ -10,9 +10,9 @@ namespace Scenes.Menu
         
         private int _index;
         private int _menuIndex;
-
+        
         private void Start() => _onCardSelected?.Invoke(_index);
-
+        
         public void SelectCard(int index)
         {
             _index = index;
