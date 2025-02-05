@@ -1,7 +1,6 @@
 using Character.Components;
 using Character.Input;
 using IK2D.Bodies;
-using PhysicsEcs2D;
 using PhysicsEcs2D.Components;
 using PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using Unity.Entities;

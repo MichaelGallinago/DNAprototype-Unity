@@ -1,9 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
 using LitMotion;
-using Scenes.Menu.Audio;
-using Scenes.Menu.Model;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Scenes.Menu.Tube
@@ -16,9 +15,9 @@ namespace Scenes.Menu.Tube
         [SerializeField] private float _initialValue;
         [SerializeField] private float _delay;
         [SerializeField] private AudioClip _audioClip;
-        [SerializeField] private MenuAudioSource _audioSource;
-        [SerializeField] private MenuThemeAudioSource _menuThemeAudioSource;
-        [SerializeField] private ModelAnimation _modelAnimation;
+        
+        [SerializeField] private UnityEvent<AudioClip, float> _onSoundEmitted;
+        [SerializeField] private UnityEvent _onAnimationFinished;
         
         private void Start() => _ = PlayAnimation();
         
@@ -28,17 +27,16 @@ namespace Scenes.Menu.Tube
             
             await UniTask.WaitForSeconds(_delay);
             
-            LMotion.Create(_initialValue, _scaleTarget, _scaleDuration)
+            _ = LMotion.Create(_initialValue, _scaleTarget, _scaleDuration)
                 .WithEase(Ease.OutSine)
                 .Bind(UpdateScale);
             
             await UniTask.WaitForSeconds(0.5f);
-            _audioSource.Play(_audioClip, 0.5f);
+            _onSoundEmitted?.Invoke(_audioClip, 0.5f);
             
             await UniTask.WaitForSeconds(MathF.Max(_audioClip.length - 1f, 0f));
-            _menuThemeAudioSource.PlayTheme();
 
-            _ = _modelAnimation.StartRotation();
+            _onAnimationFinished?.Invoke();
         }
         
         private void UpdateScale(float value) => _image.material.SetFloat(TubeShaderProperties.ScaleId, value);
