@@ -1,3 +1,4 @@
+#nullable enable
 using System.Text;
 
 namespace UxmlViewBinding
@@ -46,8 +47,8 @@ namespace UxmlViewBinding
 
         public static IncrementalBuilder operator +(IncrementalBuilder sb1, IncrementalBuilder sb2) => sb2;
 
-        public static bool operator ==(IncrementalBuilder sb1, IncrementalBuilder sb2) => sb1.Builder == sb2.Builder;
-        public static bool operator !=(IncrementalBuilder sb1, IncrementalBuilder sb2) => sb1.Builder != sb2.Builder;
+        public static bool operator ==(IncrementalBuilder sb1, IncrementalBuilder sb2) => sb1.Equals(sb2);
+        public static bool operator !=(IncrementalBuilder sb1, IncrementalBuilder sb2) => !sb1.Equals(sb2);
 
         public static IncrementalBuilder operator -(IncrementalBuilder sb, string text)
         {
@@ -71,5 +72,12 @@ namespace UxmlViewBinding
         }
 
         public override string ToString() => Builder.ToString();
+        
+        public override bool Equals(object? obj) => 
+            obj is IncrementalBuilder other && Builder.ToString() == other.Builder.ToString();
+        
+        public bool Equals(IncrementalBuilder other) => Builder.ToString() == other.Builder.ToString();
+
+        public override int GetHashCode() => Builder.ToString().GetHashCode();
     }
 }

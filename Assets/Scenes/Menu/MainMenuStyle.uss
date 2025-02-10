@@ -21,8 +21,15 @@
     rotate: 0;
 }
 
-.cardText {
-    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/Prototype%20Bitmap.asset?fileID=11400000&guid=831218e0de19df942bd9c5838ab1c225&type=2#Prototype Bitmap");
-    font-size: 16px;
-    color: rgb(255, 255, 255);
+.cardContainer {
+    align-self: flex-start;
+    margin-bottom: 8px;
+    transition-timing-function: ease-in-out-back;
+    transition-duration: 1s;
+}
+
+.cardContainer:disabled {
+    align-self: flex-start;
+    margin-bottom: 8px;
+    translate: -256px 0;
 }

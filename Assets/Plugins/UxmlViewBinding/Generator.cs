@@ -36,7 +36,7 @@ namespace UxmlViewBinding
             XmlDoc.Load(uxmlPath);
 
             XmlNodeList elements = XmlDoc.SelectNodes("//*[@name]");
-            if (elements == null || elements.Count == 0) return;
+            if (elements == null) return;
             
             string fileContent = CreateFileString(className, elements, Builder.Clear());
             File.WriteAllText(outputPath, fileContent);
@@ -52,12 +52,14 @@ namespace UxmlViewBinding
                 - ""
                 - "namespace UxmlViewBindings"
                 - "{"
-                - "    public class " + className
+                - "    public readonly struct " + className
                 - "    {"
+                - "        [NotNull] public readonly VisualElement Root;"
                 +          builder.AddFields(elements)
                 - ""
                 - "        public " + className + "(VisualElement root)"
                 - "        {"
+                - "            Root = root;"
                 +              builder.AddConstructorLines(elements)
                 - "        }"
                 - "    }"

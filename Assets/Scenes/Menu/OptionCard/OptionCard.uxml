@@ -1,0 +1,6 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/Menu/OptionCard/OptionCard.uss?fileID=7433441132597879392&amp;guid=0b4093f36ea2de7489fc4eea933bd41b&amp;type=3#OptionCard" />
+    <engine:VisualElement class="card">
+        <engine:Button text="~BUTTON" enable-rich-text="false" emoji-fallback-support="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" selectable="false" focusable="true" name="Button" class="option-button" />
+    </engine:VisualElement>
+</engine:UXML>

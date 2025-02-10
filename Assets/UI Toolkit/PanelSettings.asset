@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   themeUss: {fileID: -4733365628477956816, guid: 8edfae88c45d81945ae2c00b1a7f8bc1, type: 3}
   m_DisableNoThemeWarning: 0
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 52431250a24d0614cacaa78d9ab55910, type: 2}
   m_RenderMode: 0
   m_WorldSpaceLayer: 0
   m_ScaleMode: 2
@@ -30,7 +30,7 @@ MonoBehaviour:
   m_TargetDisplay: 0
   m_BindingLogLevel: 0
   m_ClearDepthStencil: 1
-  m_ClearColor: 0
+  m_ClearColor: 1
   m_ColorClearValue: {r: 0, g: 0, b: 0, a: 0}
   m_VertexBudget: 0
   m_DynamicAtlasSettings:
