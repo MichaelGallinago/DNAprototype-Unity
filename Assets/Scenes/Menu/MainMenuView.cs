@@ -28,21 +28,26 @@ namespace Scenes.Menu
             
             _cts = new CancellationTokenSource();
             _ = AnimateStart(_cts.Token);
+            _ = Cancel();
         }
-        
-        private async UniTask AnimateStart(CancellationToken ct)
+
+        private async UniTaskVoid Cancel()
         {
-            _ = AnimateTube();
-            _ = AnimateModel();
+            await UniTask.WaitForSeconds(1f);
+            _cts.Cancel();
+        }
+
+        private async UniTaskVoid AnimateStart(CancellationToken ct)
+        {
+            _ = AnimateTube(ct);
+            _ = AnimateModel(ct);
             await AnimateLogo();
             _ = ShowCards();
         }
 
-        private async UniTask ShowCards()
+        private async UniTaskVoid ShowCards()
         {
-            SetCardEnabled(_binding.CardSaves, true);
-            SetCardEnabled(_binding.CardSettings, true);
-            SetCardEnabled(_binding.CardShutdown, true);
+            SetCardsEnabled(true);
             
             await UniTask.WaitForSeconds(0.1f);
             PlayCardSound();
@@ -82,7 +87,7 @@ namespace Scenes.Menu
             _ = AnimateQuit();
         }
         
-        private async UniTask AnimateQuit()
+        private async UniTaskVoid AnimateQuit()
         {
             _ = _audioController.StopBgmWithPitchFade(2f);
             _ = _canvas.ModelAnimation.PlayDisappearance(1f);
@@ -101,11 +106,9 @@ namespace Scenes.Menu
 #endif
         }
         
-        private async UniTask HideCards()
+        private async UniTaskVoid HideCards()
         {
-            SetCardEnabled(_binding.CardSaves, false);
-            SetCardEnabled(_binding.CardSettings, false);
-            SetCardEnabled(_binding.CardShutdown, false);
+            SetCardsEnabled(false);
             
             PlayCardSound();
             await UniTask.WaitForSeconds(0.2f);
@@ -113,12 +116,16 @@ namespace Scenes.Menu
             await UniTask.WaitForSeconds(0.2f);
             PlayCardSound();
         }
-        
-        private static void SetCardEnabled(in OptionCardViewBinding card, bool isEnabled)
+
+        private void SetCardsEnabled(bool isEnabled)
         {
-            card.Root.enabledSelf = isEnabled;
-            card.Button.enabledSelf = isEnabled;
+            SetCardEnabled(_binding.CardSaves, isEnabled);
+            SetCardEnabled(_binding.CardSettings, isEnabled);
+            SetCardEnabled(_binding.CardShutdown, isEnabled);
         }
+        
+        private static void SetCardEnabled(in OptionCardViewBinding card, bool isEnabled) =>
+            card.Root.enabledSelf = isEnabled;
 
         private void RegisterCardMouseEnter(in OptionCardViewBinding card) =>
             card.Button.RegisterCallback<MouseEnterEvent>(PlayHoverSound);
@@ -135,7 +142,7 @@ namespace Scenes.Menu
             PlayLogoSpin();
         }
         
-        private async UniTask HideLogo()
+        private async UniTaskVoid HideLogo()
         {
             _ = LMotion.Create(0f, 90f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale);
             await UniTask.WaitForSeconds(0.2f);
@@ -153,29 +160,31 @@ namespace Scenes.Menu
         private void PlayCardSound() => _audioController.PlaySfx(_audioStorage.CardMovement, 0.1f);
         private void PlayCardSelectSound() => _audioController.PlaySfx(_audioStorage.CardSelect, 0.1f);
         
-        private async UniTask AnimateTube()
+        private async UniTaskVoid AnimateTube(CancellationToken ct)
         {
-            await UniTask.WaitForSeconds(0.5f);
-            _ = PlayMenuTheme();
-            await UniTask.WaitForSeconds(0.25f);
-            await _canvas.TubeAnimation.PlayAppear(10f);
+            await UniTask.WaitForSeconds(0.5f, cancellationToken: ct);
+            _ = PlayMenuTheme(ct);
+            await UniTask.WaitForSeconds(0.25f, cancellationToken: ct);
+            await _canvas.TubeAnimation.PlayAppear(10f, ct);
         }
         
-        private async UniTask AnimateModel()
+        private async UniTaskVoid AnimateModel(CancellationToken ct)
         {
-            await UniTask.WaitForSeconds(3.25f);
-            UniTask appearance = _canvas.ModelAnimation.PlayAppearance(5f);
-            await UniTask.WaitForSeconds(1.2f);
+            await UniTask.WaitForSeconds(3.25f, cancellationToken: ct);
+            _ = _canvas.ModelAnimation.PlayAppearance(5f, ct);
+            await UniTask.WaitForSeconds(1.2f, cancellationToken: ct);
             _audioController.PlaySfx(_audioStorage.ModelAppearance, 0.5f);
-            await appearance;
         }
         
-        private async UniTask PlayMenuTheme()
+        private async UniTaskVoid PlayMenuTheme(CancellationToken ct)
         {
-            _audioController.PlayBgm(_audioStorage.TubeAppearance, 0.5f);
-            await UniTask.WaitForSeconds(_audioStorage.TubeAppearance.length);
-            _audioController.PlayBgmWithPitchFade(_audioStorage.MenuTheme, 1f, 10f);
-            await UniTask.WaitForSeconds(1.1f);
+            _audioController.PlayBgm(_audioStorage.TubeAppearance, 0.5f, false);
+            
+            await UniTask.WaitForSeconds(_audioStorage.TubeAppearance.length, cancellationToken: ct);
+            _ = _audioController.PlayBgmWithPitchFade(
+                _audioStorage.MenuTheme, 1f, 10f, true).ToUniTask(ct);
+            
+            await UniTask.WaitForSeconds(1.1f, cancellationToken: ct);
             await _canvas.ModelAnimation.PlayRotation();
         }
     }

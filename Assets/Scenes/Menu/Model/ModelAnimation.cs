@@ -1,3 +1,4 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
@@ -16,8 +17,8 @@ namespace Scenes.Menu.Model
         
         private void Start() => UpdateSnapping(_snap);
         
-        public async UniTask PlayAppearance(float duration) => 
-            await StartSnapChanging(_snap, WireframeShaderProperties.SnapMaximum, duration, Ease.InQuad);
+        public async UniTask PlayAppearance(float duration, CancellationToken ct) => 
+            await StartSnapChanging(_snap, WireframeShaderProperties.SnapMaximum, duration, Ease.InQuad).ToUniTask(ct);
         
         public async UniTask PlayDisappearance(float duration) => 
             await StartSnapChanging(_snap, 0f, duration, Ease.OutQuad);
@@ -32,11 +33,13 @@ namespace Scenes.Menu.Model
                 .WithEase(Ease.InSine)
                 .BindToLocalEulerAnglesY(_meshTransform);
             
-            await LMotion.Create(0f, 360f, _rotationDuration).WithLoops(-1).BindToLocalEulerAnglesY(_meshTransform);
+            await LMotion.Create(0f, 360f, _rotationDuration)
+                .WithLoops(-1)
+                .BindToLocalEulerAnglesY(_meshTransform);
         }
 
-        private async UniTask StartSnapChanging(float from, float to, float duration, Ease ease) =>
-            await LMotion.Create(from, to, duration)
+        private MotionHandle StartSnapChanging(float from, float to, float duration, Ease ease) =>
+            LMotion.Create(from, to, duration)
                 .WithEase(ease)
                 .Bind(UpdateSnapping);
         

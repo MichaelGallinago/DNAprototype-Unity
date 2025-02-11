@@ -1,3 +1,4 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using UnityEngine;
@@ -13,17 +14,18 @@ namespace Scenes.Menu.Audio
 
         private void Start() => _targetBgmPitch = _bgmAudioSource.pitch;
         
-        public void PlayBgmWithPitchFade(AudioClip clip, float volume, float duration)
+        public MotionHandle PlayBgmWithPitchFade(AudioClip clip, float volume, float duration, bool loop)
         {
-            StartPitchChanging(0f, _targetBgmPitch, duration, Ease.OutCubic);
-            PlayBgm(clip, volume);
+            PlayBgm(clip, volume, loop);
+            return StartPitchChanging(0f, _targetBgmPitch, duration, Ease.OutCubic);
         }
         
-        public void PlayBgm(AudioClip clip, float volume)
+        public void PlayBgm(AudioClip clip, float volume, bool loop)
         {
             _bgmAudioSource.pitch = 1f;
             _bgmAudioSource.volume = volume;
             _bgmAudioSource.clip = clip;
+            _bgmAudioSource.loop = loop;
             _bgmAudioSource.Play();
         }
         
