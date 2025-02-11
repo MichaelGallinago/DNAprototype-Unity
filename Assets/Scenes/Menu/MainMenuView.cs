@@ -1,4 +1,8 @@
+using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using LitMotion;
+using Scenes.Menu.Audio;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UxmlViewBindings;
@@ -7,55 +11,172 @@ namespace Scenes.Menu
 {
     public class MainMenuView : MonoBehaviour
     {
+        [SerializeField] private AudioStorage _audioStorage;
+        [SerializeField] private AudioController _audioController;
+        
         [SerializeField] private UIDocument _document;
         [SerializeField] private MainMenuCanvas _canvas;
         [SerializeField] private MainMenuViewModel _viewModel;
-        private MainMenuViewBinding _binding;
         
-        private void Awake() => _binding = new MainMenuViewBinding(_document.rootVisualElement);
-
+        private MainMenuViewBinding _binding;
+        private CancellationTokenSource _cts;
+        
         private void Start()
         {
             _binding = new MainMenuViewBinding(_document.rootVisualElement);
-
-            _ = AnimateStart();
+            RegisterCardsCallbacks();
+            
+            _cts = new CancellationTokenSource();
+            _ = AnimateStart(_cts.Token);
         }
         
-        private async UniTask AnimateStart()
+        private async UniTask AnimateStart(CancellationToken ct)
         {
             _ = AnimateTube();
             _ = AnimateModel();
-            await UniTask.WaitForSeconds(0.1f);
+            await AnimateLogo();
+            _ = ShowCards();
+        }
 
-            SetOptionCardsEnabled(true);
+        private async UniTask ShowCards()
+        {
+            SetCardEnabled(_binding.CardSaves, true);
+            SetCardEnabled(_binding.CardSettings, true);
+            SetCardEnabled(_binding.CardShutdown, true);
             
             await UniTask.WaitForSeconds(0.1f);
-            _viewModel.PlayCardSound();
-            await UniTask.WaitForSeconds(0.15f);
-            _viewModel.PlayCardSound();
-            await UniTask.WaitForSeconds(0.15f);
-            _viewModel.PlayCardSound();
+            PlayCardSound();
+            await UniTask.WaitForSeconds(0.2f);
+            PlayCardSound();
+            await UniTask.WaitForSeconds(0.2f);
+            PlayCardSound();
         }
 
-        private void SetOptionCardsEnabled(bool isEnabled)
+        private void RegisterCardsCallbacks()
         {
-            _binding.OptionSaves.Root.enabledSelf = isEnabled;
-            _binding.OptionSettings.Root.enabledSelf = isEnabled;
-            _binding.OptionShutdown.Root.enabledSelf = isEnabled;
+            RegisterCardMouseEnter(_binding.CardSaves);
+            RegisterCardMouseEnter(_binding.CardSettings);
+            RegisterCardMouseEnter(_binding.CardShutdown);
+            
+            _binding.CardSaves.Button.RegisterCallback<ClickEvent>(OnSavesPressed);
+            _binding.CardSettings.Button.RegisterCallback<ClickEvent>(OnSettingsPressed);
+            _binding.CardShutdown.Button.RegisterCallback<ClickEvent>(OnShutdownPressed);
+        }
+        
+        private void OnSavesPressed(ClickEvent e)
+        {
+            PlayCardSelectSound();
+            _ = HideCards();
+        }
+        
+        private void OnSettingsPressed(ClickEvent e)
+        {
+            PlayCardSelectSound();
+            _ = HideCards();
         }
 
+        private void OnShutdownPressed(ClickEvent e)
+        {
+            PlayCardSelectSound();
+            _ = HideCards();
+            _ = AnimateQuit();
+        }
+        
+        private async UniTask AnimateQuit()
+        {
+            _ = _audioController.StopBgmWithPitchFade(2f);
+            _ = _canvas.ModelAnimation.PlayDisappearance(1f);
+            _ = HideLogo();
+            await _canvas.TubeAnimation.PlayHide(1.5f);
+            await UniTask.WaitForSeconds(1f);
+            Quit();
+        }
+        
+        private static void Quit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+        
+        private async UniTask HideCards()
+        {
+            SetCardEnabled(_binding.CardSaves, false);
+            SetCardEnabled(_binding.CardSettings, false);
+            SetCardEnabled(_binding.CardShutdown, false);
+            
+            PlayCardSound();
+            await UniTask.WaitForSeconds(0.2f);
+            PlayCardSound();
+            await UniTask.WaitForSeconds(0.2f);
+            PlayCardSound();
+        }
+        
+        private static void SetCardEnabled(in OptionCardViewBinding card, bool isEnabled)
+        {
+            card.Root.enabledSelf = isEnabled;
+            card.Button.enabledSelf = isEnabled;
+        }
+
+        private void RegisterCardMouseEnter(in OptionCardViewBinding card) =>
+            card.Button.RegisterCallback<MouseEnterEvent>(PlayHoverSound);
+
+        private void PlayHoverSound(MouseEnterEvent e) => 
+            _audioController.PlaySfx(_audioStorage.CardHover, 0.05f);
+
+        private async UniTask AnimateLogo()
+        {
+            _ = LMotion.Create(90f, 360f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale);
+            await UniTask.WaitForSeconds(0.1f);
+            PlayLogoSpin();
+            await UniTask.WaitForSeconds(0.4f);
+            PlayLogoSpin();
+        }
+        
+        private async UniTask HideLogo()
+        {
+            _ = LMotion.Create(0f, 90f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale);
+            await UniTask.WaitForSeconds(0.2f);
+            PlayLogoSpin();
+        }
+
+        private void SetDegreesToLogoScale(float value)
+        {
+            Vector3 scale = _binding.Logo.transform.scale;
+            scale.x = MathF.Cos(value * Mathf.Deg2Rad);
+            _binding.Logo.transform.scale = scale;
+        }
+        
+        private void PlayLogoSpin() => _audioController.PlaySfx(_audioStorage.LogoSpin, 0.2f);
+        private void PlayCardSound() => _audioController.PlaySfx(_audioStorage.CardMovement, 0.1f);
+        private void PlayCardSelectSound() => _audioController.PlaySfx(_audioStorage.CardSelect, 0.1f);
+        
         private async UniTask AnimateTube()
         {
-            _ = _canvas.TubeAnimation.Play();
             await UniTask.WaitForSeconds(0.5f);
-            _ = _viewModel.PlayMenuTheme();
+            _ = PlayMenuTheme();
+            await UniTask.WaitForSeconds(0.25f);
+            await _canvas.TubeAnimation.PlayAppear(10f);
         }
         
         private async UniTask AnimateModel()
         {
-            _ = _canvas.ModelAnimation.PlayAppearance();
+            await UniTask.WaitForSeconds(3.25f);
+            UniTask appearance = _canvas.ModelAnimation.PlayAppearance(5f);
             await UniTask.WaitForSeconds(1.2f);
-            _viewModel.PlayModelSound();
+            _audioController.PlaySfx(_audioStorage.ModelAppearance, 0.5f);
+            await appearance;
+        }
+        
+        private async UniTask PlayMenuTheme()
+        {
+            _audioController.PlayBgm(_audioStorage.TubeAppearance, 0.5f);
+            await UniTask.WaitForSeconds(_audioStorage.TubeAppearance.length);
+            _audioController.PlayBgmWithPitchFade(_audioStorage.MenuTheme, 1f, 10f);
+            await UniTask.WaitForSeconds(1.1f);
+            await _canvas.ModelAnimation.PlayRotation();
         }
     }
 }

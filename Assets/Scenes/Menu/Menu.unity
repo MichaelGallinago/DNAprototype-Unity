@@ -239,6 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5ae1675572c96449e2937592dc5899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioStorage: {fileID: 11400000, guid: a4f62d48f678de24eb755988e1cb8a16, type: 2}
+  _audioController: {fileID: 1172187603}
   _document: {fileID: 278241483}
   _canvas: {fileID: 278241485}
   _viewModel: {fileID: 278241484}
@@ -273,8 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654b02e4902e6e342b6e19a35a40fffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioStorage: {fileID: 11400000, guid: a4f62d48f678de24eb755988e1cb8a16, type: 2}
-  _audioController: {fileID: 1172187603}
 --- !u!114 &278241485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,7 +441,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117443679}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100.000015, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
@@ -760,6 +760,7 @@ MonoBehaviour:
   _delay: 3.25
   _rotationDelay: 1.1
   _meshRenderer: {fileID: 1117443682}
+  _meshTransform: {fileID: 1117443680}
 --- !u!1 &1575789385
 GameObject:
   m_ObjectHideFlags: 0

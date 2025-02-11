@@ -9,39 +9,40 @@ namespace Scenes.Menu.Model
     public class ModelAnimation : MonoBehaviour
     {
         [SerializeField] private float _rotationDuration = 15f;
-        [SerializeField] private float _snappingDuration = 15f;
-        [SerializeField] private float _delay = 5f;
-        [SerializeField] private float _rotationDelay = 1f;
         [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private Transform _meshTransform;
 
-        private void Start() => UpdateSnapping(0f);
+        private float _snap;
         
-        public async UniTask PlayAppearance()
-        {
-            await UniTask.WaitForSeconds(_delay);
-            
-            await LMotion.Create(0f, WireframeShaderProperties.SnapMaximum, _snappingDuration)
-                .WithEase(Ease.InQuad)
-                .Bind(UpdateSnapping);
-        }
-
+        private void Start() => UpdateSnapping(_snap);
+        
+        public async UniTask PlayAppearance(float duration) => 
+            await StartSnapChanging(_snap, WireframeShaderProperties.SnapMaximum, duration, Ease.InQuad);
+        
+        public async UniTask PlayDisappearance(float duration) => 
+            await StartSnapChanging(_snap, 0f, duration, Ease.OutQuad);
+        
         public async UniTask PlayRotation()
         {
-            await UniTask.WaitForSeconds(_rotationDelay);
-            
             await LMotion.Create(0f, -30f, _rotationDuration / 4f)
                 .WithEase(Ease.InOutQuad)
-                .BindToLocalEulerAnglesY(transform);
+                .BindToLocalEulerAnglesY(_meshTransform);
             
             await LMotion.Create(-30f, 360f, _rotationDuration * 1.5f)
                 .WithEase(Ease.InSine)
-                .BindToLocalEulerAnglesY(transform);
+                .BindToLocalEulerAnglesY(_meshTransform);
             
-            await LMotion.Create(0f, 360f, _rotationDuration).WithLoops(-1).BindToLocalEulerAnglesY(transform);
+            await LMotion.Create(0f, 360f, _rotationDuration).WithLoops(-1).BindToLocalEulerAnglesY(_meshTransform);
         }
+
+        private async UniTask StartSnapChanging(float from, float to, float duration, Ease ease) =>
+            await LMotion.Create(from, to, duration)
+                .WithEase(ease)
+                .Bind(UpdateSnapping);
         
         private void UpdateSnapping(float value)
         {
+            _snap = value;
             value /= WireframeShaderProperties.SnapMaximum;
             value *= value * WireframeShaderProperties.SnapMaximum;
             _meshRenderer.material.SetFloat(WireframeShaderProperties.SnapId, value);
