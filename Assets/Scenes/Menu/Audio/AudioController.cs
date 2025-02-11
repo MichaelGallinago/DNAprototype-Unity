@@ -13,10 +13,10 @@ namespace Scenes.Menu.Audio
 
         private void Start() => _targetBgmPitch = _bgmAudioSource.pitch;
         
-        public void PlayBgmWithPitchFade(AudioClip clip, float volume, float duration)
+        public MotionHandle PlayBgmWithPitchFade(AudioClip clip, float volume, float duration)
         {
-            StartPitchChanging(0f, _targetBgmPitch, duration, Ease.OutCubic);
             PlayBgm(clip, volume);
+            return StartPitchChanging(0f, _targetBgmPitch, duration, Ease.OutCubic);
         }
         
         public void PlayBgm(AudioClip clip, float volume)

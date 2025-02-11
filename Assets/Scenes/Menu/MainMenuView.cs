@@ -5,6 +5,7 @@ using LitMotion;
 using Scenes.Menu.Audio;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Utilities;
 using UxmlViewBindings;
 
 namespace Scenes.Menu
@@ -19,22 +20,19 @@ namespace Scenes.Menu
         [SerializeField] private MainMenuViewModel _viewModel;
         
         private MainMenuViewBinding _binding;
-        private CancellationTokenSource _cts;
+        private MotionHandle _startAnimation;
         
         private void Start()
         {
             _binding = new MainMenuViewBinding(_document.rootVisualElement);
             RegisterCardsCallbacks();
             
-            _cts = new CancellationTokenSource();
-            _ = AnimateStart(_cts.Token);
+            AnimateStart();
         }
         
-        private async UniTask AnimateStart(CancellationToken ct)
+        private void AnimateStart()
         {
-            _ = AnimateTube();
-            _ = AnimateModel();
-            await AnimateLogo();
+            _startAnimation = LSequence.Create().Join(AnimateTube()).Join(AnimateModel()).Join(AnimateLogo()).Run();
             _ = ShowCards();
         }
 
@@ -77,6 +75,7 @@ namespace Scenes.Menu
 
         private void OnShutdownPressed(ClickEvent e)
         {
+            _startAnimation.Cancel();
             PlayCardSelectSound();
             _ = HideCards();
             _ = AnimateQuit();
@@ -126,14 +125,13 @@ namespace Scenes.Menu
         private void PlayHoverSound(MouseEnterEvent e) => 
             _audioController.PlaySfx(_audioStorage.CardHover, 0.05f);
 
-        private async UniTask AnimateLogo()
-        {
-            _ = LMotion.Create(90f, 360f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale);
-            await UniTask.WaitForSeconds(0.1f);
-            PlayLogoSpin();
-            await UniTask.WaitForSeconds(0.4f);
-            PlayLogoSpin();
-        }
+        private MotionHandle AnimateLogo() => LSequence.Create()
+            .Join(LMotion.Create(90f, 360f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale))
+            .AppendInterval(0.1f)
+            .JoinAction(PlayLogoSpin)
+            .AppendInterval(0.4f)
+            .JoinAction(PlayLogoSpin)
+            .Run();
         
         private async UniTask HideLogo()
         {
@@ -155,27 +153,24 @@ namespace Scenes.Menu
 
         private MotionHandle AnimateTube() => LSequence.Create()
             .AppendInterval(0.5f)
-            .Append(PlayMenuTheme())
+            .Join(PlayMenuTheme())
             .AppendInterval(0.25f)
             .Append(_canvas.TubeAnimation.PlayAppear(10f))
             .Run();
-        
-        private async UniTask AnimateModel()
-        {
-            await UniTask.WaitForSeconds(3.25f);
-            MotionHandle appearance = _canvas.ModelAnimation.PlayAppearance(5f);
-            await UniTask.WaitForSeconds(1.2f);
-            _audioController.PlaySfx(_audioStorage.ModelAppearance, 0.5f);
-            await appearance;
-        }
-        
-        private async UniTask PlayMenuTheme()
-        {
-            _audioController.PlayBgm(_audioStorage.TubeAppearance, 0.5f);
-            await UniTask.WaitForSeconds(_audioStorage.TubeAppearance.length);
-            _audioController.PlayBgmWithPitchFade(_audioStorage.MenuTheme, 1f, 10f);
-            await UniTask.WaitForSeconds(1.1f);
-            await _canvas.ModelAnimation.PlayRotation();
-        }
+
+        private MotionHandle AnimateModel() => LSequence.Create()
+            .AppendInterval(3.25f)
+            .Join(_canvas.ModelAnimation.PlayAppearance(5f))
+            .AppendInterval(1.2f)
+            .JoinAction(() => _audioController.PlaySfx(_audioStorage.ModelAppearance, 0.5f))
+            .Run();
+
+        private MotionHandle PlayMenuTheme() => LSequence.Create()
+            .JoinAction(() => _audioController.PlayBgm(_audioStorage.TubeAppearance, 0.5f))
+            .AppendInterval(_audioStorage.TubeAppearance.length)
+            .Join(_audioController.PlayBgmWithPitchFade(_audioStorage.MenuTheme, 1f, 10f))
+            .AppendInterval(1.1f)
+            .Join(_canvas.ModelAnimation.PlayRotation())
+            .Run();
     }
 }
