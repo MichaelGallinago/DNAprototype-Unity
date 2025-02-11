@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
 using Scenes.Menu.Wireframe;
@@ -16,27 +15,26 @@ namespace Scenes.Menu.Model
         
         private void Start() => UpdateSnapping(_snap);
         
-        public async UniTask PlayAppearance(float duration) => 
-            await StartSnapChanging(_snap, WireframeShaderProperties.SnapMaximum, duration, Ease.InQuad);
+        public MotionHandle PlayAppearance(float duration) => 
+            StartSnapChanging(_snap, WireframeShaderProperties.SnapMaximum, duration, Ease.InQuad);
+         
+        public MotionHandle PlayDisappearance(float duration) => 
+            StartSnapChanging(_snap, 0f, duration, Ease.OutQuad);
         
-        public async UniTask PlayDisappearance(float duration) => 
-            await StartSnapChanging(_snap, 0f, duration, Ease.OutQuad);
-        
-        public async UniTask PlayRotation()
-        {
-            await LMotion.Create(0f, -30f, _rotationDuration / 4f)
+        public MotionHandle PlayRotation() => LSequence.Create()
+            .Append(LMotion.Create(0f, -30f, _rotationDuration / 4f)
                 .WithEase(Ease.InOutQuad)
-                .BindToLocalEulerAnglesY(_meshTransform);
-            
-            await LMotion.Create(-30f, 360f, _rotationDuration * 1.5f)
+                .BindToLocalEulerAnglesY(_meshTransform))
+            .Append(LMotion.Create(-30f, 360f, _rotationDuration * 1.5f)
                 .WithEase(Ease.InSine)
-                .BindToLocalEulerAnglesY(_meshTransform);
-            
-            await LMotion.Create(0f, 360f, _rotationDuration).WithLoops(-1).BindToLocalEulerAnglesY(_meshTransform);
-        }
+                .BindToLocalEulerAnglesY(_meshTransform))
+            .Append(LMotion.Create(0f, 360f, _rotationDuration)
+                .WithLoops(-1)
+                .BindToLocalEulerAnglesY(_meshTransform))
+            .Run();
 
-        private async UniTask StartSnapChanging(float from, float to, float duration, Ease ease) =>
-            await LMotion.Create(from, to, duration)
+        private MotionHandle StartSnapChanging(float from, float to, float duration, Ease ease) =>
+            LMotion.Create(from, to, duration)
                 .WithEase(ease)
                 .Bind(UpdateSnapping);
         

@@ -152,19 +152,18 @@ namespace Scenes.Menu
         private void PlayLogoSpin() => _audioController.PlaySfx(_audioStorage.LogoSpin, 0.2f);
         private void PlayCardSound() => _audioController.PlaySfx(_audioStorage.CardMovement, 0.1f);
         private void PlayCardSelectSound() => _audioController.PlaySfx(_audioStorage.CardSelect, 0.1f);
-        
-        private async UniTask AnimateTube()
-        {
-            await UniTask.WaitForSeconds(0.5f);
-            _ = PlayMenuTheme();
-            await UniTask.WaitForSeconds(0.25f);
-            await _canvas.TubeAnimation.PlayAppear(10f);
-        }
+
+        private MotionHandle AnimateTube() => LSequence.Create()
+            .AppendInterval(0.5f)
+            .Append(PlayMenuTheme())
+            .AppendInterval(0.25f)
+            .Append(_canvas.TubeAnimation.PlayAppear(10f))
+            .Run();
         
         private async UniTask AnimateModel()
         {
             await UniTask.WaitForSeconds(3.25f);
-            UniTask appearance = _canvas.ModelAnimation.PlayAppearance(5f);
+            MotionHandle appearance = _canvas.ModelAnimation.PlayAppearance(5f);
             await UniTask.WaitForSeconds(1.2f);
             _audioController.PlaySfx(_audioStorage.ModelAppearance, 0.5f);
             await appearance;
