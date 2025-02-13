@@ -577,6 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bgmAudioSource: {fileID: 1575789387}
   _sfxAudioSource: {fileID: 1288630149}
+  _targetBgmPitch: 1
 --- !u!1 &1288630148
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,9 +757,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationDuration: 15
-  _snappingDuration: 6.5
-  _delay: 3.25
-  _rotationDelay: 1.1
   _meshRenderer: {fileID: 1117443682}
   _meshTransform: {fileID: 1117443680}
 --- !u!1 &1575789385
@@ -793,7 +791,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -941,10 +939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 1846582775}
-  _scaleDuration: 15
   _scaleTarget: 1
-  _initialValue: 0
-  _delay: 0.75
 --- !u!114 &1846582775
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,10 +28,11 @@ namespace Scenes.Menu.Model
             .Append(LMotion.Create(-30f, 360f, _rotationDuration * 1.5f)
                 .WithEase(Ease.InSine)
                 .BindToLocalEulerAnglesY(_meshTransform))
-            .Append(LMotion.Create(0f, 360f, _rotationDuration)
-                .WithLoops(-1)
-                .BindToLocalEulerAnglesY(_meshTransform))
             .Run();
+
+        public MotionHandle LoopRotation() => LMotion.Create(0f, 360f, _rotationDuration)
+            .WithLoops(-1)
+            .BindToLocalEulerAnglesY(_meshTransform);
 
         private MotionHandle StartSnapChanging(float from, float to, float duration, Ease ease) =>
             LMotion.Create(from, to, duration)

@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using Scenes.Menu.Audio;
@@ -38,6 +37,8 @@ namespace Scenes.Menu
 
         private async UniTask ShowCards()
         {
+            await UniTask.WaitForSeconds(1f);
+            
             SetCardEnabled(_binding.CardSaves, true);
             SetCardEnabled(_binding.CardSettings, true);
             SetCardEnabled(_binding.CardShutdown, true);
@@ -83,7 +84,7 @@ namespace Scenes.Menu
         
         private async UniTask AnimateQuit()
         {
-            _ = _audioController.StopBgmWithPitchFade(2f);
+            _ = _audioController.StopBgmWithPitchFadeIn(2f);
             _ = _canvas.ModelAnimation.PlayDisappearance(1f);
             _ = HideLogo();
             await _canvas.TubeAnimation.PlayHide(1.5f);
@@ -128,9 +129,9 @@ namespace Scenes.Menu
         private MotionHandle AnimateLogo() => LSequence.Create()
             .Join(LMotion.Create(90f, 360f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale))
             .AppendInterval(0.1f)
-            .JoinAction(PlayLogoSpin)
+            .AppendAction(PlayLogoSpin)
             .AppendInterval(0.4f)
-            .JoinAction(PlayLogoSpin)
+            .AppendAction(PlayLogoSpin)
             .Run();
         
         private async UniTask HideLogo()
@@ -153,24 +154,24 @@ namespace Scenes.Menu
 
         private MotionHandle AnimateTube() => LSequence.Create()
             .AppendInterval(0.5f)
-            .Join(PlayMenuTheme())
-            .AppendInterval(0.25f)
+            .AppendAndInterval(PlayMenuTheme(), 0.25f)
             .Append(_canvas.TubeAnimation.PlayAppear(10f))
             .Run();
 
         private MotionHandle AnimateModel() => LSequence.Create()
             .AppendInterval(3.25f)
-            .Join(_canvas.ModelAnimation.PlayAppearance(5f))
-            .AppendInterval(1.2f)
-            .JoinAction(() => _audioController.PlaySfx(_audioStorage.ModelAppearance, 0.5f))
+            .AppendAndInterval(_canvas.ModelAnimation.PlayAppearance(5f), 1.2f)
+            .AppendAction(() => _audioController.PlaySfx(_audioStorage.ModelAppearance, 0.5f))
             .Run();
 
         private MotionHandle PlayMenuTheme() => LSequence.Create()
             .JoinAction(() => _audioController.PlayBgm(_audioStorage.TubeAppearance, 0.5f))
             .AppendInterval(_audioStorage.TubeAppearance.length)
-            .Join(_audioController.PlayBgmWithPitchFade(_audioStorage.MenuTheme, 1f, 10f))
+            .AppendAction(() => _audioController.PlayBgm(_audioStorage.MenuTheme, 1f))
+            .JoinAction(() => _audioController.SetPitchFadeOut(10f))
             .AppendInterval(1.1f)
-            .Join(_canvas.ModelAnimation.PlayRotation())
+            .Append(_canvas.ModelAnimation.PlayRotation())
+            .AppendAction(() => _canvas.ModelAnimation.LoopRotation())
             .Run();
     }
 }

@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using LitMotion;
 using UnityEngine;
 
@@ -8,17 +7,22 @@ namespace Scenes.Menu.Audio
     {
         [SerializeField] private AudioSource _bgmAudioSource;
         [SerializeField] private AudioSource _sfxAudioSource;
-
-        private float _targetBgmPitch;
-
-        private void Start() => _targetBgmPitch = _bgmAudioSource.pitch;
+        [SerializeField] private float _targetBgmPitch = 1f;
         
-        public MotionHandle PlayBgmWithPitchFade(AudioClip clip, float volume, float duration)
+        private MotionHandle _pitchHandle;
+        
+        public MotionHandle SetPitchFadeOut(float duration)
         {
-            PlayBgm(clip, volume);
-            return StartPitchChanging(0f, _targetBgmPitch, duration, Ease.OutCubic);
+            if (_pitchHandle.IsPlaying())
+            {
+                _pitchHandle.Cancel();   
+            }
+            
+            return _pitchHandle = LMotion.Create(0f, _targetBgmPitch, duration)
+                .WithEase(Ease.OutCubic)
+                .Bind(SetBgmPitch);
         }
-        
+
         public void PlayBgm(AudioClip clip, float volume)
         {
             _bgmAudioSource.pitch = 1f;
@@ -30,16 +34,18 @@ namespace Scenes.Menu.Audio
         public void PlaySfx(AudioClip clip, float volumeScale) => _sfxAudioSource.PlayOneShot(clip, volumeScale);
         public void PlaySfx(AudioClip clip) => _sfxAudioSource.PlayOneShot(clip);
 
-        public async UniTask StopBgmWithPitchFade(float duration)
+        public MotionHandle StopBgmWithPitchFadeIn(float duration)
         {
-            await StartPitchChanging(_bgmAudioSource.pitch, 0f, duration, Ease.InCubic);
-            _bgmAudioSource.Stop();
-        }
-        
-        private MotionHandle StartPitchChanging(float from, float to, float duration, Ease ease) =>
-            LMotion.Create(from, to, duration)
-                .WithEase(ease)
+            if (_pitchHandle.IsPlaying())
+            {
+                _pitchHandle.Cancel();   
+            }
+            
+            return _pitchHandle = LMotion.Create(_bgmAudioSource.pitch, 0f, duration)
+                .WithEase(Ease.InCubic)
+                .WithOnComplete(_bgmAudioSource.Stop)
                 .Bind(SetBgmPitch);
+        }
 
         private void SetBgmPitch(float value) => _bgmAudioSource.pitch = value;
     }
