@@ -27,6 +27,9 @@ namespace Scenes.Menu
             RegisterCardsCallbacks();
             
             AnimateStart();
+            
+            TextElement textElement = _document.rootVisualElement.Q<UnityEngine.UIElements.TextElement>("text");
+            textElement.style.unityFontDefinition = new StyleFontDefinition();
         }
         
         private void AnimateStart()
@@ -38,10 +41,8 @@ namespace Scenes.Menu
         private async UniTask ShowCards()
         {
             await UniTask.WaitForSeconds(1f);
-            
-            SetCardEnabled(_binding.CardSaves, true);
-            SetCardEnabled(_binding.CardSettings, true);
-            SetCardEnabled(_binding.CardShutdown, true);
+
+            SetCardsEnabled(true);
             
             await UniTask.WaitForSeconds(0.1f);
             PlayCardSound();
@@ -49,6 +50,13 @@ namespace Scenes.Menu
             PlayCardSound();
             await UniTask.WaitForSeconds(0.2f);
             PlayCardSound();
+        }
+
+        private void SetCardsEnabled(bool isEnabled)
+        {
+            SetCardEnabled(_binding.CardSaves, isEnabled);
+            SetCardEnabled(_binding.CardSettings, isEnabled);
+            SetCardEnabled(_binding.CardShutdown, isEnabled);
         }
 
         private void RegisterCardsCallbacks()
@@ -72,11 +80,17 @@ namespace Scenes.Menu
         {
             PlayCardSelectSound();
             _ = HideCards();
+            
+            _binding.Settings.Root.enabledSelf = true;
         }
 
         private void OnShutdownPressed(ClickEvent e)
         {
-            _startAnimation.Cancel();
+            if (_startAnimation.IsPlaying())
+            {
+                _startAnimation.Cancel();
+            }
+            
             PlayCardSelectSound();
             _ = HideCards();
             _ = AnimateQuit();
@@ -103,9 +117,7 @@ namespace Scenes.Menu
         
         private async UniTask HideCards()
         {
-            SetCardEnabled(_binding.CardSaves, false);
-            SetCardEnabled(_binding.CardSettings, false);
-            SetCardEnabled(_binding.CardShutdown, false);
+            SetCardsEnabled(false);
             
             PlayCardSound();
             await UniTask.WaitForSeconds(0.2f);
@@ -133,13 +145,12 @@ namespace Scenes.Menu
             .AppendInterval(0.4f)
             .AppendAction(PlayLogoSpin)
             .Run();
-        
-        private async UniTask HideLogo()
-        {
-            _ = LMotion.Create(0f, 90f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale);
-            await UniTask.WaitForSeconds(0.2f);
-            PlayLogoSpin();
-        }
+
+        private MotionHandle HideLogo() => LSequence.Create()
+            .Join(LMotion.Create(0f, 90f, 1f).WithEase(Ease.InOutQuad).Bind(SetDegreesToLogoScale))
+            .AppendInterval(0.2f)
+            .AppendAction(PlayLogoSpin)
+            .Run();
 
         private void SetDegreesToLogoScale(float value)
         {

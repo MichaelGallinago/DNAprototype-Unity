@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using LitMotion;
 using UnityEngine;
 using UnityEngine.UI;

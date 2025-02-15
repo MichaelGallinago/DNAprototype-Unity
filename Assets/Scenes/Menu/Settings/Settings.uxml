@@ -1,0 +1,9 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/Menu/Settings/Settings.uss?fileID=7433441132597879392&amp;guid=80ea76051e313a14e983470807b828cc&amp;type=3#Settings" />
+    <engine:VisualElement enabled="true" class="settings" style="flex-grow: 1;">
+        <engine:ScrollView mode="Vertical" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" name="Options" class="scroller">
+            <engine:SliderInt label="SLI" value="42" high-value="100" style="-unity-font-definition: initial; color: rgb(255, 255, 255);" />
+        </engine:ScrollView>
+        <engine:ScrollView mode="Vertical" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" name="Control" enabled="false" class="scroller" />
+    </engine:VisualElement>
+</engine:UXML>

@@ -1,0 +1,107 @@
+ScrollView VisualElement#unity-dragger {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 8px;
+    max-width: 12px;
+    left: 0;
+    background-color: rgb(224, 224, 224);
+}
+
+ScrollView RepeatButton#unity-low-button {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background-image: none;
+    max-width: 12px;
+    background-color: rgb(224, 224, 224);
+    max-height: 12px;
+}
+
+ScrollView RepeatButton#unity-high-button {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    background-image: none;
+    max-width: 12px;
+    background-color: rgb(224, 224, 224);
+    max-height: 12px;
+}
+
+ScrollView VisualElement#unity-tracker {
+    visibility: hidden;
+    max-width: 12px;
+}
+
+ScrollView Scroller {
+    max-width: 12px;
+}
+
+ScrollView ScrollerSlider#unity-slider {
+    min-width: 0;
+    max-width: none;
+    width: auto;
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+
+.settings {
+    flex-grow: 1;
+    position: absolute;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: auto;
+    align-items: stretch;
+    align-self: stretch;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    transition-timing-function: ease-in-out-back;
+    transition-duration: 1s;
+    transform-origin: bottom;
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/Prototype.asset?fileID=11400000&guid=ba317d4c33a45ac46823198b6eed1742&type=2#Prototype");
+}
+
+.settings:disabled {
+    opacity: 0;
+    translate: 0 240px;
+}
+
+.scroller {
+    visibility: visible;
+    display: flex;
+}
+
+.scroller:disabled {
+    display: none;
+}
