@@ -2,7 +2,7 @@ using DnaCore.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Character
+namespace DnaCore.Character
 {
     [CreateAssetMenu(
         fileName = nameof(PhysicsConfig),

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using DnaCore.PhysicsEcs2D.Systems;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using DnaCore.PhysicsEcs2D.Tiles.Generators;
@@ -38,6 +39,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
             }
         }
         
+        [SuppressMessage("Performance", "EPS12:A struct member can be made readonly")]
         public void OnUpdate(ref SystemState state)
         {
 	        state.Dependency = new TileSenseJob

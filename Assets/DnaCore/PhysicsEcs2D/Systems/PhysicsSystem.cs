@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using Unity.Burst;
@@ -18,6 +19,7 @@ namespace DnaCore.PhysicsEcs2D.Systems
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
         }
 
+        [SuppressMessage("Performance", "EPS12:A struct member can be made readonly")]
         public void OnUpdate(ref SystemState state)
         {
             state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
