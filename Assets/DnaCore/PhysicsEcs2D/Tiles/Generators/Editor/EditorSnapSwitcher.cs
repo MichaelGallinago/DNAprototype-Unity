@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Generators.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 {
     public struct EditorSnapSwitcher
     {

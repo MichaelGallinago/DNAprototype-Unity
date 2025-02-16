@@ -1,7 +1,7 @@
-using PhysicsEcs2D.Tiles.Collision;
+using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using Unity.Entities;
 
-namespace PhysicsEcs2D.Tiles.Storage
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage
 {
     public struct TileStorageBlob
     {

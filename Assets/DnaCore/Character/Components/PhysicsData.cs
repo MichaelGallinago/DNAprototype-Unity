@@ -1,7 +1,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace Character.Components
+namespace DnaCore.Character.Components
 {
     public struct PhysicsData : IComponentData
     {

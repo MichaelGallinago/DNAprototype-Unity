@@ -1,16 +1,16 @@
-using Character.Components;
-using PhysicsEcs2D.Components;
-using PhysicsEcs2D.Tiles.Collision;
-using PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using DnaCore.Character.Components;
+using DnaCore.PhysicsEcs2D.Components;
+using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Utilities;
-using static Character.Systems.CollisionJobUtilities;
+using static DnaCore.Character.Systems.CollisionJobUtilities;
+using TileSenseSystem = DnaCore.PhysicsEcs2D.Tiles.Collision.TileSenseSystem;
 
-namespace Character.Systems
+namespace DnaCore.Character.Systems
 {
     [BurstCompile]
     [UpdateAfter(typeof(TileSenseSystem))]
@@ -33,7 +33,7 @@ namespace Character.Systems
             state.Dependency = new LandJob().Schedule(state.Dependency);
         }
         
-        public void OnDestroy(ref SystemState state) {}
+        public readonly void OnDestroy(ref SystemState state) {}
     }
 
     [BurstCompile]

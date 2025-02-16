@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles
+namespace DnaCore.PhysicsEcs2D.Tiles
 {
     public static class TileConstants
     {

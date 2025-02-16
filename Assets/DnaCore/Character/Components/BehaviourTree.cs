@@ -1,7 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 
-namespace Character.Components
+namespace DnaCore.Character.Components
 {
     [BurstCompile]
     public struct BehaviourTree : IComponentData

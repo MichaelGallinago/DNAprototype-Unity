@@ -5,7 +5,7 @@ using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using static Utilities.ScriptableObjectUtilities;
 
-namespace Tiles.SolidTypes
+namespace DnaCore.PhysicsEcs2D.Tiles.SolidTypes
 {
     [CreateAssetMenu(
         fileName = nameof(SolidTypesScriptableObject), 

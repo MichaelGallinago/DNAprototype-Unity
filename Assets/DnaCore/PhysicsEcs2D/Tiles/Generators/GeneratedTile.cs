@@ -1,10 +1,10 @@
 using System;
-using PhysicsEcs2D.Tiles.Storage;
-using Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.Storage;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Tiles.Generators
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators
 {
     [Serializable]
     public class GeneratedTile : TileBase

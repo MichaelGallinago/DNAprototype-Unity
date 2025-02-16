@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities;
 
-namespace IK2D.Limbs
+namespace DnaCore.IK2D.Limbs
 {
     public class AnthroLimb : AbstractLimb
     {

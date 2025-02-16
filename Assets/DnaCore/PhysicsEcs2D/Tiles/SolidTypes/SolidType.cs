@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Tiles.SolidTypes
+namespace DnaCore.PhysicsEcs2D.Tiles.SolidTypes
 {
     public enum SolidType : byte { Full, Top, NoTop }
     

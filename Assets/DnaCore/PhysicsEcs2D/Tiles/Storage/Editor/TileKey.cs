@@ -1,8 +1,8 @@
 ﻿using System;
-using Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [Serializable]
     public struct TileKey

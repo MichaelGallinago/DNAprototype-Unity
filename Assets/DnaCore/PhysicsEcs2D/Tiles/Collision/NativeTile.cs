@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Utilities;
 
-namespace PhysicsEcs2D.Tiles.Collision
+namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 {
     [BurstCompile]
     public struct NativeTile

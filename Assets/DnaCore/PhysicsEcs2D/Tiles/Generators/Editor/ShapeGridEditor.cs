@@ -1,13 +1,11 @@
 using System;
-using Tiles;
-using Tiles.Generators;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
 using Utilities;
 using Utilities.Editor;
 
-namespace PhysicsEcs2D.Tiles.Generators.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 {
     [CustomEditor(typeof(ShapeGrid))]
     public class ShapeGridEditor : UnityEditor.Editor

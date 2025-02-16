@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using PhysicsEcs2D.Tiles.Storage.Editor;
-using Tiles.Generators;
-using Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.Storage.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities;
 
-namespace PhysicsEcs2D.Tiles.Generators.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 {
     [CustomEditor(typeof(TilemapAuthoring))]
     public class TilemapAuthoringEditor : UnityEditor.Editor

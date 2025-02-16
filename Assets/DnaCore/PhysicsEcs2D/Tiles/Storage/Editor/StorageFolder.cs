@@ -1,9 +1,8 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [Serializable]
     public struct StorageFolder
@@ -11,7 +10,7 @@ namespace PhysicsEcs2D.Tiles.Storage.Editor
         [field: SerializeField, HideInInspector] public string StoragePath { get; private set; }
         [field: SerializeField, HideInInspector] public string Path { get; private set; }
 
-        public void Init(Object storageAsset, string name)
+        public void Init(UnityEngine.Object storageAsset, string name)
         {
             StoragePath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(storageAsset));
             

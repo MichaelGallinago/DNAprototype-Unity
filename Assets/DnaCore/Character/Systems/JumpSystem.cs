@@ -1,14 +1,13 @@
-using Character.Components;
-using Character.Input;
-using PhysicsEcs2D;
-using PhysicsEcs2D.Components;
-using PhysicsEcs2D.Systems;
-using PhysicsEcs2D.Tiles.Collision;
+using DnaCore.Character.Components;
+using DnaCore.Character.Input;
+using DnaCore.PhysicsEcs2D.Components;
+using DnaCore.PhysicsEcs2D.Systems;
+using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace Character.Systems
+namespace DnaCore.Character.Systems
 {
     [BurstCompile]
     [UpdateAfter(typeof(TileSenseSystem))]

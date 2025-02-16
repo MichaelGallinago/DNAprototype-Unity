@@ -2,7 +2,7 @@ using Scenes.Bootstrap;
 using Unity.Burst;
 using Unity.Entities;
 
-namespace PhysicsEcs2D.Systems
+namespace DnaCore.PhysicsEcs2D.Systems
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup), OrderFirst = true)]
     public partial class TimeSystem : SystemBase

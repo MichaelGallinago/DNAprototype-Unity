@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IK2D.Limbs
+namespace DnaCore.IK2D.Limbs
 {
     public abstract class AbstractLimb : MonoBehaviour
     {

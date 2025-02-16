@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
-using PhysicsEcs2D.Tiles.Generators.Editor;
-using Tiles;
+using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
 using UnityEditor;
 using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.U2D;
 using Utilities;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [CreateAssetMenu(
         fileName = nameof(SpriteStorageScriptableObject),

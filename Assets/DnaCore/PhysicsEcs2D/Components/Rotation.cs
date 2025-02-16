@@ -2,7 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Utilities;
 
-namespace PhysicsEcs2D.Components
+namespace DnaCore.PhysicsEcs2D.Components
 {
     [BurstCompile]
     public struct Rotation : IComponentData

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [Serializable]
     public struct SpriteStorageData

@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Tiles.Generators
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators
 {
     [ExecuteAlways]
     [RequireComponent(typeof(Tilemap))]

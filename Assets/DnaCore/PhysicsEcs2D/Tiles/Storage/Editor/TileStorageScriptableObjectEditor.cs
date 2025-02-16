@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [CustomEditor(typeof(TileStorageScriptableObject))]
     public class TileStorageScriptableObjectEditor : UnityEditor.Editor

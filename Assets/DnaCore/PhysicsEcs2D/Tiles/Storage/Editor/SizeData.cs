@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [System.Serializable]
     public struct SizeData

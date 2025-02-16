@@ -1,7 +1,7 @@
-using PhysicsEcs2D.DeltaTimeHelpers;
+using DnaCore.PhysicsEcs2D.DeltaTimeHelpers;
 using Unity.Entities;
 
-namespace Character.Components
+namespace DnaCore.Character.Components
 {
     public struct GroundSpeed : IComponentData
     {

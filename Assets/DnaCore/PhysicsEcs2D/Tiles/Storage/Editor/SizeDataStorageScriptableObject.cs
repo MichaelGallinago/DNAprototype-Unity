@@ -8,7 +8,7 @@ using UnityEngine;
 using Utilities;
 using static Utilities.ScriptableObjectUtilities;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [CreateAssetMenu(
         fileName = nameof(SizeDataStorageScriptableObject), 

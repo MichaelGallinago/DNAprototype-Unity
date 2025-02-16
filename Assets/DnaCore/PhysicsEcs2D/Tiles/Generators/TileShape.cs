@@ -1,8 +1,8 @@
-using Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Tiles.Generators
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators
 {
     [RequireComponent(typeof(SpriteShapeController))]
     [RequireComponent(typeof(PolygonCollider2D))]

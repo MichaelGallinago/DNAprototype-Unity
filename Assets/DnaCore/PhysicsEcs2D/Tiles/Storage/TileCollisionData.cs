@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Storage
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage
 {
     [Serializable]
     public struct TileCollisionData

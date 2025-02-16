@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using Utilities;
 
-namespace CameraEcs
+namespace DnaCore.CameraEcs
 {
     public class CameraAuthoring : MonoBehaviour
     {

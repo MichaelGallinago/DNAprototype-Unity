@@ -1,7 +1,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace PhysicsEcs2D.Components
+namespace DnaCore.PhysicsEcs2D.Components
 {
     public struct Acceleration : IComponentData
     {

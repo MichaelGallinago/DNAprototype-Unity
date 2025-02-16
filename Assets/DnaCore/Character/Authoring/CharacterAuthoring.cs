@@ -1,13 +1,14 @@
-using Character.Components;
-using Character.Input;
-using IK2D.Bodies;
-using PhysicsEcs2D.Components;
-using PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using Character;
+using DnaCore.Character.Components;
+using DnaCore.Character.Input;
+using DnaCore.IK2D.Bodies;
+using DnaCore.PhysicsEcs2D.Components;
+using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using Unity.Entities;
 using UnityEngine;
 using Utilities;
 
-namespace Character
+namespace DnaCore.Character.Authoring
 {
     public class CharacterAuthoring : MonoBehaviour
     {

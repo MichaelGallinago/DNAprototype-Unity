@@ -1,8 +1,8 @@
-using Character.Components;
+using DnaCore.Character.Components;
 using Unity.Burst;
 using Unity.Entities;
 
-namespace Character.Systems
+namespace DnaCore.Character.Systems
 {
     [BurstCompile]
     [UpdateAfter(typeof(CharacterCollisionSystem))]

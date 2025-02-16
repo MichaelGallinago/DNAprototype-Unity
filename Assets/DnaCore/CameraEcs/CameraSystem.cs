@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace CameraEcs
+namespace DnaCore.CameraEcs
 {
     [BurstCompile]
     [UpdateInGroup(typeof(TransformSystemGroup), OrderFirst = true)] // TODO: make separate group?
@@ -23,7 +23,7 @@ namespace CameraEcs
             state.Dependency = new CameraJob { TransformLookup = _transformLookup }.Schedule(state.Dependency);
         }
         
-        public void OnDestroy(ref SystemState state) {}
+        public readonly void OnDestroy(ref SystemState state) {}
     }
     
     [BurstCompile]

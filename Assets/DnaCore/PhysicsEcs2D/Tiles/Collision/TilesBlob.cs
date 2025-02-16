@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace PhysicsEcs2D.Tiles.Collision
+namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 {
     public struct TilesBlob
     {

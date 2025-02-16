@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace Character.Input
+namespace DnaCore.Character.Input
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial class InputGatheringSystem : SystemBase

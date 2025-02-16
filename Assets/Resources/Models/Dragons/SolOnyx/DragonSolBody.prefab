@@ -630,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7311720915545121877, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.000000031023493
       objectReference: {fileID: 0}
     - target: {fileID: 7352511853432296457, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: m_LocalPosition.x
@@ -662,11 +662,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7693419943766447011, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: _targetPosition.x
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 7693419943766447011, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: _targetPosition.y
-      value: 0
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 7693419943766447011, guid: 85e44bcd7f4533242b529da445148489, type: 3}
       propertyPath: <RotationLimit>k__BackingField

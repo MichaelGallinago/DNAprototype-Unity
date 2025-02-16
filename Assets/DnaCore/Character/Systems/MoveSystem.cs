@@ -1,14 +1,14 @@
-using Character.Components;
-using Character.Input;
-using PhysicsEcs2D.Components;
-using PhysicsEcs2D.Systems;
+using DnaCore.Character.Components;
+using DnaCore.Character.Input;
+using DnaCore.PhysicsEcs2D.Components;
+using DnaCore.PhysicsEcs2D.Systems;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using Utilities;
 
-namespace Character.Systems
+namespace DnaCore.Character.Systems
 {
     [BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]

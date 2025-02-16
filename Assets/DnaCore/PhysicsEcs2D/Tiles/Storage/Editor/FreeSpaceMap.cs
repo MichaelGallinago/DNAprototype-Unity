@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [Serializable]
     public struct FreeSpaceMap

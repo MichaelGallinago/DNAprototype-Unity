@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
-using PhysicsEcs2D.Tiles.Collision;
-using PhysicsEcs2D.Tiles.Generators.Editor;
-using Tiles;
-using Tiles.Generators;
-using Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.Collision;
+using DnaCore.PhysicsEcs2D.Tiles.Generators;
+using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
+using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEditor;
@@ -15,7 +14,7 @@ using UnityEngine.Tilemaps;
 using Utilities;
 using static Utilities.ScriptableObjectUtilities;
 
-namespace PhysicsEcs2D.Tiles.Storage.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [CreateAssetMenu(
         fileName = nameof(TileStorageScriptableObject),

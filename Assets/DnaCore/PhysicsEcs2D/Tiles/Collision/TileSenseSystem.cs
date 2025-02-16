@@ -1,6 +1,6 @@
-using PhysicsEcs2D.Systems;
-using PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
-using Tiles.Generators;
+using DnaCore.PhysicsEcs2D.Systems;
+using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using DnaCore.PhysicsEcs2D.Tiles.Generators;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -8,9 +8,10 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using Utilities;
-using static PhysicsEcs2D.Tiles.TileConstants;
 
-namespace PhysicsEcs2D.Tiles.Collision
+using static DnaCore.PhysicsEcs2D.Tiles.TileConstants;
+
+namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 {
     [BurstCompile]
     [UpdateAfter(typeof(PhysicsSystem))]
@@ -38,7 +39,7 @@ namespace PhysicsEcs2D.Tiles.Collision
             }
         }
         
-        public void OnUpdate(ref SystemState state)
+        public readonly void OnUpdate(ref SystemState state)
         {
 	        state.Dependency = new TileSenseJob
 	        {
@@ -47,7 +48,7 @@ namespace PhysicsEcs2D.Tiles.Collision
 	        }.ScheduleParallel(state.Dependency);
         }
         
-        public void OnStopRunning(ref SystemState state) {}
+        public readonly void OnStopRunning(ref SystemState state) {}
         
         public void OnDestroy(ref SystemState state)
         {

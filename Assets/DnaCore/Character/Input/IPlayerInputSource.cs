@@ -1,4 +1,4 @@
-namespace Character.Input
+namespace DnaCore.Character.Input
 {
     public interface IPlayerInputSource
     {

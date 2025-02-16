@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace Character.Components
+namespace DnaCore.Character.Components
 {
-    public struct AirTag : IComponentData, IEnableableComponent {}
+    public readonly struct AirTag : IComponentData, IEnableableComponent {}
 }

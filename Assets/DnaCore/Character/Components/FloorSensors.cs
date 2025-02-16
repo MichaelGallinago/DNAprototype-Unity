@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace Character.Components
+namespace DnaCore.Character.Components
 {
     public struct FloorSensors : IComponentData
     {

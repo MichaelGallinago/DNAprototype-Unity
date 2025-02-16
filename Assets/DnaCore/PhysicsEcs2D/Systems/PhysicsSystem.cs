@@ -1,26 +1,24 @@
-using Character.Components;
-using PhysicsEcs2D.Components;
+using DnaCore.Character.Components;
+using DnaCore.PhysicsEcs2D.Components;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace PhysicsEcs2D.Systems
+namespace DnaCore.PhysicsEcs2D.Systems
 {
     [BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    public partial struct PhysicsSystem : ISystem, ISystemStartStop
+    public partial struct PhysicsSystem : ISystem
     {
         private EntityQuery _moveableQuery;
         
-        public void OnCreate(ref SystemState state)
+        public readonly void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
         }
-        
-        public void OnStartRunning(ref SystemState state) {}
 
-        public void OnUpdate(ref SystemState state)
+        public readonly void OnUpdate(ref SystemState state)
         {
             state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
             state.Dependency = new GravityJob().ScheduleParallel(state.Dependency); 
@@ -30,12 +28,10 @@ namespace PhysicsEcs2D.Systems
 
             UpdateTransformSystemGroup();
         }
-
-        public void OnStopRunning(ref SystemState state) {}
         
-        public void OnDestroy(ref SystemState state) {}
+        public readonly void OnDestroy(ref SystemState state) {}
 
-        private void UpdateTransformSystemGroup()
+        private readonly void UpdateTransformSystemGroup()
         {
             var world = World.DefaultGameObjectInjectionWorld;
             var transformSystemGroup = world.GetOrCreateSystemManaged<TransformSystemGroup>();

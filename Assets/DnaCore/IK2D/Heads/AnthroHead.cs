@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace IK2D.Heads
+namespace DnaCore.IK2D.Heads
 {
     public class AnthroHead : MonoBehaviour
     {

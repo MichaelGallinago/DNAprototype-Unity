@@ -1,15 +1,15 @@
 using System;
 using System.Runtime.CompilerServices;
-using PhysicsEcs2D.Tiles;
+using DnaCore.PhysicsEcs2D.Tiles;
+using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
 using Tiles;
-using Tiles.SolidTypes;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static System.Runtime.CompilerServices.MethodImplOptions;
 
 [assembly: StructArrayAttributes.StructArray("SizeMap", nameof(Tiles), TileConstants.Size)]
 
-namespace PhysicsEcs2D.Tiles.Generators.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 {
     [Serializable]
     public struct BitTile

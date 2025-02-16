@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IK2D.Bodies
+namespace DnaCore.IK2D.Bodies
 {
     public class DragonBody : AnthroBody
     {

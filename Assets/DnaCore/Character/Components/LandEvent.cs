@@ -1,7 +1,7 @@
-using PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using Unity.Entities;
 
-namespace Character.Components
+namespace DnaCore.Character.Components
 {
     public struct LandEvent : IComponentData, IEnableableComponent
     {

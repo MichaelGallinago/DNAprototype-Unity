@@ -3,7 +3,7 @@ using Unity.Burst;
 using Unity.Mathematics;
 using Utilities;
 
-namespace PhysicsEcs2D.DeltaTimeHelpers
+namespace DnaCore.PhysicsEcs2D.DeltaTimeHelpers
 {
     [BurstCompile]
     public struct AcceleratedValue : IEquatable<AcceleratedValue>

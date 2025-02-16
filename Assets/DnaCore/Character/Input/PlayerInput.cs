@@ -2,7 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace Character.Input
+namespace DnaCore.Character.Input
 {
     public struct PlayerInput : IComponentData
     {

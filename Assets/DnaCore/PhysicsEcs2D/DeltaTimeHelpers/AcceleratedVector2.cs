@@ -2,7 +2,7 @@ using Unity.Burst;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace PhysicsEcs2D.DeltaTimeHelpers
+namespace DnaCore.PhysicsEcs2D.DeltaTimeHelpers
 {
     [BurstCompile]
     public struct AcceleratedVector2

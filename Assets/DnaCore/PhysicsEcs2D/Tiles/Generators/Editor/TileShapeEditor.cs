@@ -1,10 +1,9 @@
-using PhysicsEcs2D.Tiles.Storage.Editor;
-using Tiles.Generators;
-using Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
+using DnaCore.PhysicsEcs2D.Tiles.Storage.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace PhysicsEcs2D.Tiles.Generators.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 {
     [CustomEditor(typeof(TileShape))]
     public class TileShapeEditor : UnityEditor.Editor

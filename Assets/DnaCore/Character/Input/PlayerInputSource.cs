@@ -1,7 +1,7 @@
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-namespace Character.Input
+namespace DnaCore.Character.Input
 {
     public class PlayerInputSource : InputActions.IPlayerActions, IPlayerInputSource
     {

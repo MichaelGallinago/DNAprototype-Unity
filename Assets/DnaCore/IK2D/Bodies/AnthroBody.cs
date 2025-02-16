@@ -1,8 +1,8 @@
-using IK2D.Heads;
-using IK2D.Limbs;
+using DnaCore.IK2D.Heads;
+using DnaCore.IK2D.Limbs;
 using UnityEngine;
 
-namespace IK2D.Bodies
+namespace DnaCore.IK2D.Bodies
 {
     public class AnthroBody : MonoBehaviour
     {
