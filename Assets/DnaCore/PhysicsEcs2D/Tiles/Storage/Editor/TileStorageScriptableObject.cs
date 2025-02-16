@@ -6,13 +6,14 @@ using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using DnaCore.PhysicsEcs2D.Tiles.Generators;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
 using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
+using DnaCore.Utilities;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Utilities;
-using static Utilities.ScriptableObjectUtilities;
+
+using static DnaCore.Utilities.ScriptableObjectUtilities;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {

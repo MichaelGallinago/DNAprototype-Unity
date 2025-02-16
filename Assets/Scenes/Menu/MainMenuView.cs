@@ -1,10 +1,10 @@
 using System;
 using Cysharp.Threading.Tasks;
+using DnaCore.Utilities;
 using LitMotion;
 using Scenes.Menu.Audio;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Utilities;
 using UxmlViewBindings;
 
 namespace Scenes.Menu

@@ -1,6 +1,6 @@
+using DnaCore.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
-using Utilities;
 
 namespace Character
 {

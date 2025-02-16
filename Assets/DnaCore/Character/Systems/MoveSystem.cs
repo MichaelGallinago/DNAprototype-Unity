@@ -2,11 +2,11 @@ using DnaCore.Character.Components;
 using DnaCore.Character.Input;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Systems;
+using DnaCore.Utilities;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using Utilities;
 
 namespace DnaCore.Character.Systems
 {

@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class CustomSlider : MonoBehaviour
+namespace Scenes.Menu.Settings
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class CustomSlider : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

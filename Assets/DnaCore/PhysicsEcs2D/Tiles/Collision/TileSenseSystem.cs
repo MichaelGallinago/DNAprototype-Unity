@@ -1,14 +1,13 @@
 using DnaCore.PhysicsEcs2D.Systems;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using DnaCore.PhysicsEcs2D.Tiles.Generators;
+using DnaCore.Utilities;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using Utilities;
-
 using static DnaCore.PhysicsEcs2D.Tiles.TileConstants;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Collision
@@ -39,7 +38,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
             }
         }
         
-        public readonly void OnUpdate(ref SystemState state)
+        public void OnUpdate(ref SystemState state)
         {
 	        state.Dependency = new TileSenseJob
 	        {

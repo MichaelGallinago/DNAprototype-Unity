@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
+using DnaCore.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Utilities;
 
 namespace DnaCore.IK2D.Limbs
 {

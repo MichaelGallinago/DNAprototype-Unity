@@ -1,6 +1,6 @@
+using DnaCore.Utilities;
 using Unity.Burst;
 using Unity.Entities;
-using Utilities;
 
 namespace DnaCore.PhysicsEcs2D.Components
 {

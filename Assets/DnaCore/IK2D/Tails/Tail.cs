@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class Tail : MonoBehaviour
+namespace DnaCore.IK2D.Tails
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class Tail : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

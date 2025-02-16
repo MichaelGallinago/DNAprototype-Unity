@@ -3,7 +3,7 @@ using System;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 
-namespace Utilities
+namespace DnaCore.Utilities
 {
     public static class AssetDatabaseUtilities
     {

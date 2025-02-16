@@ -1,11 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
-using DnaCore.IK2D.Limbs;
 using UnityEditor;
 using UnityEngine;
-using Utilities;
 
-namespace IK2D.Limbs.Editor
+namespace DnaCore.IK2D.Limbs.Editor
 {
     [CustomEditor(typeof(AnthroLimb))]
     public class AnthroLimbEditor : UnityEditor.Editor

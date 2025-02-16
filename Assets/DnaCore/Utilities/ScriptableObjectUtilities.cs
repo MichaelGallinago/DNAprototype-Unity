@@ -1,4 +1,4 @@
-namespace Utilities
+namespace DnaCore.Utilities
 {
     public static class ScriptableObjectUtilities
     {

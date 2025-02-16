@@ -1,8 +1,7 @@
 ﻿using System;
 using LitMotion;
-using UnityEngine;
 
-namespace Utilities
+namespace DnaCore.Utilities
 {
     public static class MotionSequenceBuilderExtensions
     {

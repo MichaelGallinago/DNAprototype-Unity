@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
 using DnaCore.PhysicsEcs2D.Tiles.Storage.Editor;
+using DnaCore.Utilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Utilities;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 {

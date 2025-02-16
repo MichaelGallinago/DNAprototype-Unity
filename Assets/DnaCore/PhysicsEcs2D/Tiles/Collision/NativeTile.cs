@@ -1,7 +1,7 @@
+using DnaCore.Utilities;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
-using Utilities;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 {

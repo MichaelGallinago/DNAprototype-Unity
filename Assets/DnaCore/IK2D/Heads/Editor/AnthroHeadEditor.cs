@@ -1,10 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
-using DnaCore.IK2D.Heads;
 using UnityEditor;
 using UnityEngine;
 
-namespace IK2D.Heads.Editor
+namespace DnaCore.IK2D.Heads.Editor
 {
     [CustomEditor(typeof(AnthroHead))]
     public class AnthroHeadEditor : UnityEditor.Editor

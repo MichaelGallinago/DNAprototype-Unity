@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
-namespace Utilities.Editor
+namespace DnaCore.Utilities.Editor
 {
     public static class CustomEditorUtilities
     {

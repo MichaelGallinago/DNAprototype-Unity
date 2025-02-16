@@ -4,9 +4,9 @@ using DnaCore.Character.Input;
 using DnaCore.IK2D.Bodies;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using DnaCore.Utilities;
 using Unity.Entities;
 using UnityEngine;
-using Utilities;
 
 namespace DnaCore.Character.Authoring
 {

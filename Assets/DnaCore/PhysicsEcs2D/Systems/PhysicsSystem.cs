@@ -18,7 +18,7 @@ namespace DnaCore.PhysicsEcs2D.Systems
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
         }
 
-        public readonly void OnUpdate(ref SystemState state)
+        public void OnUpdate(ref SystemState state)
         {
             state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
             state.Dependency = new GravityJob().ScheduleParallel(state.Dependency); 

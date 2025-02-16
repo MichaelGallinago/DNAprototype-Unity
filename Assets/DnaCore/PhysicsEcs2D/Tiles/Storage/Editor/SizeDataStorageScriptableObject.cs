@@ -2,11 +2,12 @@
 using System;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
+using DnaCore.Utilities;
 using Tiles;
 using UnityEditor;
 using UnityEngine;
-using Utilities;
-using static Utilities.ScriptableObjectUtilities;
+
+using static DnaCore.Utilities.ScriptableObjectUtilities;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {

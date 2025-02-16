@@ -1,7 +1,7 @@
 using Unity.Burst;
 using Unity.Mathematics;
 
-namespace Utilities
+namespace DnaCore.Utilities
 {
     [BurstCompile]
     public static class MathUtilities

@@ -1,9 +1,10 @@
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+
 using static System.Runtime.CompilerServices.MethodImplOptions;
 
-namespace Utilities
+namespace DnaCore.Utilities
 {
     public static class VectorUtilities
     {

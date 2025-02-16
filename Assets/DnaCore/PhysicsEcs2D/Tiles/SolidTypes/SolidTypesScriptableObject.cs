@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
-using static Utilities.ScriptableObjectUtilities;
+using static DnaCore.Utilities.ScriptableObjectUtilities;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.SolidTypes
 {

@@ -1,12 +1,12 @@
 using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using DnaCore.Utilities;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Utilities;
 using static DnaCore.Character.Systems.CollisionJobUtilities;
 using TileSenseSystem = DnaCore.PhysicsEcs2D.Tiles.Collision.TileSenseSystem;
 

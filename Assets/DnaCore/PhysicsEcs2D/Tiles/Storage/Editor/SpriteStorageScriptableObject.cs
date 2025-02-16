@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
+using DnaCore.Utilities;
 using UnityEditor;
 using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.U2D;
-using Utilities;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
