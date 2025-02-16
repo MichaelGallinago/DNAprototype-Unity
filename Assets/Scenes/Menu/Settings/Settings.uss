@@ -1,11 +1,13 @@
 ScrollView VisualElement#unity-dragger {
-    border-top-left-radius: 2px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 8px;
-    max-width: 12px;
+    max-width: 14px;
     left: 0;
-    background-color: rgb(224, 224, 224);
+    background-image: url("project://database/Assets/Scenes/Menu/Settings/slider.png?fileID=2800000&guid=709cda45bc6aaf149b89dbdb96b943d2&type=3#slider");
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-left: 9;
+    -unity-slice-right: 6;
+    -unity-slice-top: 7;
+    -unity-slice-bottom: 8;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 ScrollView RepeatButton#unity-low-button {
@@ -18,9 +20,9 @@ ScrollView RepeatButton#unity-low-button {
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
     background-image: none;
-    max-width: 12px;
+    max-width: 14px;
     background-color: rgb(224, 224, 224);
-    max-height: 12px;
+    max-height: 14px;
 }
 
 ScrollView RepeatButton#unity-high-button {
@@ -33,18 +35,22 @@ ScrollView RepeatButton#unity-high-button {
     border-top-right-radius: 2px;
     border-top-left-radius: 2px;
     background-image: none;
-    max-width: 12px;
+    max-width: 14px;
     background-color: rgb(224, 224, 224);
-    max-height: 12px;
+    max-height: 14px;
 }
 
 ScrollView VisualElement#unity-tracker {
-    visibility: hidden;
-    max-width: 12px;
+    visibility: visible;
+    background-color: rgb(0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
 }
 
 ScrollView Scroller {
-    max-width: 12px;
+    max-width: 14px;
 }
 
 ScrollView ScrollerSlider#unity-slider {
@@ -104,4 +110,29 @@ ScrollView ScrollerSlider#unity-slider {
 
 .scroller:disabled {
     display: none;
+}
+
+.slider:selected {
+    color: rgb(255, 192, 64);
+}
+
+.unity-slider-int > .unity-slider-int__input > #unity-drag-container > #unity-dragger {
+    background-image: url("project://database/Assets/Scenes/Menu/Settings/SmallSlider.png?fileID=2800000&guid=8785cb950faba804b81dcfd0938663cd&type=3#SmallSlider");
+    -unity-slice-left: 3;
+    -unity-slice-top: 3;
+    -unity-slice-right: 3;
+    -unity-slice-bottom: 3;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.unity-slider-int__input > #unity-drag-container > #unity-tracker {
+    height: 2px;
+    margin-top: -1px;
+}
+
+.unity-slider-int:focus {
+    color: rgb(255, 192, 64);
 }

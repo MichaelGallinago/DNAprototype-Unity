@@ -27,9 +27,6 @@ namespace Scenes.Menu
             RegisterCardsCallbacks();
             
             AnimateStart();
-            
-            TextElement textElement = _document.rootVisualElement.Q<UnityEngine.UIElements.TextElement>("text");
-            textElement.style.unityFontDefinition = new StyleFontDefinition();
         }
         
         private void AnimateStart()

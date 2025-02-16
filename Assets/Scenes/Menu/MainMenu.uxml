@@ -4,8 +4,7 @@
     <Style src="project://database/Assets/Scenes/Menu/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=ead0049837d7f8f4b87596bba8d34462&amp;type=3#MainMenuStyle" />
     <engine:VisualElement style="flex-grow: 1;">
         <engine:VisualElement style="flex-grow: 1; min-height: 70px;" />
-        <engine:Instance template="Settings" enabled="false" name="Settings" style="position: absolute; right: 0; bottom: 0; left: 0; top: 0; margin-top: 53px;" />
-        <engine:VisualElement style="justify-content: flex-start; flex-grow: 1;">
+        <engine:VisualElement picking-mode="Ignore" style="justify-content: flex-start; flex-grow: 1;">
             <engine:Instance template="OptionCard" name="CardSaves" enabled="false" class="cardContainer" style="left: -85px;">
                 <AttributeOverrides element-name="Button" text="* SAVES" />
             </engine:Instance>
@@ -16,6 +15,7 @@
                 <AttributeOverrides element-name="Button" text="~ SHUTDOWN" />
             </engine:Instance>
         </engine:VisualElement>
+        <engine:Instance template="Settings" enabled="false" name="Settings" picking-mode="Ignore" style="position: absolute; right: 0; bottom: 0; left: 0; top: 0; margin-top: 53px;" />
         <engine:VisualElement name="Logo" class="logo" style="position: absolute; bottom: auto; top: 16px; left: 16px; right: auto;" />
     </engine:VisualElement>
 </engine:UXML>
