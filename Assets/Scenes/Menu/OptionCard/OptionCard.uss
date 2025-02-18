@@ -1,3 +1,8 @@
+.option-button:focus {
+    color: rgb(255, 192, 64);
+    -unity-background-image-tint-color: rgba(96, 96, 96, 0.5);
+}
+
 .option-button:hover {
     color: rgb(255, 192, 64);
     -unity-background-image-tint-color: rgba(96, 96, 96, 0.5);

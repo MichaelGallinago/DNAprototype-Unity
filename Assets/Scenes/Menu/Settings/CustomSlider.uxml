@@ -1,0 +1,6 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/Menu/Settings/CustomSlider.uss?fileID=7433441132597879392&amp;guid=9b96af20a23a3384eb7e1935f3b10a8a&amp;type=3#CustomSlider" />
+    <engine:SliderInt value="0" high-value="1" label="NAME" name="Slider" class="custom-slider">
+        <engine:Label text="VALUE" name="ValueLabel" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" emoji-fallback-support="false" enable-rich-text="false" enabled="true" class="unity-base-field__label custom-slider-value-label" />
+    </engine:SliderInt>
+</engine:UXML>

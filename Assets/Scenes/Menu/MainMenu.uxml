@@ -5,14 +5,14 @@
     <engine:VisualElement style="flex-grow: 1;">
         <engine:VisualElement style="flex-grow: 1; min-height: 70px;" />
         <engine:VisualElement picking-mode="Ignore" style="justify-content: flex-start; flex-grow: 1;">
-            <engine:Instance template="OptionCard" name="CardSaves" enabled="false" focusable="true" class="cardContainer" style="left: -85px;">
-                <AttributeOverrides element-name="Button" text="* SAVES" />
+            <engine:Instance template="OptionCard" name="CardSaves" enabled="false" class="cardContainer" style="left: -85px;">
+                <AttributeOverrides element-name="Button" text="* SAVES" tabindex="10" />
             </engine:Instance>
-            <engine:Instance template="OptionCard" name="CardSettings" enabled="false" tabindex="1" focusable="true" class="cardContainer" style="left: -53px; transition-delay: 0.2s;">
-                <AttributeOverrides element-name="Button" text="@ SETTINGS" />
+            <engine:Instance template="OptionCard" name="CardSettings" enabled="false" class="cardContainer" style="left: -53px; transition-delay: 0.2s;">
+                <AttributeOverrides element-name="Button" text="@ SETTINGS" tabindex="10" />
             </engine:Instance>
-            <engine:Instance template="OptionCard" name="CardShutdown" enabled="false" tabindex="2" focusable="true" class="cardContainer" style="left: -32px; transition-delay: 0.4s;">
-                <AttributeOverrides element-name="Button" text="~ SHUTDOWN" />
+            <engine:Instance template="OptionCard" name="CardShutdown" enabled="false" class="cardContainer" style="left: -32px; transition-delay: 0.4s;">
+                <AttributeOverrides element-name="Button" text="~ SHUTDOWN" tabindex="10" />
             </engine:Instance>
         </engine:VisualElement>
         <engine:Instance template="Settings" enabled="false" name="Settings" picking-mode="Ignore" style="position: absolute; right: 0; bottom: 0; left: 0; top: 0; margin-top: 53px;" />

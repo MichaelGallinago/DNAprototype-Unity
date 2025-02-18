@@ -1,0 +1,41 @@
+.unity-slider-int > .unity-slider-int__input > #unity-drag-container > #unity-dragger {
+    background-image: url("project://database/Assets/Scenes/Menu/Settings/SmallSlider.png?fileID=2800000&guid=8785cb950faba804b81dcfd0938663cd&type=3#SmallSlider");
+    -unity-slice-left: 3;
+    -unity-slice-top: 3;
+    -unity-slice-right: 3;
+    -unity-slice-bottom: 3;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-slider-int__input > #unity-drag-container > #unity-tracker {
+    height: 2px;
+    margin-top: -1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+SliderInt:focus > .unity-label {
+    color: rgb(255, 192, 64);
+}
+
+.custom-slider {
+    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/PrototypeMini.asset?fileID=11400000&guid=2121c05c17a540d48b0ea4350e30373e&type=2#PrototypeMini");
+    font-size: 16px;
+    max-height: none;
+    -unity-text-align: upper-left;
+    min-height: auto;
+    margin-bottom: 0;
+    margin-top: 0;
+    color: rgb(255, 255, 255);
+}
+
+.custom-slider-value-label {
+    width: 120px;
+    -unity-text-align: upper-center;
+}

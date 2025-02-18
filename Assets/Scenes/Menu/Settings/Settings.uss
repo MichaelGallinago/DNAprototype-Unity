@@ -104,35 +104,8 @@ ScrollView ScrollerSlider#unity-slider {
 }
 
 .scroller {
-    visibility: visible;
-    display: flex;
 }
 
 .scroller:disabled {
     display: none;
-}
-
-.slider:selected {
-    color: rgb(255, 192, 64);
-}
-
-.unity-slider-int > .unity-slider-int__input > #unity-drag-container > #unity-dragger {
-    background-image: url("project://database/Assets/Scenes/Menu/Settings/SmallSlider.png?fileID=2800000&guid=8785cb950faba804b81dcfd0938663cd&type=3#SmallSlider");
-    -unity-slice-left: 3;
-    -unity-slice-top: 3;
-    -unity-slice-right: 3;
-    -unity-slice-bottom: 3;
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-}
-
-.unity-slider-int__input > #unity-drag-container > #unity-tracker {
-    height: 2px;
-    margin-top: -1px;
-}
-
-.unity-slider-int:focus {
-    color: rgb(255, 192, 64);
 }

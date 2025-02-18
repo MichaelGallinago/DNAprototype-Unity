@@ -12,21 +12,19 @@ namespace UxmlViewBindings
     {
         [NotNull] public readonly VisualElement Root;
         [NotNull] public readonly ScrollView Control;
-        [NotNull] public readonly SliderInt Resolution;
-        [NotNull] public readonly Label ResolutionLabel;
-        [NotNull] public readonly SliderInt VSync;
-        [NotNull] public readonly SliderInt FrameRate;
-        [NotNull] public readonly SliderInt SimulationRate;
+        [NotNull] public readonly CustomSliderViewBinding Resolution;
+        [NotNull] public readonly CustomSliderViewBinding VSync;
+        [NotNull] public readonly CustomSliderViewBinding FrameRate;
+        [NotNull] public readonly CustomSliderViewBinding SimulationRate;
 
         public SettingsViewBinding(VisualElement root)
         {
             Root = root;
             Control = root.Q<ScrollView>("Control") ?? throw new NullReferenceException("\"Control\" not found!");
-            Resolution = root.Q<SliderInt>("Resolution") ?? throw new NullReferenceException("\"Resolution\" not found!");
-            ResolutionLabel = root.Q<Label>("ResolutionLabel") ?? throw new NullReferenceException("\"ResolutionLabel\" not found!");
-            VSync = root.Q<SliderInt>("VSync") ?? throw new NullReferenceException("\"VSync\" not found!");
-            FrameRate = root.Q<SliderInt>("FrameRate") ?? throw new NullReferenceException("\"FrameRate\" not found!");
-            SimulationRate = root.Q<SliderInt>("SimulationRate") ?? throw new NullReferenceException("\"SimulationRate\" not found!");
+            Resolution = new CustomSliderViewBinding(root.Q<VisualElement>("Resolution") ?? throw new NullReferenceException("\"Resolution\" not found!"));
+            VSync = new CustomSliderViewBinding(root.Q<VisualElement>("VSync") ?? throw new NullReferenceException("\"VSync\" not found!"));
+            FrameRate = new CustomSliderViewBinding(root.Q<VisualElement>("FrameRate") ?? throw new NullReferenceException("\"FrameRate\" not found!"));
+            SimulationRate = new CustomSliderViewBinding(root.Q<VisualElement>("SimulationRate") ?? throw new NullReferenceException("\"SimulationRate\" not found!"));
         }
     }
 }

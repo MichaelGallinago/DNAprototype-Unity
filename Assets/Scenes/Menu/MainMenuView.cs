@@ -51,29 +51,33 @@ namespace Scenes.Menu
 
         private void SetCardsEnabled(bool isEnabled)
         {
-            SetCardEnabled(_binding.CardSaves, isEnabled);
-            SetCardEnabled(_binding.CardSettings, isEnabled);
-            SetCardEnabled(_binding.CardShutdown, isEnabled);
+            SetCardEnabled(in _binding.CardSaves, isEnabled);
+            SetCardEnabled(in _binding.CardSettings, isEnabled);
+            SetCardEnabled(in _binding.CardShutdown, isEnabled);
         }
 
         private void RegisterCardsCallbacks()
         {
-            RegisterCardMouseEnter(_binding.CardSaves);
-            RegisterCardMouseEnter(_binding.CardSettings);
-            RegisterCardMouseEnter(_binding.CardShutdown);
+            RegisterCardMouseEnter(in _binding.CardSaves);
+            RegisterCardMouseEnter(in _binding.CardSettings);
+            RegisterCardMouseEnter(in _binding.CardShutdown);
             
-            _binding.CardSaves.Button.RegisterCallback<ClickEvent>(OnSavesPressed);
-            _binding.CardSettings.Button.RegisterCallback<ClickEvent>(OnSettingsPressed);
-            _binding.CardShutdown.Button.RegisterCallback<ClickEvent>(OnShutdownPressed);
+            _binding.CardSaves.Button.RegisterCallback<ClickEvent>(_ => OnSavesPressed());
+            _binding.CardSettings.Button.RegisterCallback<ClickEvent>(_ => OnSettingsPressed());
+            _binding.CardShutdown.Button.RegisterCallback<ClickEvent>(_ => OnShutdownPressed());
+            
+            _binding.CardSaves.Button.RegisterCallback<KeyUpEvent>(_ => OnSavesPressed());
+            _binding.CardSettings.Button.RegisterCallback<KeyUpEvent>(_ => OnSettingsPressed());
+            _binding.CardShutdown.Button.RegisterCallback<KeyUpEvent>(_ => OnShutdownPressed());
         }
         
-        private void OnSavesPressed(ClickEvent e)
+        private void OnSavesPressed()
         {
             PlayCardSelectSound();
             _ = HideCards();
         }
         
-        private void OnSettingsPressed(ClickEvent e)
+        private void OnSettingsPressed()
         {
             PlayCardSelectSound();
             _ = HideCards();
@@ -81,7 +85,7 @@ namespace Scenes.Menu
             _binding.Settings.Root.enabledSelf = true;
         }
 
-        private void OnShutdownPressed(ClickEvent e)
+        private void OnShutdownPressed()
         {
             if (_startAnimation.IsPlaying())
             {
