@@ -13,7 +13,7 @@ namespace Scenes.Menu.Audio
         [field: SerializeField] public AudioClip CardMovement { get; private set; }
         [field: SerializeField] public AudioClip ModelAppearance { get; private set; }
         [field: SerializeField] public AudioClip LogoSpin { get; private set; }
-        [field: SerializeField] public AudioClip CardHover { get; private set; }
-        [field: SerializeField] public AudioClip CardSelect { get; private set; }
+        [field: SerializeField] public AudioClip Focus { get; private set; }
+        [field: SerializeField] public AudioClip Select { get; private set; }
     }
 }

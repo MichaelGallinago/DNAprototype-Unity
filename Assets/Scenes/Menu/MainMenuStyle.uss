@@ -33,3 +33,7 @@
     margin-bottom: 8px;
     translate: -256px 0;
 }
+
+#Settings.unity-disabled {
+    opacity: 1;
+}

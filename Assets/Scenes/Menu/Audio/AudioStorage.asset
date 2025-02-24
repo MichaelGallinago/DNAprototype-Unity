@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a23fce3bfb4ea48b5e20640984f579, type: 3}
   m_Name: AudioStorage
   m_EditorClassIdentifier: 
-  <TubeAppearance>k__BackingField: {fileID: 8300000, guid: be04edb580beb5341afc9955e1436cfc, type: 3}
+  <TubeAppearance>k__BackingField: {fileID: 8300000, guid: 994f9abef172d6c49b1a1856dc349f3a, type: 3}
   <MenuTheme>k__BackingField: {fileID: 8300000, guid: eb1f6c28ff4cedb42ab20ed3c4009e68, type: 3}
   <CardMovement>k__BackingField: {fileID: 8300000, guid: 2f57cecb91d356f4b8bcb7c3fbab691f, type: 3}
   <ModelAppearance>k__BackingField: {fileID: 8300000, guid: 530bbfeeba9e4434389c13f9dcdd4bf7, type: 3}
   <LogoSpin>k__BackingField: {fileID: 8300000, guid: 3afc568edc850fa49be42f8c71c45ffb, type: 3}
-  <CardHover>k__BackingField: {fileID: 8300000, guid: 2c590952b7a34344b9f097d75ceb30a5, type: 3}
-  <CardSelect>k__BackingField: {fileID: 8300000, guid: 7019ec57df25a5d4e9394572a00a2806, type: 3}
+  <Focus>k__BackingField: {fileID: 8300000, guid: 2c590952b7a34344b9f097d75ceb30a5, type: 3}
+  <Select>k__BackingField: {fileID: 8300000, guid: 7019ec57df25a5d4e9394572a00a2806, type: 3}

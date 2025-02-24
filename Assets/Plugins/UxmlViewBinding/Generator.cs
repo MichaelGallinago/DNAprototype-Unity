@@ -23,6 +23,7 @@ namespace UxmlViewBinding
         {
             foreach (string assetPath in importedAssets)
             {
+                if (!assetPath.StartsWith("Assets/")) continue;
                 if (Path.GetExtension(assetPath) != ".uxml") continue;
                 GenerateUxmlBinding(assetPath);
             }

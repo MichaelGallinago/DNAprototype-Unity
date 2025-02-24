@@ -4,7 +4,7 @@
     <Style src="project://database/Assets/Scenes/Menu/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=ead0049837d7f8f4b87596bba8d34462&amp;type=3#MainMenuStyle" />
     <engine:VisualElement style="flex-grow: 1;">
         <engine:VisualElement style="flex-grow: 1; min-height: 70px;" />
-        <engine:VisualElement picking-mode="Ignore" style="justify-content: flex-start; flex-grow: 1;">
+        <engine:VisualElement picking-mode="Ignore" name="VisualElement" enabled="true" style="justify-content: flex-start; flex-grow: 1;">
             <engine:Instance template="OptionCard" name="CardSaves" enabled="false" class="cardContainer" style="left: -85px;">
                 <AttributeOverrides element-name="Button" text="* SAVES" tabindex="10" />
             </engine:Instance>

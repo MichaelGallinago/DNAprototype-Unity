@@ -11,6 +11,7 @@ namespace UxmlViewBindings
     public readonly struct MainMenuViewBinding
     {
         [NotNull] public readonly VisualElement Root;
+        [NotNull] public readonly VisualElement VisualElement;
         [NotNull] public readonly OptionCardViewBinding CardSaves;
         [NotNull] public readonly OptionCardViewBinding CardSettings;
         [NotNull] public readonly OptionCardViewBinding CardShutdown;
@@ -20,6 +21,7 @@ namespace UxmlViewBindings
         public MainMenuViewBinding(VisualElement root)
         {
             Root = root;
+            VisualElement = root.Q<VisualElement>("VisualElement") ?? throw new NullReferenceException("\"VisualElement\" not found!");
             CardSaves = new OptionCardViewBinding(root.Q<VisualElement>("CardSaves") ?? throw new NullReferenceException("\"CardSaves\" not found!"));
             CardSettings = new OptionCardViewBinding(root.Q<VisualElement>("CardSettings") ?? throw new NullReferenceException("\"CardSettings\" not found!"));
             CardShutdown = new OptionCardViewBinding(root.Q<VisualElement>("CardShutdown") ?? throw new NullReferenceException("\"CardShutdown\" not found!"));

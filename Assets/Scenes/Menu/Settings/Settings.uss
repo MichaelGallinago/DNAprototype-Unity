@@ -99,13 +99,43 @@ ScrollView ScrollerSlider#unity-slider {
 }
 
 .settings:disabled {
-    opacity: 0;
     translate: 0 240px;
+    opacity: 0;
 }
 
 .scroller {
+    transition-property: display;
+    transition-duration: 0.01s;
+    transition-timing-function: ease-in;
+    position: absolute;
 }
 
 .scroller:disabled {
     display: none;
+}
+
+.submenuButton {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: lower-left;
+    height: 32px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+}
+
+.submenuButton:hover {
+    color: rgb(255, 192, 64);
+}
+
+.submenuButton:focus {
+    color: rgb(255, 192, 64);
 }

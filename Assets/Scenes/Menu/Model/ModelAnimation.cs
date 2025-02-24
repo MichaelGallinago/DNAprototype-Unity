@@ -13,7 +13,7 @@ namespace Scenes.Menu.Model
 
         private float _snap;
         
-        private void Start() => UpdateSnapping(_snap);
+        private void Start() => UpdateSnapping(0f, this);
         
         public MotionHandle PlayAppearance(float duration) => 
             StartSnapChanging(_snap, WireframeShaderProperties.SnapMaximum, duration, Ease.InQuad);
@@ -29,7 +29,7 @@ namespace Scenes.Menu.Model
                 .WithEase(Ease.InSine)
                 .BindToLocalEulerAnglesY(_meshTransform))
             .Run();
-
+        
         public MotionHandle LoopRotation() => LMotion.Create(0f, 360f, _rotationDuration)
             .WithLoops(-1)
             .BindToLocalEulerAnglesY(_meshTransform);
@@ -37,14 +37,14 @@ namespace Scenes.Menu.Model
         private MotionHandle StartSnapChanging(float from, float to, float duration, Ease ease) =>
             LMotion.Create(from, to, duration)
                 .WithEase(ease)
-                .Bind(UpdateSnapping);
+                .Bind(this, static (snap, model) => UpdateSnapping(snap, model));
         
-        private void UpdateSnapping(float value)
+        private static void UpdateSnapping(float value, ModelAnimation modelAnimation)
         {
-            _snap = value;
+            modelAnimation._snap = value;
             value /= WireframeShaderProperties.SnapMaximum;
             value *= value * WireframeShaderProperties.SnapMaximum;
-            _meshRenderer.material.SetFloat(WireframeShaderProperties.SnapId, value);
+            modelAnimation._meshRenderer.material.SetFloat(WireframeShaderProperties.SnapId, value);
         }
     }
 }

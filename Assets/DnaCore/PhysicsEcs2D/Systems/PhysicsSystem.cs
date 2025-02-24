@@ -32,7 +32,7 @@ namespace DnaCore.PhysicsEcs2D.Systems
         }
         
         public readonly void OnDestroy(ref SystemState state) {}
-
+        
         private readonly void UpdateTransformSystemGroup()
         {
             var world = World.DefaultGameObjectInjectionWorld;
