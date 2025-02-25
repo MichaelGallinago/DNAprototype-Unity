@@ -21,14 +21,10 @@ namespace Scenes.Menu.OptionCard
         }
 
         public static MotionHandle Show(MainMenuArgs args) => LSequence.Create()
-            .AppendInterval(1f)
-            .AppendAction(args, motionArgs => SetCardsEnabled(true, motionArgs))
-            .AppendInterval(0.1f)
-            .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
-            .AppendInterval(0.2f)
-            .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
-            .AppendInterval(0.2f)
-            .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
+            .JoinAction(args, motionArgs => SetCardsEnabled(true, motionArgs), 1f)
+            .JoinAction(args, static motionArgs => PlayCardSound(motionArgs), 1.1f)
+            .JoinAction(args, static motionArgs => PlayCardSound(motionArgs), 1.3f)
+            .JoinAction(args, static motionArgs => PlayCardSound(motionArgs), 1.5f)
             .Run();
         
         private static void RegisterCardCallbacks(
