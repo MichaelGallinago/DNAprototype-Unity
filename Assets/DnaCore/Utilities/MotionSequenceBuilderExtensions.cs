@@ -21,6 +21,12 @@ namespace DnaCore.Utilities
                     builder.Join(CreateAction(action, args, delay));
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static MotionSequenceBuilder AppendAction<TUserArgs>(
+            this MotionSequenceBuilder builder, TUserArgs args, Action<TUserArgs> action) 
+            where TUserArgs : class => 
+                builder.Append(CreateAction(action, args, 0f));
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MotionSequenceBuilder JoinAction<TUserArgs1, TUserArgs2>(
             this MotionSequenceBuilder builder, 
             TUserArgs1 args1, TUserArgs2 args2, 
@@ -29,6 +35,15 @@ namespace DnaCore.Utilities
                 where TUserArgs1 : class 
                 where TUserArgs2 : class => 
                     builder.Join(CreateAction(action, args1, args2, delay));
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static MotionSequenceBuilder AppendAction<TUserArgs1, TUserArgs2>(
+            this MotionSequenceBuilder builder, 
+            TUserArgs1 args1, TUserArgs2 args2, 
+            Action<TUserArgs1, TUserArgs2> action) 
+                where TUserArgs1 : class 
+                where TUserArgs2 : class => 
+                    builder.Join(CreateAction(action, args1, args2, 0f));
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MotionSequenceBuilder AppendAndInterval(

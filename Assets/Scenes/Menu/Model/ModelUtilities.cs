@@ -18,7 +18,8 @@ namespace Scenes.Menu.Model
             MotionHandle initialRotation = args.Canvas.ModelAnimation.PlayRotation();
             return LSequence.Create()
                 .Append(initialRotation)
-                .JoinAction(args.Canvas.ModelAnimation, model => model.LoopRotation(), initialRotation.Duration)
+                .AppendAction(args.Canvas.ModelAnimation, model => model.LoopRotation())
+                .AppendInterval(0.01f)
                 .Run();
         }
     }
