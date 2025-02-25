@@ -11,13 +11,18 @@ namespace Scenes.Menu.Logo
     {
         public static MotionHandle Show(MainMenuArgs args) => LSequence.Create()
             .Join(GetRotateMotion(args, 90f, 360f))
-            .JoinAction(args, static motionArgs => SoundUtilities.PlayLogoSpin(motionArgs), 0.1f)
-            .JoinAction(args, static motionArgs => SoundUtilities.PlayLogoSpin(motionArgs), 0.5f)
+            .AppendInterval(0.1f)
+            .AppendAction(args, static motionArgs => SoundUtilities.PlayLogoSpin(motionArgs))
+            .AppendInterval(0.4f)
+            .AppendAction(args, static motionArgs => SoundUtilities.PlayLogoSpin(motionArgs))
+            .AppendInterval(0.01f)
             .Run();
 
         public static MotionHandle Hide(MainMenuArgs args) => LSequence.Create()
             .Join(GetRotateMotion(args, 0f, 90f))
-            .JoinAction(args, static motionArgs => SoundUtilities.PlayLogoSpin(motionArgs), 0.2f)
+            .AppendInterval(0.2f)
+            .AppendAction(args, static motionArgs => SoundUtilities.PlayLogoSpin(motionArgs))
+            .AppendInterval(0.01f)
             .Run();
         
         private static MotionHandle GetRotateMotion(MainMenuArgs args, float from, float to) => 

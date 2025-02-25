@@ -9,18 +9,13 @@ namespace Scenes.Menu.Model
         public static MotionHandle Animate(MainMenuArgs args) => LSequence.Create()
             .AppendInterval(3.25f)
             .AppendAndInterval(args.Canvas.ModelAnimation.PlayAppearance(5f), 1.2f)
-            .JoinAction(args.AudioStorage.ModelAppearance, 
-                static clip => AudioPlayerInstance.Instance.PlaySfx(clip, 0.5f), 1.2f)
-            .Run();
+            .AppendAction(args.AudioStorage.ModelAppearance, 
+                static clip => AudioPlayerInstance.Instance.PlaySfx(clip, 0.5f))
+            .RunAfterAction();
 
-        public static MotionHandle Rotate(MainMenuArgs args)
-        {
-            MotionHandle initialRotation = args.Canvas.ModelAnimation.PlayRotation();
-            return LSequence.Create()
-                .Append(initialRotation)
+        public static MotionHandle Rotate(MainMenuArgs args) => LSequence.Create()
+            .Append(args.Canvas.ModelAnimation.PlayRotation())
                 .AppendAction(args.Canvas.ModelAnimation, model => model.LoopRotation())
-                .AppendInterval(0.01f)
-                .Run();
-        }
+                .RunAfterAction();
     }
 }
