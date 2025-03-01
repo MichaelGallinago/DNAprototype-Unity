@@ -1,34 +1,13 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Template name="CustomSlider" src="project://database/Assets/Scenes/Menu/Settings/CustomSlider.uxml?fileID=9197481963319205126&amp;guid=a8a2dea0689b2e440b8426c4e94f354f&amp;type=3#CustomSlider" />
+    <engine:Template name="Options" src="project://database/Assets/Scenes/Menu/Settings/Options.uxml?fileID=9197481963319205126&amp;guid=932055de28d400e44973f835708846a8&amp;type=3#Options" />
+    <engine:Template name="Control" src="project://database/Assets/Scenes/Menu/Settings/Control.uxml?fileID=9197481963319205126&amp;guid=4c88c53b9afd2f3479725d861573ceb5&amp;type=3#Control" />
+    <engine:Template name="Audio" src="project://database/Assets/Scenes/Menu/Settings/Audio.uxml?fileID=9197481963319205126&amp;guid=c32b3b6bb21be9342a5f921d0c0dc827&amp;type=3#Audio" />
+    <engine:Template name="Submenus" src="project://database/Assets/Scenes/Menu/Settings/Submenus.uxml?fileID=9197481963319205126&amp;guid=cd799a8d0914d4d47a098a78c26a67a0&amp;type=3#Submenus" />
     <Style src="project://database/Assets/Scenes/Menu/Settings/Settings.uss?fileID=7433441132597879392&amp;guid=80ea76051e313a14e983470807b828cc&amp;type=3#Settings" />
-    <engine:VisualElement enabled="true" class="settings" style="flex-grow: 1;">
-        <engine:ScrollView name="Options" enabled="false" class="scroller">
-            <engine:Instance template="CustomSlider" name="Resolution">
-                <AttributeOverrides element-name="Slider" label="RESOLUTION" value="0" high-value="1" />
-                <AttributeOverrides element-name="ValueLabel" text="640X360" />
-            </engine:Instance>
-            <engine:Instance template="CustomSlider" name="VSync" style="justify-content: center;">
-                <AttributeOverrides element-name="Slider" label="VSYCN" value="0" />
-                <AttributeOverrides element-name="ValueLabel" text="FALSE" />
-            </engine:Instance>
-            <engine:Instance template="CustomSlider" name="FrameRate" style="flex-direction: column-reverse;">
-                <AttributeOverrides element-name="Slider" label="FRAMERATE" value="0" high-value="1" />
-                <AttributeOverrides element-name="ValueLabel" text="60" />
-            </engine:Instance>
-            <engine:Instance template="CustomSlider" name="SimulationRate">
-                <AttributeOverrides element-name="Slider" label="SIMULATION" value="0" high-value="1" />
-                <AttributeOverrides element-name="ValueLabel" text="60" />
-            </engine:Instance>
-        </engine:ScrollView>
-        <engine:ScrollView name="Control" enabled="false" class="scroller" />
-        <engine:ScrollView name="Audio" enabled="false" class="scroller" />
-        <engine:VisualElement name="SubmenusContainer" enabled="true" style="flex-grow: 1;">
-            <engine:ScrollView name="Submenus">
-                <engine:Button text="OPTIONS" emoji-fallback-support="false" enable-rich-text="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" name="OptionsButton" class="submenuButton" />
-                <engine:Button text="CONTROL" emoji-fallback-support="false" enable-rich-text="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" name="ControlButton" class="submenuButton" />
-                <engine:Button text="AUDIO" emoji-fallback-support="false" enable-rich-text="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" name="AudioButton" class="submenuButton" />
-            </engine:ScrollView>
-            <engine:Button text="BACK" emoji-fallback-support="false" enable-rich-text="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" name="Back" class="submenuButton" style="bottom: 0; top: auto; position: absolute; right: 0; left: 0;" />
-        </engine:VisualElement>
+    <engine:VisualElement enabled="true" class="settings" style="flex-grow: 1; justify-content: space-between;">
+        <engine:Instance template="Options" name="Options" enabled="true" style="display: flex; justify-content: space-between; flex-grow: 1;" />
+        <engine:Instance template="Control" name="Control" style="display: none; flex-grow: 1;" />
+        <engine:Instance template="Audio" name="Audio" style="display: none; flex-grow: 1;" />
+        <engine:Instance template="Submenus" name="Submenus" style="flex-grow: 1; display: none;" />
     </engine:VisualElement>
 </engine:UXML>

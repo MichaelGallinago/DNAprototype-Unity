@@ -1,0 +1,30 @@
+.backButton {
+    position: relative;
+    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/PrototypeMini.asset?fileID=11400000&guid=2121c05c17a540d48b0ea4350e30373e&type=2#PrototypeMini");
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    -unity-font-style: normal;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-left: 7px;
+    margin-right: 7px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    align-self: flex-start;
+    min-height: 18px;
+}
+
+.backButton:focus {
+    color: rgb(255, 192, 64);
+}
+
+.backButton:hover {
+    color: rgb(255, 160, 0);
+}

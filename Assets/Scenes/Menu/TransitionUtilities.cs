@@ -2,11 +2,25 @@ using Cysharp.Threading.Tasks;
 using DnaCore.Audio;
 using LitMotion;
 using Scenes.Menu.Logo;
+using Scenes.Menu.Model;
+using Scenes.Menu.OptionCard;
+using Scenes.Menu.Tube;
 
 namespace Scenes.Menu
 {
     public static class TransitionUtilities
     {
+        public static void Enter(MainMenuArgs args)
+        {
+            args.StartAnimation = LSequence.Create()
+                .Join(TubeUtilities.Animate(args))
+                .Join(ModelUtilities.Animate(args))
+                .Join(LogoUtilities.Show(args))
+                .Run();
+            
+            _ = CardsUtilities.Show(args);
+        }
+        
         public static async UniTask Quit(MainMenuArgs args)
         {
             _ = AudioPlayer.StopBgmWithPitchFadeIn(2f);

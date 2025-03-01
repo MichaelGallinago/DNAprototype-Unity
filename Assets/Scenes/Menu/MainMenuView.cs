@@ -1,15 +1,12 @@
 using LitMotion;
 using Scenes.Menu.Audio;
-using Scenes.Menu.Logo;
-using Scenes.Menu.Model;
 using Scenes.Menu.OptionCard;
+using Scenes.Menu.Saves;
 using Scenes.Menu.Settings;
-using Scenes.Menu.Tube;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UxmlViewBindings;
 
-//TODO: replace "static (evt, userArgs) => ..." to method group after C# 11 in unity
 namespace Scenes.Menu
 {
     public class MainMenuView : MonoBehaviour
@@ -24,22 +21,13 @@ namespace Scenes.Menu
         private void Start()
         {
             var binding = new MainMenuViewBinding(_document.rootVisualElement);
-            var args = new MainMenuArgs(in binding, _audioStorage, _canvas);
+            var args = new MainMenuArgs(in binding, _audioStorage, _canvas, _viewModel);
+            
             CardsUtilities.RegisterCallbacks(args);
             SettingsUtilities.RegisterCallbacks(args);
+            SavesUtilities.RegisterCallbacks(args);
             
-            AnimateStart(args);
-        }
-        
-        private void AnimateStart(MainMenuArgs args)
-        {
-            args.StartAnimation = LSequence.Create()
-                .Join(TubeUtilities.Animate(args))
-                .Join(ModelUtilities.Animate(args))
-                .Join(LogoUtilities.Show(args))
-                .Run();
-            
-            _ = CardsUtilities.Show(args);
+            TransitionUtilities.Enter(args);
         }
     }
 }

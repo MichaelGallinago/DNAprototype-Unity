@@ -6,6 +6,8 @@ using Scenes.Menu.Audio;
 using UnityEngine.UIElements;
 using UxmlViewBindings;
 
+//TODO: replace "static (evt, userArgs) => ..." to method group after C# 11 in unity
+// ReSharper disable UnusedParameter.Local
 namespace Scenes.Menu.OptionCard
 {
     public static class CardsUtilities

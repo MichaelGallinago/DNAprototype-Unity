@@ -1,0 +1,26 @@
+.submenuButton {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: lower-left;
+    height: 32px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/Prototype.asset?fileID=11400000&guid=ba317d4c33a45ac46823198b6eed1742&type=2#Prototype");
+}
+
+.submenuButton:focus {
+    color: rgb(255, 192, 64);
+}
+
+.submenuButton:hover {
+    color: rgb(255, 160, 0);
+}
