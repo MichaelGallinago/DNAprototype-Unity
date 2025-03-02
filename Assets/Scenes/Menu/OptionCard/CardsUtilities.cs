@@ -14,11 +14,12 @@ namespace Scenes.Menu.OptionCard
     {
         public static void RegisterCallbacks(MainMenuArgs args)
         {
-            RegisterCardCallbacks(in args.Binding.CardSaves, args, 
+            var builder = new CallbackBuilder<MainMenuArgs>(args);
+            RegisterCardCallbacks(args.Binding.CardSaves.Button, builder, 
                 static (evt, userArgs) => OnSavesPressed(evt, userArgs));
-            RegisterCardCallbacks(in args.Binding.CardSettings, args,
+            RegisterCardCallbacks(args.Binding.CardSettings.Button, builder,
                 static (evt, userArgs) => OnSettingsPressed(evt, userArgs));
-            RegisterCardCallbacks(in args.Binding.CardShutdown, args,
+            RegisterCardCallbacks(args.Binding.CardShutdown.Button, builder,
                 static (evt, userArgs) => OnShutdownPressed(evt, userArgs));
         }
 
@@ -32,17 +33,15 @@ namespace Scenes.Menu.OptionCard
             .AppendInterval(0.2f)
             .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
             .RunAfterAction();
-        
+
         private static void RegisterCardCallbacks(
-            in OptionCardViewBinding binding, 
-            MainMenuArgs args, 
-            EventCallback<EventBase, MainMenuArgs> onPressedCallback)
-        {
-            binding.Button.RegisterCallback<MouseEnterEvent, MainMenuArgs>(
-                static (evt, userArgs) => SoundUtilities.PlayFocus(evt, userArgs), args);
-            binding.Button.RegisterCallback<NavigationSubmitEvent, MainMenuArgs>(onPressedCallback, args);
-            binding.Button.RegisterCallback<ClickEvent, MainMenuArgs>(onPressedCallback, args);
-        }
+            Button cardButton,
+            CallbackBuilder<MainMenuArgs> builder,
+            EventCallback<EventBase, MainMenuArgs> onPressedCallback) => builder
+                .Register<MouseEnterEvent>(cardButton,
+                    static (evt, userArgs) => SoundUtilities.PlayFocus(evt, userArgs))
+                .Register<NavigationSubmitEvent>(cardButton, onPressedCallback)
+                .Register<ClickEvent>(cardButton, onPressedCallback);
 
         private static async UniTask Hide(MainMenuArgs args)
         {

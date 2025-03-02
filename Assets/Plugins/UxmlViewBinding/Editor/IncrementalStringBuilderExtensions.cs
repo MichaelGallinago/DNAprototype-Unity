@@ -1,6 +1,6 @@
 using System.Xml;
 
-namespace UxmlViewBinding
+namespace UxmlViewBinding.Editor
 {
     public static class IncrementalStringBuilderExtensions
     {

@@ -3,7 +3,7 @@ using System.Text;
 using System.Xml;
 using UnityEditor;
 
-namespace UxmlViewBinding
+namespace UxmlViewBinding.Editor
 {
     public class UxmlBindingGenerator : AssetPostprocessor
     {

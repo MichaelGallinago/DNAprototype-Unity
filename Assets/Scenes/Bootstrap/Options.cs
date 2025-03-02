@@ -8,12 +8,12 @@ namespace Scenes.Bootstrap
         public const ushort BaseFrameRate = 60;
         
         public readonly ushort FrameRateLimit;
-        public readonly ushort SimulationFrameRate;
+        public readonly ushort SimulationRate;
         
-        public Options(ushort frameRateLimit, ushort simulationFrameRate)
+        public Options(ushort frameRateLimit, ushort simulationRate)
         {
             FrameRateLimit = frameRateLimit;
-            SimulationFrameRate = simulationFrameRate;
+            SimulationRate = simulationRate;
         }
     }
 }

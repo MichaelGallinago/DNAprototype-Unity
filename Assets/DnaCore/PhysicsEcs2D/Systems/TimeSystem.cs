@@ -15,10 +15,10 @@ namespace DnaCore.PhysicsEcs2D.Systems
         
         protected override void OnCreate()
         {
-            SimulationFrameRate.Data = Settings.Options.SimulationFrameRate;
+            SimulationFrameRate.Data = Settings.Options.SimulationRate;
             
             var systemGroup = World.GetExistingSystemManaged<FixedStepSimulationSystemGroup>();
-            systemGroup.Timestep = 1f / Settings.Options.SimulationFrameRate;
+            systemGroup.Timestep = 1f / Settings.Options.SimulationRate;
         }
 
         protected override void OnUpdate() {}

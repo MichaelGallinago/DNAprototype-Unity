@@ -58,7 +58,7 @@ Shader "DNA/WireframeShader"
 
             v2g vert(appdata v)
             {
-                v2g o;
+                v2g o = (v2g)0;
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_OUTPUT_STEREO_EYE_INDEX(o);
 

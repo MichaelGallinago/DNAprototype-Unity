@@ -2,7 +2,6 @@ using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
 
-//TODO: replace "static pitch => SetBgmPitch(pitch)" to method group after C# 11 in unity
 namespace DnaCore.Audio
 {
     public class AudioPlayerInstance : MonoBehaviour

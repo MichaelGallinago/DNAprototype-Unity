@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DnaCore.PhysicsEcs2D.Tiles.Generators
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 {
     public class ShapeGrid : MonoBehaviour
     {

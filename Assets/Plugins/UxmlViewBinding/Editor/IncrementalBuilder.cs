@@ -1,7 +1,7 @@
 #nullable enable
 using System.Text;
 
-namespace UxmlViewBinding
+namespace UxmlViewBinding.Editor
 {
     public readonly struct IncrementalBuilder
     {

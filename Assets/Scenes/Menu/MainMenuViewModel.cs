@@ -6,11 +6,11 @@ namespace Scenes.Menu
     public class MainMenuViewModel : MonoBehaviour
     {
         //TODO: this
-        /*public int Resolution
+        public int Resolution
         {
             set
             {
-                Screen.SetResolution(width, height, Screen.fullScreenMode);
+                //Screen.SetResolution(width, height, Screen.fullScreenMode);
             }
         }
 
@@ -18,18 +18,20 @@ namespace Scenes.Menu
         {
             set
             {
-                QualitySettings.vSyncCount = Math.Clamp(value, 0, 2);
+                //QualitySettings.vSyncCount = Math.Clamp(value, 0, 2);
             }
         }
 
         public int FrameRate
         {
-            set =>
+            set {}
         }
 
         public int SimulationRate
         {
-            set =>
-        }*/
+            set
+            {
+            }
+        }
     }
 }

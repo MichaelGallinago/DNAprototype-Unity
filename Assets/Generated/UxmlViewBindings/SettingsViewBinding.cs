@@ -11,6 +11,7 @@ namespace UxmlViewBindings
     public readonly struct SettingsViewBinding
     {
         [NotNull] public readonly VisualElement Root;
+        [NotNull] public readonly VisualElement VisualElement;
         [NotNull] public readonly OptionsViewBinding Options;
         [NotNull] public readonly ControlViewBinding Control;
         [NotNull] public readonly AudioViewBinding Audio;
@@ -19,6 +20,7 @@ namespace UxmlViewBindings
         public SettingsViewBinding(VisualElement root)
         {
             Root = root;
+            VisualElement = root.Q<VisualElement>("VisualElement") ?? throw new NullReferenceException("\"VisualElement\" not found!");
             Options = new OptionsViewBinding(root.Q<VisualElement>("Options") ?? throw new NullReferenceException("\"Options\" not found!"));
             Control = new ControlViewBinding(root.Q<VisualElement>("Control") ?? throw new NullReferenceException("\"Control\" not found!"));
             Audio = new AudioViewBinding(root.Q<VisualElement>("Audio") ?? throw new NullReferenceException("\"Audio\" not found!"));

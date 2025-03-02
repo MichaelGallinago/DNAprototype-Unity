@@ -1,3 +1,4 @@
+using DnaCore.Utilities;
 using Scenes.Menu.OptionCard;
 using UnityEngine.UIElements;
 using UxmlViewBindings;
@@ -10,31 +11,30 @@ namespace Scenes.Menu.Settings.Submenus
     {
         public static void RegisterCallbacks(MainMenuArgs args) => 
             RegisterCallbacks(in args.Binding.Settings.Submenus, args);
-        
-        private static void RegisterCallbacks(in SubmenusViewBinding binding, MainMenuArgs args)
-        {
-            binding.Root.RegisterCallback<NavigationCancelEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnSettingsCanceled(evt, userArgs), args);
-            binding.BackButton.RegisterCallback<ClickEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnSettingsCanceled(evt, userArgs), args);
-            binding.BackButton.RegisterCallback<NavigationSubmitEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnSettingsCanceled(evt, userArgs), args);
 
-            binding.OptionsButton.RegisterCallback<ClickEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnOptionsPressed(evt, userArgs), args);
-            binding.OptionsButton.RegisterCallback<NavigationSubmitEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnOptionsPressed(evt, userArgs), args);
-            
-            binding.ControlButton.RegisterCallback<ClickEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnControlPressed(evt, userArgs), args);
-            binding.ControlButton.RegisterCallback<NavigationSubmitEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnControlPressed(evt, userArgs), args);
-            
-            binding.AudioButton.RegisterCallback<ClickEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnAudioPressed(evt, userArgs), args);
-            binding.AudioButton.RegisterCallback<NavigationSubmitEvent, MainMenuArgs>(
-                static (evt, userArgs) => OnAudioPressed(evt, userArgs), args);
-        }
+        private static void RegisterCallbacks(in SubmenusViewBinding binding, MainMenuArgs args) =>
+            new CallbackBuilder<MainMenuArgs>(args)
+                .Register<NavigationCancelEvent>(binding.Root,
+                    static (evt, userArgs) => OnSettingsCanceled(evt, userArgs))
+                .Register<ClickEvent>(binding.BackButton,
+                    static (evt, userArgs) => OnSettingsCanceled(evt, userArgs))
+                .Register<NavigationSubmitEvent>(binding.BackButton,
+                    static (evt, userArgs) => OnSettingsCanceled(evt, userArgs))
+
+                .Register<ClickEvent>(binding.OptionsButton,
+                    static (evt, userArgs) => OnOptionsPressed(evt, userArgs))
+                .Register<NavigationSubmitEvent>(binding.OptionsButton,
+                    static (evt, userArgs) => OnOptionsPressed(evt, userArgs))
+
+                .Register<ClickEvent>(binding.ControlButton,
+                    static (evt, userArgs) => OnControlPressed(evt, userArgs))
+                .Register<NavigationSubmitEvent>(binding.ControlButton,
+                    static (evt, userArgs) => OnControlPressed(evt, userArgs))
+
+                .Register<ClickEvent>(binding.AudioButton,
+                    static (evt, userArgs) => OnAudioPressed(evt, userArgs))
+                .Register<NavigationSubmitEvent>(binding.AudioButton,
+                    static (evt, userArgs) => OnAudioPressed(evt, userArgs));
         
         private static void OnSettingsCanceled(EventBase e, MainMenuArgs args)
         {
