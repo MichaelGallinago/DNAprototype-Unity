@@ -23,8 +23,8 @@ namespace Scenes.Menu.OptionCard
                 static (evt, userArgs) => OnShutdownPressed(evt, userArgs));
         }
 
-        public static MotionHandle Show(MainMenuArgs args) => LSequence.Create()
-            .AppendInterval(1f)
+        public static MotionHandle Show(MainMenuArgs args, float delay = 0f) => LSequence.Create()
+            .AppendInterval(delay)
             .AppendAction(args, motionArgs => SetCardsEnabled(true, motionArgs))
             .AppendInterval(0.1f)
             .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
@@ -38,7 +38,7 @@ namespace Scenes.Menu.OptionCard
             Button cardButton,
             CallbackBuilder<MainMenuArgs> builder,
             EventCallback<EventBase, MainMenuArgs> onPressedCallback) => builder
-                .Register<MouseEnterEvent>(cardButton,
+                .Register<FocusInEvent>(cardButton,
                     static (evt, userArgs) => SoundUtilities.PlayFocus(evt, userArgs))
                 .Register<NavigationSubmitEvent>(cardButton, onPressedCallback)
                 .Register<ClickEvent>(cardButton, onPressedCallback);

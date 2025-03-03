@@ -4,7 +4,7 @@ namespace UxmlViewBinding.Editor
 {
     public static class IncrementalStringBuilderExtensions
     {
-        private const int PrefixLength = 7;
+        private const string EngineTypePrefix = "engine:";
         
         public static IncrementalBuilder AddFields(this IncrementalBuilder builder, XmlNodeList elements) =>
             builder.AddFieldsOrConstructorLines(elements, isConstructorLine: false);
@@ -20,7 +20,12 @@ namespace UxmlViewBinding.Editor
                 string name = element.Attributes?["name"].Value;
                 if (name is null || name.StartsWith('_')) continue;
 
-                string type = element.Name.Substring(PrefixLength);
+                string type = element.Name;
+                if (type.StartsWith(EngineTypePrefix))
+                {
+                    type = type.Substring(EngineTypePrefix.Length);
+                }
+                
                 switch (type)
                 {
                     case "Template": continue;

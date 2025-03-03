@@ -18,7 +18,7 @@ namespace Scenes.Menu
                 .Join(LogoUtilities.Show(args))
                 .Run();
             
-            _ = CardsUtilities.Show(args);
+            _ = CardsUtilities.Show(args, 1f);
         }
         
         public static async UniTask Quit(MainMenuArgs args)

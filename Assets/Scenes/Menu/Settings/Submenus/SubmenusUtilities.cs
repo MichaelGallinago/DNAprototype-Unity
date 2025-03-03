@@ -1,5 +1,8 @@
 using DnaCore.Utilities;
 using Scenes.Menu.OptionCard;
+using Scenes.Menu.Settings.Audio;
+using Scenes.Menu.Settings.Control;
+using Scenes.Menu.Settings.Options;
 using UnityEngine.UIElements;
 using UxmlViewBindings;
 
@@ -22,42 +25,61 @@ namespace Scenes.Menu.Settings.Submenus
                     static (evt, userArgs) => OnSettingsCanceled(evt, userArgs))
 
                 .Register<ClickEvent>(binding.OptionsButton,
-                    static (evt, userArgs) => OnOptionsPressed(evt, userArgs))
+                    static (evt, userArgs) => OnOptionsClicked(evt, userArgs))
                 .Register<NavigationSubmitEvent>(binding.OptionsButton,
-                    static (evt, userArgs) => OnOptionsPressed(evt, userArgs))
+                    static (evt, userArgs) => OnOptionsSubmitted(evt, userArgs))
 
                 .Register<ClickEvent>(binding.ControlButton,
-                    static (evt, userArgs) => OnControlPressed(evt, userArgs))
+                    static (evt, userArgs) => OnControlClicked(evt, userArgs))
                 .Register<NavigationSubmitEvent>(binding.ControlButton,
-                    static (evt, userArgs) => OnControlPressed(evt, userArgs))
+                    static (evt, userArgs) => OnControlSubmitted(evt, userArgs))
 
                 .Register<ClickEvent>(binding.AudioButton,
-                    static (evt, userArgs) => OnAudioPressed(evt, userArgs))
+                    static (evt, userArgs) => OnAudioClicked(evt, userArgs))
                 .Register<NavigationSubmitEvent>(binding.AudioButton,
-                    static (evt, userArgs) => OnAudioPressed(evt, userArgs));
+                    static (evt, userArgs) => OnAudioSubmitted(evt, userArgs));
         
         private static void OnSettingsCanceled(EventBase e, MainMenuArgs args)
         {
             _ = CardsUtilities.Show(args);
             args.Binding.Settings.Root.enabledSelf = false;
+            args.Binding.CardSettings.Button.Focus();
         }
         
-        private static void OnOptionsPressed(EventBase e, MainMenuArgs args)
+        private static void OnOptionsClicked(ClickEvent e, MainMenuArgs args)
         {
             HideSubmenus(in args.Binding.Settings);
-            args.Binding.Settings.Options.Root.style.display = DisplayStyle.Flex;
+            OptionsUtilities.Open(args, false);
         }
         
-        private static void OnControlPressed(EventBase e, MainMenuArgs args)
+        private static void OnOptionsSubmitted(NavigationSubmitEvent e, MainMenuArgs args)
         {
             HideSubmenus(in args.Binding.Settings);
-            args.Binding.Settings.Options.Root.style.display = DisplayStyle.Flex;
+            OptionsUtilities.Open(args, true);
         }
         
-        private static void OnAudioPressed(EventBase e, MainMenuArgs args)
+        private static void OnControlClicked(ClickEvent e, MainMenuArgs args)
         {
             HideSubmenus(in args.Binding.Settings);
-            args.Binding.Settings.Options.Root.style.display = DisplayStyle.Flex;
+            ControlUtilities.Open(args, false);
+        }
+        
+        private static void OnControlSubmitted(NavigationSubmitEvent e, MainMenuArgs args)
+        {
+            HideSubmenus(in args.Binding.Settings);
+            ControlUtilities.Open(args, true);
+        }
+        
+        private static void OnAudioClicked(ClickEvent e, MainMenuArgs args)
+        {
+            HideSubmenus(in args.Binding.Settings);
+            AudioUtilities.Open(args, false);
+        }
+        
+        private static void OnAudioSubmitted(NavigationSubmitEvent e, MainMenuArgs args)
+        {
+            HideSubmenus(in args.Binding.Settings);
+            AudioUtilities.Open(args, true);
         }
 
         private static void HideSubmenus(in SettingsViewBinding binding)

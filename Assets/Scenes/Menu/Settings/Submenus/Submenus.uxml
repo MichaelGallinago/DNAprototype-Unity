@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Scenes/Menu/Settings/Submenus.uss?fileID=7433441132597879392&amp;guid=5270d4da6300b514e91e991c5f001497&amp;type=3#Submenus" />
-    <Style src="project://database/Assets/Scenes/Menu/Settings/CustomScrollView.uss?fileID=7433441132597879392&amp;guid=6a4d1fbc01635e4409db8add966e3448&amp;type=3#CustomScrollView" />
+    <Style src="project://database/Assets/Scenes/Menu/Settings/Submenus/Submenus.uss?fileID=7433441132597879392&amp;guid=5270d4da6300b514e91e991c5f001497&amp;type=3#Submenus" />
+    <Style src="project://database/Assets/Scenes/Menu/Settings/CustomElements/ScrollView/CustomScrollView.uss?fileID=7433441132597879392&amp;guid=6a4d1fbc01635e4409db8add966e3448&amp;type=3#CustomScrollView" />
     <engine:ScrollView>
         <engine:Button text="OPTIONS" emoji-fallback-support="false" enable-rich-text="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" name="OptionsButton" class="submenuButton" />
         <engine:Button text="CONTROL" emoji-fallback-support="false" enable-rich-text="false" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" name="ControlButton" class="submenuButton" />

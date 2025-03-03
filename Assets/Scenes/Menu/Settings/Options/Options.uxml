@@ -3,7 +3,7 @@
     <engine:Template name="BackButton" src="project://database/Assets/Scenes/Menu/Settings/CustomElements/ApplyButton/ApplyButton.uxml?fileID=9197481963319205126&amp;guid=bd9692381d32df24ab0107f54a5df0e0&amp;type=3#ApplyButton" />
     <Style src="project://database/Assets/Scenes/Menu/Settings/CustomElements/ScrollView/CustomScrollView.uss?fileID=7433441132597879392&amp;guid=6a4d1fbc01635e4409db8add966e3448&amp;type=3#CustomScrollView" />
     <engine:VisualElement style="flex-grow: 1; justify-content: space-between;">
-        <engine:ScrollView enabled="true" nested-interaction-kind="StopScrolling" class="scroller">
+        <engine:ScrollView enabled="true" nested-interaction-kind="StopScrolling" name="ScrollView" class="scroller">
             <engine:Instance template="CustomSlider" name="Resolution">
                 <AttributeOverrides element-name="Slider" label="RESOLUTION" value="1" high-value="1" />
                 <AttributeOverrides element-name="ValueLabel" text="640X360" />

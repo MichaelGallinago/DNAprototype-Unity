@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using UnityEngine.UIElements;
 using System;
 // ReSharper disable CheckNamespace
@@ -11,12 +11,12 @@ namespace UxmlViewBindings
     public readonly struct AudioViewBinding
     {
         [NotNull] public readonly VisualElement Root;
-        [NotNull] public readonly BackButtonViewBinding Apply;
+        [NotNull] public readonly ApplyViewBinding Apply;
 
         public AudioViewBinding(VisualElement root)
         {
             Root = root;
-            Apply = new BackButtonViewBinding(root.Q<VisualElement>("Apply") ?? throw new NullReferenceException("\"Apply\" not found!"));
+            Apply = new ApplyViewBinding(root);
         }
     }
 }

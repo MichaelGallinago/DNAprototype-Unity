@@ -11,6 +11,7 @@ namespace UxmlViewBindings
     public readonly struct OptionsViewBinding
     {
         [NotNull] public readonly VisualElement Root;
+        [NotNull] public readonly ScrollView ScrollView;
         [NotNull] public readonly CustomSliderViewBinding Resolution;
         [NotNull] public readonly CustomSliderViewBinding VSync;
         [NotNull] public readonly CustomSliderViewBinding FrameRate;
@@ -20,6 +21,7 @@ namespace UxmlViewBindings
         public OptionsViewBinding(VisualElement root)
         {
             Root = root;
+            ScrollView = root.Q<ScrollView>("ScrollView") ?? throw new NullReferenceException("\"ScrollView\" not found!");
             Resolution = new CustomSliderViewBinding(root.Q<VisualElement>("Resolution") ?? throw new NullReferenceException("\"Resolution\" not found!"));
             VSync = new CustomSliderViewBinding(root.Q<VisualElement>("VSync") ?? throw new NullReferenceException("\"VSync\" not found!"));
             FrameRate = new CustomSliderViewBinding(root.Q<VisualElement>("FrameRate") ?? throw new NullReferenceException("\"FrameRate\" not found!"));

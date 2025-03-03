@@ -24,7 +24,7 @@ namespace Scenes.Menu
             var args = new MainMenuArgs(in binding, _audioStorage, _canvas, _viewModel);
             
             CardsUtilities.RegisterCallbacks(args);
-            SettingsUtilities.RegisterCallbacks(args);
+            SettingsUtilities.Initialize(args);
             SavesUtilities.RegisterCallbacks(args);
             
             TransitionUtilities.Enter(args);
