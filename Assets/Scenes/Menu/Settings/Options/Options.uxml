@@ -1,23 +1,23 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Template name="CustomSlider" src="project://database/Assets/Scenes/Menu/Settings/CustomElements/Slider/CustomSlider.uxml?fileID=9197481963319205126&amp;guid=a8a2dea0689b2e440b8426c4e94f354f&amp;type=3#CustomSlider" />
+    <engine:Template name="LabeledSlider" src="project://database/Assets/Scenes/Menu/Settings/CustomElements/Slider/LabeledSlider.uxml?fileID=9197481963319205126&amp;guid=a8a2dea0689b2e440b8426c4e94f354f&amp;type=3#LabeledSlider" />
     <engine:Template name="BackButton" src="project://database/Assets/Scenes/Menu/Settings/CustomElements/ApplyButton/ApplyButton.uxml?fileID=9197481963319205126&amp;guid=bd9692381d32df24ab0107f54a5df0e0&amp;type=3#ApplyButton" />
     <Style src="project://database/Assets/Scenes/Menu/Settings/CustomElements/ScrollView/CustomScrollView.uss?fileID=7433441132597879392&amp;guid=6a4d1fbc01635e4409db8add966e3448&amp;type=3#CustomScrollView" />
     <engine:VisualElement style="flex-grow: 1; justify-content: space-between;">
         <engine:ScrollView enabled="true" nested-interaction-kind="StopScrolling" name="ScrollView" class="scroller">
-            <engine:Instance template="CustomSlider" name="Resolution">
+            <engine:Instance template="LabeledSlider" name="Resolution">
                 <AttributeOverrides element-name="Slider" label="RESOLUTION" value="1" high-value="1" />
                 <AttributeOverrides element-name="ValueLabel" text="640X360" />
             </engine:Instance>
-            <engine:Instance template="CustomSlider" name="VSync" style="justify-content: center;">
+            <engine:Instance template="LabeledSlider" name="VSync" style="justify-content: center;">
                 <AttributeOverrides element-name="Slider" label="VSYCN" value="0" />
                 <AttributeOverrides element-name="ValueLabel" text="FALSE" />
             </engine:Instance>
-            <engine:Instance template="CustomSlider" name="FrameRate" style="flex-direction: column-reverse;">
-                <AttributeOverrides element-name="Slider" label="FRAMERATE" value="0" high-value="1" />
+            <engine:Instance template="LabeledSlider" name="FrameRate" style="flex-direction: column-reverse;">
+                <AttributeOverrides element-name="Slider" label="FRAMERATE" value="600" high-value="60" low-value="30" />
                 <AttributeOverrides element-name="ValueLabel" text="60" />
             </engine:Instance>
-            <engine:Instance template="CustomSlider" name="SimulationRate">
-                <AttributeOverrides element-name="Slider" label="SIMULATION" value="0" high-value="1" />
+            <engine:Instance template="LabeledSlider" name="SimulationRate">
+                <AttributeOverrides element-name="Slider" label="SIMULATION" value="0" high-value="60" low-value="60" />
                 <AttributeOverrides element-name="ValueLabel" text="60" />
             </engine:Instance>
         </engine:ScrollView>
