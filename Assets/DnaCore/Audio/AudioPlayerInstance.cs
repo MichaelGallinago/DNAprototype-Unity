@@ -4,41 +4,20 @@ using UnityEngine;
 
 namespace DnaCore.Audio
 {
-    public class AudioPlayerInstance : MonoBehaviour
+    public class AudioPlayerInstance : MonoSingleton<AudioPlayerInstance>
     {
         [SerializeField] private AudioSource _bgmAudioSource;
         [SerializeField] private AudioSource _sfxAudioSource;
 
         private MotionHandle _pitchHandle;
-        
-        public static AudioPlayerInstance Instance { get; private set; }
 
-        public static void Initialize()
+        protected override void Initialize(GameObject singletonObject)
         {
-            if (Instance) return;
-            
-            var singletonObject = new GameObject(nameof(AudioPlayerInstance));
-            Instance = singletonObject.AddComponent<AudioPlayerInstance>();
-            
             Instance._bgmAudioSource = singletonObject.AddComponent<AudioSource>();
             Instance._bgmAudioSource.playOnAwake = false;
             
             Instance._sfxAudioSource = singletonObject.AddComponent<AudioSource>();
             Instance._sfxAudioSource.playOnAwake = false;
-            
-            DontDestroyOnLoad(singletonObject);
-        }
-
-        private void Awake()
-        {
-            if (Instance && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         public MotionHandle SetPitchFadeOut(float duration)
@@ -51,11 +30,12 @@ namespace DnaCore.Audio
             return _pitchHandle = LMotion.Create(0f, 1f, duration).WithEase(Ease.OutCubic).BindToPitch(_bgmAudioSource);
         }
 
-        public void PlayBgm(AudioClip clip, float volume)
+        public void PlayBgm(AudioClip clip, float volume, bool loop = true)
         {
             _bgmAudioSource.pitch = 1f;
             _bgmAudioSource.volume = volume;
             _bgmAudioSource.clip = clip;
+            _bgmAudioSource.loop = loop;
             _bgmAudioSource.Play();
         }
         

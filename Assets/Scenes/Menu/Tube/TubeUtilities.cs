@@ -14,7 +14,7 @@ namespace Scenes.Menu.Tube
             .Run();
         
         private static MotionHandle PlayMenuTheme(MainMenuArgs args) => LSequence.Create()
-            .JoinAction(args.AudioStorage.TubeAppearance, clip => AudioPlayer.PlayBgm(clip, 0.5f))
+            .JoinAction(args.AudioStorage.TubeAppearance, clip => AudioPlayer.PlayBgm(clip, 0.5f, false))
             .AppendInterval(args.AudioStorage.TubeAppearance.length)
             .AppendAction(args.AudioStorage.MenuTheme, clip => AudioPlayer.PlayBgm(clip, 1f))
             .AppendAction(() => AudioPlayer.SetPitchFadeOut(10f))

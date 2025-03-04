@@ -12,7 +12,7 @@ namespace Scenes.Menu.Settings.CustomElements.Slider
     
         public LabeledSlider()
         {
-            Add(_valueLabel = new Label());
+            Add(_valueLabel = new Label { name = "ValueLabel" });
             
             RegisterCallback<ChangeEvent<int>, LabeledSlider>(
                 (e, slider) => slider.UpdateLabel(e.newValue), this);

@@ -1,5 +1,6 @@
 using System;
 using DnaCore.Utilities;
+using DnaCore.Window;
 using Scenes.Menu.Audio;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,8 +12,6 @@ namespace Scenes.Menu.Settings.Options
 {
     public static class OptionsUtilities
     {
-        private static readonly Resolution ReferenceResolution = new() { width = 640, height = 360 };
-        
         public static void Initialize(MainMenuArgs args)
         {
             UpdateSlidersLimits(args);
@@ -37,14 +36,11 @@ namespace Scenes.Menu.Settings.Options
             DisplayInfo currentInfo = Screen.mainWindowDisplayInfo;
             
             binding.Resolution.Slider.highValue = 1 + Math.Min(
-                currentInfo.width / ReferenceResolution.width,
-                currentInfo.height / ReferenceResolution.height);
+                currentInfo.width / WindowController.ReferenceResolution.width,
+                currentInfo.height / WindowController.ReferenceResolution.height);
             
-            binding.FrameRate.Slider.highValue = Math.Max(30, (int)currentInfo.refreshRate.value);
-            binding.FrameRate.Slider.lowValue = 30;
-            
-            binding.SimulationRate.Slider.lowValue = 60;
-            binding.SimulationRate.Slider.highValue = 600;
+            binding.FrameRate.Slider.highValue = 
+                Math.Max(binding.FrameRate.Slider.lowValue, (int)currentInfo.refreshRate.value);
         }
 
         private static void RegisterCallbacks(in OptionsViewBinding binding, MainMenuArgs args) =>

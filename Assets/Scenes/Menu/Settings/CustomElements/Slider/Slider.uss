@@ -45,3 +45,8 @@
     margin-top: 0;
     color: rgb(255, 255, 255);
 }
+
+#ValueLabel {
+    -unity-text-align: upper-center;
+    width: 100px;
+}

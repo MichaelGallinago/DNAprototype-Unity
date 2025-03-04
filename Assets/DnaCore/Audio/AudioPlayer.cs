@@ -17,8 +17,8 @@ namespace DnaCore.Audio
             AudioPlayerInstance.Instance.SetPitchFadeOut(duration);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void PlayBgm(AudioClip clip, float volume) =>
-            AudioPlayerInstance.Instance.PlayBgm(clip, volume);
+        public static void PlayBgm(AudioClip clip, float volume, bool loop = true) =>
+            AudioPlayerInstance.Instance.PlayBgm(clip, volume, loop);
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PlaySfx(AudioClip clip, float volumeScale) => 

@@ -5,13 +5,13 @@ namespace Scenes.Menu.Settings.CustomElements.Slider
     [UxmlElement]
     public partial class VariantsSlider : SliderInt
     {
-        [UxmlAttribute] public string[] Variants { get; set; } = null;
+        [UxmlAttribute] public string[] Variants { get; set; }
 
         private readonly Label _valueLabel;
     
         public VariantsSlider()
         {
-            Add(_valueLabel = new Label());
+            Add(_valueLabel = new Label { name = "ValueLabel" });
             
             RegisterCallback<ChangeEvent<int>, VariantsSlider>((e, slider) => 
                 slider.UpdateLabelVariant(e.newValue), this);

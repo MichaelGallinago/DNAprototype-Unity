@@ -1,4 +1,5 @@
 using DnaCore.Audio;
+using DnaCore.Window;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,13 +12,13 @@ namespace Scenes.Bootstrap
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void InitializeSingletons()
         {
-            AudioPlayerInstance.Initialize();
+            AudioPlayerInstance.Initialize(nameof(AudioPlayerInstance));
+            WindowControllerInstance.Initialize(nameof(WindowControllerInstance));
         }
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void LoadConfigs()
         {
-            //TODO: Load config
         }
     }
 }
