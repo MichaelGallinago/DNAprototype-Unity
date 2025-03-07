@@ -13,13 +13,11 @@ namespace DnaCore.Audio
 
         public static float SfxVolume
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.SfxVolume;
             [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.SfxVolume = value;
         }
         
         public static float BgmVolume
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.BgmVolume;
             [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.BgmVolume = value;
         }
 

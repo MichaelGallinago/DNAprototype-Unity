@@ -160,7 +160,8 @@ namespace Scenes.Menu
 
         private static string[] GetResolutionNames(AspectRatio ratio)
         {
-            int count = GetMaxScale(ratio);
+            DisplayInfo displayInfo = Screen.mainWindowDisplayInfo;
+            int count = ratio.GetMaxScale(displayInfo.width, displayInfo.height);
             var aspectRatios = new string[count];
             for (var i = 0; i < count; i++)
             {
@@ -168,13 +169,6 @@ namespace Scenes.Menu
                 aspectRatios[i] = ZString.Concat(resolution.x, ":", resolution.y);
             }
             return aspectRatios;
-        }
-
-        private static int GetMaxScale(AspectRatio ratio)
-        {
-            DisplayInfo currentInfo = Screen.mainWindowDisplayInfo;
-            Vector2Int minResolution = ratio.MinResolution;
-            return Math.Min(currentInfo.width / minResolution.x, currentInfo.height / minResolution.y) + 1;
         }
     }
 }

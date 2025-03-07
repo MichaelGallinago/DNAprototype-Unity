@@ -1,6 +1,8 @@
+using DnaCore.Utilities;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace DnaCore.Audio
 {
@@ -8,28 +10,34 @@ namespace DnaCore.Audio
     {
         [SerializeField] private AudioSource _bgmAudioSource;
         [SerializeField] private AudioSource _sfxAudioSource;
+        
+        [SerializeField] private AudioMixer _bgmAudioMixer;
+        [SerializeField] private AudioMixer _sfxAudioMixer;
 
         private MotionHandle _pitchHandle;
-
+        
         public float BgmVolume
         {
-            get => _bgmAudioSource.volume;
-            set => _bgmAudioSource.volume = value;
+            set => _bgmAudioMixer.SetFloat("MasterVolume", MathUtilities.FloatToDb(value));
         }
         
         public float SfxVolume
         {
-            get => _sfxAudioSource.volume;
-            set => _sfxAudioSource.volume = value;
+            set => _sfxAudioMixer.SetFloat("MasterVolume", MathUtilities.FloatToDb(value));
         }
 
         protected override void Initialize(GameObject singletonObject)
         {
-            Instance._bgmAudioSource = singletonObject.AddComponent<AudioSource>();
-            Instance._bgmAudioSource.playOnAwake = false;
-            
-            Instance._sfxAudioSource = singletonObject.AddComponent<AudioSource>();
-            Instance._sfxAudioSource.playOnAwake = false;
+            Instance._bgmAudioSource = GetAudioSource(singletonObject, _bgmAudioMixer);
+            Instance._sfxAudioSource = GetAudioSource(singletonObject, _sfxAudioMixer);
+        }
+
+        private static AudioSource GetAudioSource(GameObject singletonObject, AudioMixer mixer)
+        {
+            var bgmSource = singletonObject.AddComponent<AudioSource>();
+            bgmSource.playOnAwake = false;
+            bgmSource.outputAudioMixerGroup = mixer.outputAudioMixerGroup;
+            return bgmSource;
         }
 
         public MotionHandle SetPitchFadeOut(float duration)

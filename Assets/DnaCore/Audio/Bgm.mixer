@@ -6,7 +6,7 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sfx
+  m_Name: Bgm
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -15,10 +15,12 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 758c1dce9d245ff47a0aaa0ef789f44a
+    name: MasterVolume
   m_AudioMixerGroupViews:
   - guids:
-    - 80992df011587584890d77ba0cff052c
+    - ebab3e1465769474093168796f409839
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -30,10 +32,10 @@ AudioMixerGroupController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Master
   m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 80992df011587584890d77ba0cff052c
+  m_GroupID: ebab3e1465769474093168796f409839
   m_Children: []
-  m_Volume: 2ab7a6c779a815d46a7522109de3f837
-  m_Pitch: 01c8f53a8c8b2df478fbf6b3cb85f24d
+  m_Volume: 758c1dce9d245ff47a0aaa0ef789f44a
+  m_Pitch: f43dcdd38dc0fd04ab1ba9ee66c3191f
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
@@ -48,9 +50,9 @@ AudioMixerEffectController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_EffectID: 3157ca6dd8be908448061c0d5d71592b
+  m_EffectID: b30401a68c81e0743a0917b4041a9cb4
   m_EffectName: Attenuation
-  m_MixLevel: 9a943957c76e9ee48822febcbc5c8aa7
+  m_MixLevel: 7467bdab58c74394dbda53028f34fe1d
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
@@ -63,6 +65,23 @@ AudioMixerSnapshotController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
-  m_SnapshotID: 0f6c65166c820a84a8c277b2ca65182f
-  m_FloatValues: {}
+  m_SnapshotID: f9f30c8c1758e0646a1567a271c78042
+  m_FloatValues:
+    758c1dce9d245ff47a0aaa0ef789f44a: 0
   m_TransitionOverrides: {}
+--- !u!244 &8786016105240187786
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 16a1148f8276bb2478dd1f6f05ce6f26
+  m_EffectName: Highpass Simple
+  m_MixLevel: 6da265afdbbe95941b7daae6bb33c0c0
+  m_Parameters:
+  - m_ParameterName: Cutoff freq
+    m_GUID: 8b6ae27df5e992a4fa7b143bce418974
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0

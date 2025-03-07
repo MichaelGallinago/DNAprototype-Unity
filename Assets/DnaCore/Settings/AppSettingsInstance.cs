@@ -30,7 +30,7 @@ namespace DnaCore.Settings
             Options = new Options(
                 true,
                 aspectRatio,
-                default, 
+                aspectRatio.GetMaxScale(currentInfo.width, currentInfo.height),
                 default,
                 targetFrameRate,
                 Math.Min(targetFrameRate, Options.MaxSimulationRate)

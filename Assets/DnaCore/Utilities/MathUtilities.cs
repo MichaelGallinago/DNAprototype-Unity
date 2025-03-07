@@ -1,3 +1,4 @@
+using System;
 using Unity.Burst;
 using Unity.Mathematics;
 
@@ -8,6 +9,9 @@ namespace DnaCore.Utilities
     {
         public static float ProjectOnPlane(float2 vector, float angle) => 
             math.csum(vector * math.abs(new float2(math.cos(angle), math.sin(angle))));
+        
+        public static float FloatToDb(float value) => 
+            math.log10(math.clamp(value, 0.0001f, 1f)) * 20f;
         
         public static int FindGreatestCommonDivisor(int x, int y)
         {

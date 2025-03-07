@@ -12,7 +12,6 @@ namespace Scenes.Bootstrap
         private static void LoadConfigs()
         {
             AppSettings.Load();
-            Debug.Log("1");
         }
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -21,7 +20,6 @@ namespace Scenes.Bootstrap
             AudioPlayer.Initialize(nameof(AudioPlayer));
             WindowController.Initialize(nameof(WindowController));
             
-            Debug.Log("2");
             ApplySettings();
         }
 
