@@ -23,8 +23,8 @@ namespace Scenes.Menu.Settings.Audio
         
         private static void UpdateSliders(in AudioViewBinding binding, MainMenuViewModel viewModel)
         {
-            binding.Music.Slider.value = viewModel.BgmVolume;
-            binding.Sound.Slider.value = viewModel.SfxVolume;
+            binding.Music.Slider.SetInitialValue(viewModel.BgmVolume);
+            binding.Sound.Slider.SetInitialValue(viewModel.SfxVolume);
         }
 
         private static void RegisterCallbacks(in AudioViewBinding binding, MainMenuArgs args) =>

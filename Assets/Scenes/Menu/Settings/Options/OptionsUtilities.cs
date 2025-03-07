@@ -43,11 +43,11 @@ namespace Scenes.Menu.Settings.Options
             binding.SimulationRate.Slider.highValue = DnaCore.Settings.Options.MaxSimulationRate;
             
             //TODO: fullscreen
-            binding.AspectRatio.Slider.value = viewModel.Ratio;
-            binding.Resolution.Slider.value = viewModel.Scale;
-            binding.VSync.Slider.value = viewModel.VSync;
-            binding.FrameRate.Slider.value = viewModel.FrameRate;
-            binding.SimulationRate.Slider.value = viewModel.SimulationRate;
+            binding.AspectRatio.Slider.SetInitialValue(viewModel.Ratio);
+            binding.Resolution.Slider.SetInitialValue(viewModel.Scale);
+            binding.VSync.Slider.SetInitialValue(viewModel.VSync);
+            binding.FrameRate.Slider.SetInitialValue(viewModel.FrameRate);
+            binding.SimulationRate.Slider.SetInitialValue(viewModel.SimulationRate);
         }
 
         private static void SetSliderVariants(VariantsSlider slider, string[] variants)

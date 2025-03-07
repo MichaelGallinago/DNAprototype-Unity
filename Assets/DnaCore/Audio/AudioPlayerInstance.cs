@@ -8,6 +8,8 @@ namespace DnaCore.Audio
 {
     public class AudioPlayerInstance : MonoSingleton<AudioPlayerInstance>
     {
+        private const string VolumeName = "MasterVolume";
+        
         [SerializeField] private AudioSource _bgmAudioSource;
         [SerializeField] private AudioSource _sfxAudioSource;
         
@@ -18,12 +20,12 @@ namespace DnaCore.Audio
         
         public float BgmVolume
         {
-            set => _bgmAudioMixer.SetFloat("MasterVolume", MathUtilities.FloatToDb(value));
+            set => _bgmAudioMixer.SetFloat(VolumeName, MathUtilities.FloatToDb(value));
         }
         
         public float SfxVolume
         {
-            set => _sfxAudioMixer.SetFloat("MasterVolume", MathUtilities.FloatToDb(value));
+            set => _sfxAudioMixer.SetFloat(VolumeName, MathUtilities.FloatToDb(value));
         }
 
         protected override void Initialize(GameObject singletonObject)

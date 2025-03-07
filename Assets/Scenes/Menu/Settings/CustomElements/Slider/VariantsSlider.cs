@@ -20,6 +20,8 @@ namespace Scenes.Menu.Settings.CustomElements.Slider
                 slider.UpdateLabelVariant(slider.value), this);
         }
 
+        public void SetInitialValue(int initialValue) => UpdateLabelVariant(initialValue);
+        
         private void UpdateLabelVariant(int newValue) => 
             _valueLabel.text = Variants is { Length: > 0 } ? Variants[newValue % Variants.Length] : string.Empty;
     }
