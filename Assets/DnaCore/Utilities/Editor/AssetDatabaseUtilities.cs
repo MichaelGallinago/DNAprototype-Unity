@@ -1,9 +1,8 @@
-#if UNITY_EDITOR
 using System;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 
-namespace DnaCore.Utilities
+namespace DnaCore.Utilities.Editor
 {
     public static class AssetDatabaseUtilities
     {
@@ -35,4 +34,3 @@ namespace DnaCore.Utilities
             AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(assetObject));
     }
 }
-#endif

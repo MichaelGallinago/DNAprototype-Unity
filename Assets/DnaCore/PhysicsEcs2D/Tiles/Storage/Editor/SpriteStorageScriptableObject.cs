@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
 using DnaCore.Utilities;
+using DnaCore.Utilities.Editor;
 using UnityEditor;
 using UnityEditor.U2D;
 using UnityEngine;

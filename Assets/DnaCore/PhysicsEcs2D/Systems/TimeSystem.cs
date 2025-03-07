@@ -1,3 +1,4 @@
+using DnaCore.Settings;
 using Scenes.Bootstrap;
 using Unity.Burst;
 using Unity.Entities;
@@ -15,10 +16,10 @@ namespace DnaCore.PhysicsEcs2D.Systems
         
         protected override void OnCreate()
         {
-            SimulationFrameRate.Data = Settings.Options.SimulationRate;
+            SimulationFrameRate.Data = AppSettings.Options.SimulationRate;
             
             var systemGroup = World.GetExistingSystemManaged<FixedStepSimulationSystemGroup>();
-            systemGroup.Timestep = 1f / Settings.Options.SimulationRate;
+            systemGroup.Timestep = 1f / AppSettings.Options.SimulationRate;
         }
 
         protected override void OnUpdate() {}

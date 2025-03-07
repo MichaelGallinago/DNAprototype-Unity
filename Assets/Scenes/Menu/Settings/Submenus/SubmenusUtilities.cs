@@ -1,3 +1,4 @@
+using DnaCore.Settings;
 using DnaCore.Utilities;
 using Scenes.Menu.OptionCard;
 using Scenes.Menu.Settings.Audio;
@@ -18,11 +19,11 @@ namespace Scenes.Menu.Settings.Submenus
         private static void RegisterCallbacks(in SubmenusViewBinding binding, MainMenuArgs args) =>
             new CallbackBuilder<MainMenuArgs>(args)
                 .Register<NavigationCancelEvent>(binding.Root,
-                    static (evt, userArgs) => OnSettingsCanceled(evt, userArgs))
+                    static (evt, userArgs) => OnSettingsClosed(evt, userArgs))
                 .Register<ClickEvent>(binding.BackButton,
-                    static (evt, userArgs) => OnSettingsCanceled(evt, userArgs))
+                    static (evt, userArgs) => OnSettingsClosed(evt, userArgs))
                 .Register<NavigationSubmitEvent>(binding.BackButton,
-                    static (evt, userArgs) => OnSettingsCanceled(evt, userArgs))
+                    static (evt, userArgs) => OnSettingsClosed(evt, userArgs))
 
                 .Register<ClickEvent>(binding.OptionsButton,
                     static (evt, userArgs) => OnOptionsClicked(evt, userArgs))
@@ -39,11 +40,12 @@ namespace Scenes.Menu.Settings.Submenus
                 .Register<NavigationSubmitEvent>(binding.AudioButton,
                     static (evt, userArgs) => OnAudioSubmitted(evt, userArgs));
         
-        private static void OnSettingsCanceled(EventBase e, MainMenuArgs args)
+        private static void OnSettingsClosed(EventBase e, MainMenuArgs args)
         {
+            AppSettings.Save();
             _ = CardsUtilities.Show(args);
             args.Binding.Settings.Root.enabledSelf = false;
-            args.Binding.CardSettings.Button.Focus();
+            args.Binding.CardSettings.Root.Focus();
         }
         
         private static void OnOptionsClicked(ClickEvent e, MainMenuArgs args)

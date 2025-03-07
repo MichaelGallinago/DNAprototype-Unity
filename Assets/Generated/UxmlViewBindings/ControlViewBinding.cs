@@ -11,12 +11,12 @@ namespace UxmlViewBindings
     public readonly struct ControlViewBinding
     {
         [NotNull] public readonly VisualElement Root;
-        [NotNull] public readonly BackButtonViewBinding Apply;
+        [NotNull] public readonly ApplyButtonViewBinding Apply;
 
         public ControlViewBinding(VisualElement root)
         {
             Root = root;
-            Apply = new BackButtonViewBinding(root.Q<VisualElement>("Apply") ?? throw new NullReferenceException("\"Apply\" not found!"));
+            Apply = new ApplyButtonViewBinding(root.Q<VisualElement>("Apply") ?? throw new NullReferenceException("\"Apply\" not found!"));
         }
     }
 }

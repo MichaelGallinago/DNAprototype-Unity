@@ -15,7 +15,7 @@ namespace Scenes.Menu.Settings.Control
             args.Binding.Settings.Control.Root.style.display = DisplayStyle.Flex;
             
             if (!withFocus) return;
-            args.Binding.Settings.Control.Apply.Button.Focus();
+            args.Binding.Settings.Control.Apply.Button.Focus(); //TODO: replace on ScrollView.FirstChild().Focus();
         }
 
         private static void RegisterCallbacks(in ControlViewBinding binding, MainMenuArgs args) =>

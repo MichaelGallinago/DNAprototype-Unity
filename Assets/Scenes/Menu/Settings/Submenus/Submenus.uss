@@ -14,7 +14,7 @@
     height: 32px;
     padding-top: 2px;
     padding-bottom: 4px;
-    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/Prototype.asset?fileID=11400000&guid=ba317d4c33a45ac46823198b6eed1742&type=2#Prototype");
+    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/PrototypeMini.asset?fileID=11400000&guid=2121c05c17a540d48b0ea4350e30373e&type=2#PrototypeMini");
 }
 
 .submenuButton:focus {

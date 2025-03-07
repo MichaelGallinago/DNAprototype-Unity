@@ -8,8 +8,19 @@ namespace DnaCore.Audio
     {
         public static AudioPlayerInstance Instance
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => AudioPlayerInstance.Instance;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => AudioPlayerInstance.Instance;
+        }
+
+        public static float SfxVolume
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.SfxVolume;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.SfxVolume = value;
+        }
+        
+        public static float BgmVolume
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.BgmVolume;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.BgmVolume = value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -31,5 +42,8 @@ namespace DnaCore.Audio
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MotionHandle StopBgmWithPitchFadeIn(float duration) => 
             AudioPlayerInstance.Instance.StopBgmWithPitchFadeIn(duration);
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Initialize(string name) => AudioPlayerInstance.Initialize(name);
     }
 }

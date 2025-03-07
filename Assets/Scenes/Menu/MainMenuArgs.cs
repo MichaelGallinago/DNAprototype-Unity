@@ -10,8 +10,10 @@ namespace Scenes.Menu
         public readonly AudioStorage AudioStorage;
         public readonly MainMenuCanvas Canvas;
         public readonly MainMenuViewModel ViewModel;
+        
         public MotionHandle StartAnimation;
-            
+        public long LastSelectSoundTime;
+        
         public MainMenuArgs(
             in MainMenuViewBinding binding, 
             AudioStorage audioStorage, 

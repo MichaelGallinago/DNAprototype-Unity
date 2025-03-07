@@ -4,9 +4,10 @@ namespace DnaCore.Utilities
 {
     public static class VisualElementExtensions
     {
-        public static VisualElement First(this VisualElement visualElement) => 
+        public static VisualElement FirstChild(this VisualElement visualElement) => 
             visualElement[0];
-        public static VisualElement Last(this VisualElement visualElement) => 
+        
+        public static VisualElement LastChild(this VisualElement visualElement) => 
             visualElement[visualElement.childCount - 1];
     }
 }

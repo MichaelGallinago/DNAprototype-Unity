@@ -11,6 +11,18 @@ namespace DnaCore.Audio
 
         private MotionHandle _pitchHandle;
 
+        public float BgmVolume
+        {
+            get => _bgmAudioSource.volume;
+            set => _bgmAudioSource.volume = value;
+        }
+        
+        public float SfxVolume
+        {
+            get => _sfxAudioSource.volume;
+            set => _sfxAudioSource.volume = value;
+        }
+
         protected override void Initialize(GameObject singletonObject)
         {
             Instance._bgmAudioSource = singletonObject.AddComponent<AudioSource>();

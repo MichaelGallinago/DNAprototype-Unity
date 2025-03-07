@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using UnityEngine;
 
 namespace DnaCore.Window
 {
@@ -7,14 +6,10 @@ namespace DnaCore.Window
     {
         public static WindowControllerInstance Instance
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => WindowControllerInstance.Instance;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => WindowControllerInstance.Instance;
         }
-
-        public static Resolution ReferenceResolution
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => Instance.ReferenceResolution;
-        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Initialize(string name) => WindowControllerInstance.Initialize(name);
     }
 }

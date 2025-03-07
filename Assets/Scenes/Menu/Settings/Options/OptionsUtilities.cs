@@ -1,7 +1,7 @@
 using System;
 using DnaCore.Utilities;
-using DnaCore.Window;
 using Scenes.Menu.Audio;
+using Scenes.Menu.Settings.CustomElements.Slider;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UxmlViewBindings;
@@ -14,7 +14,7 @@ namespace Scenes.Menu.Settings.Options
     {
         public static void Initialize(MainMenuArgs args)
         {
-            UpdateSlidersLimits(args);
+            UpdateSliders(in args.Binding.Settings.Options, args.ViewModel);
             RegisterCallbacks(in args.Binding.Settings.Options, args);
             OverrideNavigation(in args.Binding.Settings.Options, args);
         }
@@ -22,25 +22,38 @@ namespace Scenes.Menu.Settings.Options
         public static void Open(MainMenuArgs args, bool withFocus)
         {
             args.Binding.Settings.Options.Root.style.display = DisplayStyle.Flex;
-            UpdateSlidersLimits(args);
+            UpdateSliders(in args.Binding.Settings.Options, args.ViewModel);
             
             if (!withFocus) return;
-            args.Binding.Settings.Options.Resolution.Slider.Focus();
+            args.Binding.Settings.Options.ScrollView.FirstChild().Focus();
         }
         
-        private static void UpdateSlidersLimits(MainMenuArgs args) => 
-            SetSlidersLimits(in args.Binding.Settings.Options);
-        
-        private static void SetSlidersLimits(in OptionsViewBinding binding)
+        private static void UpdateSliders(in OptionsViewBinding binding, MainMenuViewModel viewModel)
         {
             DisplayInfo currentInfo = Screen.mainWindowDisplayInfo;
             
-            binding.Resolution.Slider.highValue = 1 + Math.Min(
-                currentInfo.width / WindowController.ReferenceResolution.width,
-                currentInfo.height / WindowController.ReferenceResolution.height);
+            viewModel.UpdateAspectRatios(currentInfo);
             
+            SetSliderVariants(binding.AspectRatio.Slider, viewModel.RatioNames);
+            SetSliderVariants(binding.Resolution.Slider, viewModel.ResolutionNames);
+
             binding.FrameRate.Slider.highValue = 
                 Math.Max(binding.FrameRate.Slider.lowValue, (int)currentInfo.refreshRate.value);
+
+            binding.SimulationRate.Slider.highValue = DnaCore.Settings.Options.MaxSimulationRate;
+            
+            //TODO: fullscreen
+            binding.AspectRatio.Slider.value = viewModel.Ratio;
+            binding.Resolution.Slider.value = viewModel.Scale;
+            binding.VSync.Slider.value = viewModel.VSync;
+            binding.FrameRate.Slider.value = viewModel.FrameRate;
+            binding.SimulationRate.Slider.value = viewModel.SimulationRate;
+        }
+
+        private static void SetSliderVariants(VariantsSlider slider, string[] variants)
+        {
+            slider.Variants = variants;
+            slider.highValue = variants.Length - 1;
         }
 
         private static void RegisterCallbacks(in OptionsViewBinding binding, MainMenuArgs args) =>
@@ -52,25 +65,27 @@ namespace Scenes.Menu.Settings.Options
                 .Register<NavigationSubmitEvent>(binding.Apply.Button,
                     static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
                 
-                .Register<ChangeEvent<int>>(binding.Root, 
-                    static (evt, userArgs) => SoundUtilities.PlaySelect(userArgs))
+                .Register<ChangeEvent<int>>(binding.ScrollView,
+                    static (evt, userArgs) => SoundUtilities.PlaySelectWithInterval(evt, userArgs))
                 
-                .Register<ChangeEvent<int>>(binding.Resolution.Slider,
+                .RegisterValueChanged(binding.AspectRatio.Slider,
+                    static (evt, userArgs) => OnAspectRatioChanged(evt, userArgs))
+                .RegisterValueChanged(binding.Resolution.Slider,
                     static (evt, userArgs) => OnResolutionChanged(evt, userArgs))
-                .Register<ChangeEvent<int>>(binding.VSync.Slider,
+                .RegisterValueChanged(binding.VSync.Slider,
                     static (evt, userArgs) => OnVSyncChanged(evt, userArgs))
-                .Register<ChangeEvent<int>>(binding.FrameRate.Slider,
+                .RegisterValueChanged(binding.FrameRate.Slider,
                     static (evt, userArgs) => OnFrameRateChanged(evt, userArgs))
-                .Register<ChangeEvent<int>>(binding.SimulationRate.Slider,
+                .RegisterValueChanged(binding.SimulationRate.Slider,
                     static (evt, userArgs) => OnSimulationRateChanged(evt, userArgs));
 
         private static void OverrideNavigation(in OptionsViewBinding binding, MainMenuArgs args)
         {
-            binding.ScrollView.First().OverrideNavigation(NavigationMoveEvent.Direction.Up, binding.Apply.Button);
-            binding.ScrollView.Last().OverrideNavigation(NavigationMoveEvent.Direction.Down, binding.Apply.Button);
+            binding.ScrollView.FirstChild().OverrideNavigation(NavigationMoveEvent.Direction.Up, binding.Apply.Button);
+            binding.ScrollView.LastChild().OverrideNavigation(NavigationMoveEvent.Direction.Down, binding.Apply.Button);
             binding.Apply.Button.OverrideNavigation(
-                NavigationMoveEvent.Direction.Up, binding.ScrollView.Last().First(), 
-                NavigationMoveEvent.Direction.Down, binding.ScrollView.First().First());
+                NavigationMoveEvent.Direction.Up, binding.ScrollView.LastChild().FirstChild(), 
+                NavigationMoveEvent.Direction.Down, binding.ScrollView.FirstChild().FirstChild());
         }
 
         private static void OnApply(EventBase e, MainMenuArgs args)
@@ -85,8 +100,15 @@ namespace Scenes.Menu.Settings.Options
             args.Binding.Settings.Submenus.OptionsButton.Focus();
         }
         
+        //TODO: use or remove
+        private static void OnFullScreenChanged(ChangeEvent<int> e, MainMenuArgs args) =>
+            args.ViewModel.FullScreen = e.newValue > 0;
+        
+        private static void OnAspectRatioChanged(ChangeEvent<int> e, MainMenuArgs args) =>
+            args.ViewModel.Ratio = e.newValue;
+        
         private static void OnResolutionChanged(ChangeEvent<int> e, MainMenuArgs args) =>
-            args.ViewModel.Resolution = e.newValue;
+            args.ViewModel.Scale = e.newValue;
 
         private static void OnVSyncChanged(ChangeEvent<int> e, MainMenuArgs args) => 
             args.ViewModel.VSync = e.newValue;
