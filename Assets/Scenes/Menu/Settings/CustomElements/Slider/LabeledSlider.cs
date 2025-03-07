@@ -21,7 +21,7 @@ namespace Scenes.Menu.Settings.CustomElements.Slider
                 (_, slider) => slider.UpdateLabel(slider.value), this);
         }
         
-        public void SetInitialValue(int initialValue) => UpdateLabel(initialValue);
+        public void SetInitialValue(int initialValue) => UpdateLabel(value = initialValue);
 
         private void UpdateLabel(int newValue) => _valueLabel.text = ZString.Format(Format ?? string.Empty, newValue);
     }
