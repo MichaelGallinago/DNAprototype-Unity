@@ -47,8 +47,17 @@ namespace DnaCore.Settings
                 Save();
                 return;
             }
-            
-            Instance = JsonUtility.FromJson<AppSettingsInstance>(File.ReadAllText(AppSettingsFilePath));
+
+            try
+            {
+                Instance = JsonUtility.FromJson<AppSettingsInstance>(File.ReadAllText(AppSettingsFilePath));
+            }
+            catch (ArgumentException e)
+            {
+                Debug.LogException(e);
+                Instance = new AppSettingsInstance();
+                Save();
+            }
         }
 
         public static void Save()
