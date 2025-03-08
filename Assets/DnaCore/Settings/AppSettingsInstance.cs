@@ -60,10 +60,7 @@ namespace DnaCore.Settings
             }
         }
 
-        public static void Save()
-        {
-            Debug.Log(AppSettingsFilePath);
+        public static void Save() =>
             File.WriteAllText(AppSettingsFilePath, JsonUtility.ToJson(Instance, true));
-        }
     }
 }

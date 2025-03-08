@@ -18,14 +18,14 @@ namespace Scenes.Menu.Settings.Control
             args.Binding.Settings.Control.Apply.Button.Focus(); //TODO: replace on ScrollView.FirstChild().Focus();
         }
 
-        private static void RegisterCallbacks(in ControlViewBinding binding, MainMenuArgs args) =>
+        private static void RegisterCallbacks(in ControlViewBinding binding, MainMenuArgs args) => 
             new CallbackBuilder<MainMenuArgs>(args)
-                .Register<NavigationCancelEvent>(binding.Root,
-                    static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
-                .Register<ClickEvent>(binding.Apply.Button,
-                    static (evt, userArgs) => OnApply(evt, userArgs))
-                .Register<NavigationSubmitEvent>(binding.Apply.Button,
-                    static (evt, userArgs) => OnApplyWithFocus(evt, userArgs));
+                .SetTarget(binding.Root)
+                .Register<NavigationCancelEvent>(static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
+                
+                .SetTarget(binding.Apply.Button)
+                .Register<ClickEvent>(static (evt, userArgs) => OnApply(evt, userArgs))
+                .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnApplyWithFocus(evt, userArgs));
         
         private static void OnApply(EventBase e, MainMenuArgs args)
         {

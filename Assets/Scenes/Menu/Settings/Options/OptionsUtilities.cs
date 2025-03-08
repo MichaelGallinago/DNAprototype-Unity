@@ -25,7 +25,7 @@ namespace Scenes.Menu.Settings.Options
             UpdateSliders(in args.Binding.Settings.Options, args.ViewModel);
             
             if (!withFocus) return;
-            args.Binding.Settings.Options.ScrollView.FirstChild().Focus();
+            args.Binding.Settings.Options.ScrollView.FirstChild().FirstChild().Focus();
         }
         
         private static void UpdateSliders(in OptionsViewBinding binding, MainMenuViewModel viewModel)

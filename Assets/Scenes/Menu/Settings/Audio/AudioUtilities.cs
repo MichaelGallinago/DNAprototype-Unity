@@ -9,8 +9,11 @@ namespace Scenes.Menu.Settings.Audio
     // ReSharper disable UnusedParameter.Local
     public static class AudioUtilities
     {
-        public static void RegisterCallbacks(MainMenuArgs args) =>
+        public static void Initialize(MainMenuArgs args)
+        {
             RegisterCallbacks(in args.Binding.Settings.Audio, args);
+            OverrideNavigation(in args.Binding.Settings.Audio, args);
+        }
 
         public static void Open(MainMenuArgs args, bool withFocus)
         {
@@ -18,7 +21,16 @@ namespace Scenes.Menu.Settings.Audio
             UpdateSliders(in args.Binding.Settings.Audio, args.ViewModel);
             
             if (!withFocus) return;
-            args.Binding.Settings.Audio.ScrollView.FirstChild().Focus();
+            args.Binding.Settings.Audio.ScrollView.FirstChild().FirstChild().Focus();
+        }
+        
+        private static void OverrideNavigation(in AudioViewBinding binding, MainMenuArgs args)
+        {
+            binding.ScrollView.FirstChild().OverrideNavigation(NavigationMoveEvent.Direction.Up, binding.Apply.Button);
+            binding.ScrollView.LastChild().OverrideNavigation(NavigationMoveEvent.Direction.Down, binding.Apply.Button);
+            binding.Apply.Button.OverrideNavigation(
+                NavigationMoveEvent.Direction.Up, binding.ScrollView.LastChild().FirstChild(), 
+                NavigationMoveEvent.Direction.Down, binding.ScrollView.FirstChild().FirstChild());
         }
         
         private static void UpdateSliders(in AudioViewBinding binding, MainMenuViewModel viewModel)
@@ -29,17 +41,18 @@ namespace Scenes.Menu.Settings.Audio
 
         private static void RegisterCallbacks(in AudioViewBinding binding, MainMenuArgs args) =>
             new CallbackBuilder<MainMenuArgs>(args)
-                .Register<NavigationCancelEvent>(binding.Root,
-                    static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
-                .Register<ClickEvent>(binding.Apply.Button,
-                    static (evt, userArgs) => OnApply(evt, userArgs))
-                .Register<NavigationSubmitEvent>(binding.Apply.Button,
-                    static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
+                .SetTarget(binding.Root)
+                .Register<NavigationCancelEvent>(static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
                 
-                .RegisterValueChanged(binding.Music.Slider, 
-                    static (evt, userArgs) => OnMusicVolumeChanged(evt, userArgs))
-                .RegisterValueChanged(binding.Sound.Slider, 
-                    static (evt, userArgs) => OnSoundVolumeChanged(evt, userArgs));
+                .SetTarget(binding.Apply.Button)
+                .Register<ClickEvent>(static (evt, userArgs) => OnApply(evt, userArgs))
+                .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
+                
+                .SetValueTarget(binding.Music.Slider)
+                .RegisterValueChanged(static (evt, userArgs) => OnMusicVolumeChanged(evt, userArgs))
+                
+                .SetValueTarget(binding.Sound.Slider)
+                .RegisterValueChanged(static (evt, userArgs) => OnSoundVolumeChanged(evt, userArgs));
         
         private static void OnApply(EventBase e, MainMenuArgs args)
         {

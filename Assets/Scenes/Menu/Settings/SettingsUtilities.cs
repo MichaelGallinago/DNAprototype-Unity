@@ -18,7 +18,13 @@ namespace Scenes.Menu.Settings
             SubmenusUtilities.RegisterCallbacks(args);
             OptionsUtilities.Initialize(args);
             ControlUtilities.RegisterCallbacks(args);
-            AudioUtilities.RegisterCallbacks(args);
+            AudioUtilities.Initialize(args);
+        }
+
+        public static void Open(MainMenuArgs args, bool withFocus)
+        {
+            args.Binding.Settings.Root.enabledSelf = true;
+            SubmenusUtilities.Open(args, withFocus);
         }
 
         private static void RegisterCallbacks(in SettingsViewBinding binding, MainMenuArgs args) =>

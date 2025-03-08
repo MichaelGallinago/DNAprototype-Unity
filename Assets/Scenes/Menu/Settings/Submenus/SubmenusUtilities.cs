@@ -1,5 +1,6 @@
 using DnaCore.Settings;
 using DnaCore.Utilities;
+using LitMotion;
 using Scenes.Menu.OptionCard;
 using Scenes.Menu.Settings.Audio;
 using Scenes.Menu.Settings.Control;
@@ -16,36 +17,51 @@ namespace Scenes.Menu.Settings.Submenus
         public static void RegisterCallbacks(MainMenuArgs args) => 
             RegisterCallbacks(in args.Binding.Settings.Submenus, args);
 
-        private static void RegisterCallbacks(in SubmenusViewBinding binding, MainMenuArgs args) =>
-            new CallbackBuilder<MainMenuArgs>(args)
-                .Register<NavigationCancelEvent>(binding.Root,
-                    static (evt, userArgs) => OnSettingsClosed(evt, userArgs))
-                .Register<ClickEvent>(binding.BackButton,
-                    static (evt, userArgs) => OnSettingsClosed(evt, userArgs))
-                .Register<NavigationSubmitEvent>(binding.BackButton,
-                    static (evt, userArgs) => OnSettingsClosed(evt, userArgs))
-
-                .Register<ClickEvent>(binding.OptionsButton,
-                    static (evt, userArgs) => OnOptionsClicked(evt, userArgs))
-                .Register<NavigationSubmitEvent>(binding.OptionsButton,
-                    static (evt, userArgs) => OnOptionsSubmitted(evt, userArgs))
-
-                .Register<ClickEvent>(binding.ControlButton,
-                    static (evt, userArgs) => OnControlClicked(evt, userArgs))
-                .Register<NavigationSubmitEvent>(binding.ControlButton,
-                    static (evt, userArgs) => OnControlSubmitted(evt, userArgs))
-
-                .Register<ClickEvent>(binding.AudioButton,
-                    static (evt, userArgs) => OnAudioClicked(evt, userArgs))
-                .Register<NavigationSubmitEvent>(binding.AudioButton,
-                    static (evt, userArgs) => OnAudioSubmitted(evt, userArgs));
+        public static void Open(MainMenuArgs args, bool withFocus)
+        {
+            if (!withFocus) return;
+            args.Binding.Settings.Submenus.OptionsButton.Focus();
+        }
         
-        private static void OnSettingsClosed(EventBase e, MainMenuArgs args)
+        private static void RegisterCallbacks(in SubmenusViewBinding binding, MainMenuArgs args) => 
+            new CallbackBuilder<MainMenuArgs>(args)
+                .SetTarget(binding.Root)
+                .Register<NavigationCancelEvent>(static (evt, userArgs) => OnSettingsClosedFocused(evt, userArgs))
+                
+                .SetTarget(binding.BackButton)
+                .Register<ClickEvent>(static (evt, userArgs) => OnSettingsClosed(evt, userArgs))
+                .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnSettingsClosedFocused(evt, userArgs))
+
+                .SetTarget(binding.OptionsButton)
+                .Register<ClickEvent>(static (evt, userArgs) => OnOptionsClicked(evt, userArgs))
+                .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnOptionsSubmitted(evt, userArgs))
+
+                .SetTarget(binding.ControlButton)
+                .Register<ClickEvent>(static (evt, userArgs) => OnControlClicked(evt, userArgs))
+                .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnControlSubmitted(evt, userArgs))
+
+                .SetTarget(binding.AudioButton)
+                .Register<ClickEvent>(static (evt, userArgs) => OnAudioClicked(evt, userArgs))
+                .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnAudioSubmitted(evt, userArgs));
+        
+        private static void OnSettingsClosedFocused(EventBase e, MainMenuArgs args) =>
+            OnSettingsClosed(e, args, true);
+        
+        private static void OnSettingsClosed(EventBase e, MainMenuArgs args, bool withFocus = false)
         {
             AppSettings.Save();
-            _ = CardsUtilities.Show(args);
             args.Binding.Settings.Root.enabledSelf = false;
-            args.Binding.CardSettings.Root.Focus();
+
+            if (!withFocus)
+            {
+                _ = CardsUtilities.Show(args);
+                return;
+            }
+            
+            _ = LSequence.Create()
+                .Append(CardsUtilities.Show(args))
+                .AppendAction(args, motionArgs => motionArgs.Binding.CardSettings.Button.Focus())
+                .RunAfterAction();
         }
         
         private static void OnOptionsClicked(ClickEvent e, MainMenuArgs args)
