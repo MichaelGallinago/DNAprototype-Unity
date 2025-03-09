@@ -31,8 +31,7 @@ namespace DnaCore.Window
             set
             {
                 Vector2Int minResolution = value.MinResolution;
-                _pixelPerfectCamera.refResolutionX = minResolution.x;
-                _pixelPerfectCamera.refResolutionY = minResolution.y;
+                SetupPixelPerfectCamera(minResolution);
                 
                 DisplayInfo currentInfo = Screen.mainWindowDisplayInfo;                                                
                 Vector2Int resolution;                                                                                 
@@ -56,10 +55,15 @@ namespace DnaCore.Window
         {
             _camera = newCamera;
             _pixelPerfectCamera = pixelPerfectCamera;
-                                                                     
-            Vector2Int minResolution = AppSettings.Options.AspectRatio.MinResolution;      
-            _pixelPerfectCamera.refResolutionX = minResolution.x;
-            _pixelPerfectCamera.refResolutionY = minResolution.y;
+
+            SetupPixelPerfectCamera(AppSettings.Options.AspectRatio.MinResolution);
+        }
+
+        private void SetupPixelPerfectCamera(Vector2Int resolution)
+        {
+            if (!_pixelPerfectCamera) return;
+            _pixelPerfectCamera.refResolutionX = resolution.x;
+            _pixelPerfectCamera.refResolutionY = resolution.y;
         }
     }
 }

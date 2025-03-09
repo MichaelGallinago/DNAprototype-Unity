@@ -55,7 +55,7 @@ namespace Scenes.Menu.OptionCard
         private static void PlayCardSound(MainMenuArgs args) => 
             AudioPlayer.PlaySfx(args.AudioStorage.CardMovement, 0.1f);
         
-        private static void SetCardsEnabled(bool isEnabled, MainMenuArgs args, VisualElement focusTarget = null)
+        private static void SetCardsEnabled(bool isEnabled, MainMenuArgs args)
         {
             args.Binding.CardSaves.Root.enabledSelf = isEnabled;
             args.Binding.CardSettings.Root.enabledSelf = isEnabled;

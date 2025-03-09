@@ -28,12 +28,10 @@ namespace Scenes.Bootstrap
             AudioPlayer.SfxVolume = AppSettings.Audio.SfxVolume;
             AudioPlayer.BgmVolume = AppSettings.Audio.BgmVolume;
 
-            FullScreenMode fullScreen = 
-                AppSettings.Options.FullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-            Vector2Int resolution = 
-                AppSettings.Options.AspectRatio.GetScaledResolution(AppSettings.Options.Scale + 1);
-            Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode = fullScreen);
-            
+            WindowController.Ratio = AppSettings.Options.AspectRatio;
+            WindowController.Scale = AppSettings.Options.Scale;
+            WindowController.FullScreen = AppSettings.Options.FullScreen;
+
             QualitySettings.vSyncCount = AppSettings.Options.VSync;
             Application.targetFrameRate = AppSettings.Options.TargetFrameRate;
         }
