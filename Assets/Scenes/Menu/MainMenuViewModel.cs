@@ -1,8 +1,8 @@
 using System;
-using Cysharp.Text;
 using DnaCore.Audio;
 using DnaCore.Settings;
 using DnaCore.Utilities;
+using DnaCore.Window;
 using UnityEngine;
 
 namespace Scenes.Menu
@@ -12,35 +12,27 @@ namespace Scenes.Menu
         private AspectRatio _lastAspectRatio;
         private AspectRatio[] _ratios;
         
-        public string[] RatioNames => GetRatiosNames(_ratios);
+        public string[] RatioNames => AspectRatio.GetRatiosNames(_ratios);
 
-        public string[] ResolutionNames => GetResolutionNames(AppSettings.Options.AspectRatio);
+        public string[] ResolutionNames => 
+            AppSettings.Options.AspectRatio.GetResolutionNames(Screen.mainWindowDisplayInfo);
 
         public bool FullScreen
         {
-            set
-            {
-                AppSettings.Options.FullScreen = value;
-                Screen.fullScreenMode = value ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-            }
-            get => AppSettings.Options.FullScreen;
+            get => WindowController.FullScreen;
+            set => WindowController.FullScreen = value;
         }
         
         public int Ratio
         {
-            set => SetRatioWithResolutionValidation(_ratios[value]);
-            get => Array.IndexOf(_ratios, AppSettings.Options.AspectRatio);
+            get => Array.IndexOf(_ratios, WindowController.Ratio);
+            set => WindowController.Ratio = _ratios[value];
         }
         
         public int Scale
         {
-            set
-            {
-                AppSettings.Options.Scale = value;
-                Vector2Int resolution = AppSettings.Options.AspectRatio.GetScaledResolution(value + 1);
-                Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode);
-            }
-            get => AppSettings.Options.Scale;
+            get => WindowController.Scale;
+            set => WindowController.Scale = value;
         }
 
         public int VSync
@@ -102,22 +94,6 @@ namespace Scenes.Menu
             _ratios = new AspectRatio[AspectRatio.BuiltIn.Length + (currentIndex < 0 ? 1 : 0)];
             FillAspectRatios(_ratios, currentIndex, currentAspectRatio);
         }
-
-        private static void SetRatioWithResolutionValidation(AspectRatio ratio)
-        {
-            AppSettings.Options.AspectRatio = ratio;
-                
-            DisplayInfo currentInfo = Screen.mainWindowDisplayInfo;
-            Vector2Int resolution;
-            int scale = AppSettings.Options.Scale + 1;
-            do
-            {
-                resolution = ratio.GetScaledResolution(scale--);
-            } while (resolution.x > currentInfo.width || resolution.y > currentInfo.height || scale == 0);
-                
-            AppSettings.Options.Scale = scale;
-            Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode);
-        }
         
         private static void FillAspectRatios(AspectRatio[] ratios, int currentIndex, AspectRatio currentAspectRatio)
         {
@@ -139,36 +115,6 @@ namespace Scenes.Menu
             {
                 (ratios[0], ratios[currentIndex]) = (ratios[currentIndex], ratios[0]);
             }
-        }
-
-        private static string[] GetRatiosNames(AspectRatio[] ratios)
-        {
-            var aspectRatios = new string[ratios.Length];
-            for (var i = 0; i < ratios.Length; i++)
-            {
-                AspectRatio ratio = ratios[i];
-                if (AspectRatio.AspectNameOverrides.TryGetValue(ratio, out string aspectName))
-                {
-                    aspectRatios[i] = aspectName;
-                    continue;
-                }
-                aspectRatios[i] = ratio.ToString();
-            }
-            
-            return aspectRatios;
-        }
-
-        private static string[] GetResolutionNames(AspectRatio ratio)
-        {
-            DisplayInfo displayInfo = Screen.mainWindowDisplayInfo;
-            int count = ratio.GetMaxScale(displayInfo.width, displayInfo.height);
-            var aspectRatios = new string[count];
-            for (var i = 0; i < count; i++)
-            {
-                Vector2Int resolution = ratio.GetScaledResolution(i + 1);
-                aspectRatios[i] = ZString.Concat(resolution.x, ":", resolution.y);
-            }
-            return aspectRatios;
         }
     }
 }

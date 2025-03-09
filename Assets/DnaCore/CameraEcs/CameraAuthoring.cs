@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DnaCore.CameraEcs
 {
-    public class CameraAuthoring : MonoBehaviour
+    public class CameraAuthoring : CameraTracker
     {
         [SerializeField] private Transform _initialTarget;
         

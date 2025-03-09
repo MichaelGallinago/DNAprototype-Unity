@@ -54,10 +54,24 @@ namespace DnaCore.Settings
                 : new Vector2Int(ReferenceResolution.x, (int)((float)ReferenceResolution.x / Reference.X * Y));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetMaxScale(int maxWidth, int maxHeight)
         {
             Vector2Int minResolution = MinResolution;
             return Math.Min(maxWidth / minResolution.x, maxHeight / minResolution.y) + 1;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public string[] GetResolutionNames(DisplayInfo displayInfo)
+        {
+            int count = GetMaxScale(displayInfo.width, displayInfo.height);
+            var aspectRatios = new string[count];
+            for (var i = 0; i < count; i++)
+            {
+                Vector2Int resolution = GetScaledResolution(i + 1);
+                aspectRatios[i] = ZString.Concat(resolution.x, ":", resolution.y);
+            }
+            return aspectRatios;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -74,5 +88,23 @@ namespace DnaCore.Settings
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(AspectRatio ratio) => ratio.X == X && ratio.Y == Y;
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string[] GetRatiosNames(AspectRatio[] ratios)
+        {
+            var aspectRatios = new string[ratios.Length];
+            for (var i = 0; i < ratios.Length; i++)
+            {
+                AspectRatio ratio = ratios[i];
+                if (AspectNameOverrides.TryGetValue(ratio, out string aspectName))
+                {
+                    aspectRatios[i] = aspectName;
+                    continue;
+                }
+                aspectRatios[i] = ratio.ToString();
+            }
+            
+            return aspectRatios;
+        }
     }
 }

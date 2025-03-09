@@ -1,4 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
+using DnaCore.Settings;
+using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace DnaCore.Window
 {
@@ -9,7 +12,29 @@ namespace DnaCore.Window
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get => WindowControllerInstance.Instance;
         }
         
+        public static int Scale                                                                                                   
+        {                                                                                                                  
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.Scale;                                                                           
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.Scale = value;                 
+        }                                                                                                                  
+                                                                                                                           
+        public static bool FullScreen                                                                                             
+        {                                                                                                                  
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.FullScreen;                                                                         
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.FullScreen = value;                             
+        }                                                                                                                  
+                                                                                                                           
+        public static AspectRatio Ratio                                                                                           
+        {                                                                                                                  
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.Ratio;                                            
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.Ratio = value;                                                                                              
+        }                                                                                                                  
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Initialize(string name) => WindowControllerInstance.Initialize(name);
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AddCamera(Camera newCamera, PixelPerfectCamera pixelPerfectCamera) => 
+            Instance.AddCamera(newCamera, pixelPerfectCamera);
     }
 }

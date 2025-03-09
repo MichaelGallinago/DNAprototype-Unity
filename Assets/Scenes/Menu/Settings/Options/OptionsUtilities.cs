@@ -58,26 +58,30 @@ namespace Scenes.Menu.Settings.Options
 
         private static void RegisterCallbacks(in OptionsViewBinding binding, MainMenuArgs args) =>
             new CallbackBuilder<MainMenuArgs>(args)
-                .Register<NavigationCancelEvent>(binding.Root,
-                    static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
-                .Register<ClickEvent>(binding.Apply.Button,
-                    static (evt, userArgs) => OnApply(evt, userArgs))
-                .Register<NavigationSubmitEvent>(binding.Apply.Button,
-                    static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
+                .SetTarget(binding.Root)
+                .Register<NavigationCancelEvent>(static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
                 
-                .Register<ChangeEvent<int>>(binding.ScrollView,
-                    static (evt, userArgs) => SoundUtilities.PlaySelectWithInterval(evt, userArgs))
+                .SetTarget(binding.Apply.Button)
+                .Register<ClickEvent>(static (evt, userArgs) => OnApply(evt, userArgs))
+                .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnApplyWithFocus(evt, userArgs))
                 
-                .RegisterValueChanged(binding.AspectRatio.Slider,
-                    static (evt, userArgs) => OnAspectRatioChanged(evt, userArgs))
-                .RegisterValueChanged(binding.Resolution.Slider,
-                    static (evt, userArgs) => OnResolutionChanged(evt, userArgs))
-                .RegisterValueChanged(binding.VSync.Slider,
-                    static (evt, userArgs) => OnVSyncChanged(evt, userArgs))
-                .RegisterValueChanged(binding.FrameRate.Slider,
-                    static (evt, userArgs) => OnFrameRateChanged(evt, userArgs))
-                .RegisterValueChanged(binding.SimulationRate.Slider,
-                    static (evt, userArgs) => OnSimulationRateChanged(evt, userArgs));
+                .SetTarget(binding.ScrollView)
+                .Register<ChangeEvent<int>>(static (evt, userArgs) => SoundUtilities.PlaySelectWithInterval(evt, userArgs))
+                
+                .SetValueTarget(binding.AspectRatio.Slider)
+                .RegisterValueChanged(static (evt, userArgs) => OnAspectRatioChanged(evt, userArgs))
+                
+                .SetValueTarget(binding.Resolution.Slider)
+                .RegisterValueChanged(static (evt, userArgs) => OnResolutionChanged(evt, userArgs))
+                
+                .SetValueTarget(binding.VSync.Slider)
+                .RegisterValueChanged(static (evt, userArgs) => OnVSyncChanged(evt, userArgs))
+                
+                .SetValueTarget(binding.FrameRate.Slider)
+                .RegisterValueChanged(static (evt, userArgs) => OnFrameRateChanged(evt, userArgs))
+                
+                .SetValueTarget(binding.SimulationRate.Slider)
+                .RegisterValueChanged(static (evt, userArgs) => OnSimulationRateChanged(evt, userArgs));
 
         private static void OverrideNavigation(in OptionsViewBinding binding, MainMenuArgs args)
         {

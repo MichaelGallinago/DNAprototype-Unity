@@ -57,15 +57,9 @@ namespace Scenes.Menu.OptionCard
         
         private static void SetCardsEnabled(bool isEnabled, MainMenuArgs args, VisualElement focusTarget = null)
         {
-            SetCardEnabled(in args.Binding.CardSaves, isEnabled);
-            SetCardEnabled(in args.Binding.CardSettings, isEnabled);
-            SetCardEnabled(in args.Binding.CardShutdown, isEnabled);
-        }
-        
-        private static void SetCardEnabled(in OptionCardViewBinding card, bool isEnabled)
-        {
-            card.Root.enabledSelf = isEnabled;
-            //card.Button.enabledSelf = isEnabled;
+            args.Binding.CardSaves.Root.enabledSelf = isEnabled;
+            args.Binding.CardSettings.Root.enabledSelf = isEnabled;
+            args.Binding.CardShutdown.Root.enabledSelf = isEnabled;
         }
         
         private static void OnSavesPressed(EventBase e, MainMenuArgs args, bool withFocus = false)
