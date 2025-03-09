@@ -1,8 +1,8 @@
 using System;
-using DnaCore.Audio;
 using DnaCore.Settings;
+using DnaCore.Singletons.Audio;
+using DnaCore.Singletons.Window;
 using DnaCore.Utilities;
-using DnaCore.Window;
 using UnityEngine;
 
 namespace Scenes.Menu

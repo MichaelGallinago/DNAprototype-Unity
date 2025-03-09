@@ -1,4 +1,4 @@
-﻿using DnaCore.Window;
+﻿using DnaCore.Singletons.Window;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 

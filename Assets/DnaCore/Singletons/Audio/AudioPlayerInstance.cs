@@ -1,10 +1,12 @@
+using System;
+using DnaCore.Settings;
 using DnaCore.Utilities;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace DnaCore.Audio
+namespace DnaCore.Singletons.Audio
 {
     public class AudioPlayerInstance : MonoSingleton<AudioPlayerInstance>
     {
@@ -17,7 +19,13 @@ namespace DnaCore.Audio
         [SerializeField] private AudioMixer _sfxAudioMixer;
 
         private MotionHandle _pitchHandle;
-        
+
+        private void Start()
+        {
+            SfxVolume = AppSettings.Audio.SfxVolume;
+            BgmVolume = AppSettings.Audio.BgmVolume;
+        }
+
         public float BgmVolume
         {
             set => _bgmAudioMixer.SetFloat(VolumeName, MathUtilities.FloatToDb(value));
@@ -26,20 +34,6 @@ namespace DnaCore.Audio
         public float SfxVolume
         {
             set => _sfxAudioMixer.SetFloat(VolumeName, MathUtilities.FloatToDb(value));
-        }
-
-        protected override void Initialize(GameObject singletonObject)
-        {
-            Instance._bgmAudioSource = GetAudioSource(singletonObject, _bgmAudioMixer);
-            Instance._sfxAudioSource = GetAudioSource(singletonObject, _sfxAudioMixer);
-        }
-
-        private static AudioSource GetAudioSource(GameObject singletonObject, AudioMixer mixer)
-        {
-            var bgmSource = singletonObject.AddComponent<AudioSource>();
-            bgmSource.playOnAwake = false;
-            bgmSource.outputAudioMixerGroup = mixer.outputAudioMixerGroup;
-            return bgmSource;
         }
 
         public MotionHandle SetPitchFadeOut(float duration)

@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using LitMotion;
 using UnityEngine;
 
-namespace DnaCore.Audio
+namespace DnaCore.Singletons.Audio
 {
     public static class AudioPlayer
     {
@@ -40,8 +40,5 @@ namespace DnaCore.Audio
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MotionHandle StopBgmWithPitchFadeIn(float duration) => 
             AudioPlayerInstance.Instance.StopBgmWithPitchFadeIn(duration);
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Initialize(string name) => AudioPlayerInstance.Initialize(name);
     }
 }

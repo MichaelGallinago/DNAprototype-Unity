@@ -1,8 +1,9 @@
 ﻿using DnaCore.Settings;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using AspectRatio = DnaCore.Settings.AspectRatio;
 
-namespace DnaCore.Window
+namespace DnaCore.Singletons.Window
 {
     public class WindowControllerInstance : MonoSingleton<WindowControllerInstance>
     {                                                          
@@ -45,7 +46,14 @@ namespace DnaCore.Window
                 Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode);
             }
         }
-        
+
+        protected override void Initialize()
+        {
+            Ratio = AppSettings.Options.AspectRatio;
+            Scale = AppSettings.Options.Scale;
+            FullScreen = AppSettings.Options.FullScreen;
+        }
+
         /// <summary>
         /// Adds a new camera. Expand to have multiple cameras if necessary.
         /// </summary>

@@ -1,6 +1,3 @@
-using DnaCore.Audio;
-using DnaCore.Settings;
-using DnaCore.Window;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,34 +5,6 @@ namespace Scenes.Bootstrap
 {
     public class Bootstrap : MonoBehaviour
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void LoadConfigs()
-        {
-            AppSettings.Load();
-        }
-        
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void InitializeSingletons()
-        {
-            AudioPlayer.Initialize(nameof(AudioPlayer));
-            WindowController.Initialize(nameof(WindowController));
-            
-            ApplySettings();
-        }
-
-        private static void ApplySettings()
-        {
-            AudioPlayer.SfxVolume = AppSettings.Audio.SfxVolume;
-            AudioPlayer.BgmVolume = AppSettings.Audio.BgmVolume;
-
-            WindowController.Ratio = AppSettings.Options.AspectRatio;
-            WindowController.Scale = AppSettings.Options.Scale;
-            WindowController.FullScreen = AppSettings.Options.FullScreen;
-
-            QualitySettings.vSyncCount = AppSettings.Options.VSync;
-            Application.targetFrameRate = AppSettings.Options.TargetFrameRate;
-        }
-        
         private void Start() => SceneManager.LoadScene("Scenes/Menu/Menu");
     }
 }

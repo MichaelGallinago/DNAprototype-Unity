@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using DnaCore.Audio;
+using DnaCore.Singletons.Audio;
 using LitMotion;
 using Scenes.Menu.Logo;
 using Scenes.Menu.Model;

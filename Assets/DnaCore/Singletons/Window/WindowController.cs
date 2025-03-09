@@ -3,7 +3,7 @@ using DnaCore.Settings;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace DnaCore.Window
+namespace DnaCore.Singletons.Window
 {
     public static class WindowController
     {
@@ -29,9 +29,6 @@ namespace DnaCore.Window
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.Ratio;                                            
             [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.Ratio = value;                                                                                              
         }                                                                                                                  
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Initialize(string name) => WindowControllerInstance.Initialize(name);
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddCamera(Camera newCamera, PixelPerfectCamera pixelPerfectCamera) => 

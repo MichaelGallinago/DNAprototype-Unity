@@ -1,4 +1,4 @@
-using DnaCore.Audio;
+using DnaCore.Singletons.Audio;
 using UnityEngine.UIElements;
 
 namespace Scenes.Menu.Audio
