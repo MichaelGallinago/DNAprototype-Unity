@@ -1,3 +1,4 @@
+using DnaCore.Settings;
 using LitMotion;
 using Scenes.Menu.Audio;
 using Scenes.Menu.OptionCard;
@@ -28,6 +29,13 @@ namespace Scenes.Menu
             SavesUtilities.RegisterCallbacks(args);
             
             TransitionUtilities.Enter(args);
+            
+            _document.panelSettings.SetScreenToPanelSpaceFunction(
+                static coords => TransformScreenToPanelSpace(coords));
         }
+
+        private static Vector2 TransformScreenToPanelSpace(Vector2 screenPosition) =>
+            new Vector2(screenPosition.x / Screen.width, screenPosition.y / Screen.height) 
+                * AppSettings.Options.AspectRatio.MinResolution;
     }
 }

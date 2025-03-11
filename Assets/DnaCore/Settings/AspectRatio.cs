@@ -50,15 +50,17 @@ namespace DnaCore.Settings
         public Vector2Int MinResolution
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Ratio >= Reference.Ratio 
-                ? new Vector2Int((int)((float)ReferenceResolution.y / Reference.Y * X), ReferenceResolution.y) 
-                : new Vector2Int(ReferenceResolution.x, (int)((float)ReferenceResolution.x / Reference.X * Y));
+                ? new Vector2Int(
+                    (int)((float)ReferenceResolution.x * X * Reference.Y / Reference.X / Y), ReferenceResolution.y) 
+                : new Vector2Int(
+                    ReferenceResolution.x, (int)((float)ReferenceResolution.y * Y * Reference.X / Reference.Y / X));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetMaxScale(int maxWidth, int maxHeight)
         {
             Vector2Int minResolution = MinResolution;
-            return Math.Min(maxWidth / minResolution.x, maxHeight / minResolution.y) + 1;
+            return Math.Min(maxWidth / minResolution.x, maxHeight / minResolution.y);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5249126014336969317}
   - component: {fileID: 7814686181706793933}
+  - component: {fileID: 8455686801838660801}
   m_Layer: 0
   m_Name: WindowController
   m_TagString: Untagged
@@ -44,3 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440f147c43314129ac348b90eb3e4086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderTextureMatcher: {fileID: 8455686801838660801}
+--- !u!114 &8455686801838660801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071121523820178642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 334ccf1bed1a5024c99bbc176882de60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderTexture: {fileID: 8400000, guid: 52431250a24d0614cacaa78d9ab55910, type: 2}
+  depth: 32
