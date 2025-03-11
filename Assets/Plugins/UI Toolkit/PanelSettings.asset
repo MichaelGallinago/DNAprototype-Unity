@@ -18,13 +18,13 @@ MonoBehaviour:
   m_RenderMode: 0
   m_WorldSpaceLayer: 0
   m_ScaleMode: 2
-  m_ReferenceSpritePixelsPerUnit: 100
+  m_ReferenceSpritePixelsPerUnit: 1
   m_PixelsPerUnit: 100
   m_Scale: 1
   m_ReferenceDpi: 96
   m_FallbackDpi: 96
   m_ReferenceResolution: {x: 640, y: 360}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 2
   m_Match: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

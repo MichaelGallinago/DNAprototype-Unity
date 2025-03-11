@@ -1,5 +1,6 @@
 using LitMotion;
 using Scenes.Menu.Audio;
+using UnityEngine.UI;
 using UxmlViewBindings;
 
 namespace Scenes.Menu
@@ -10,6 +11,7 @@ namespace Scenes.Menu
         public readonly AudioStorage AudioStorage;
         public readonly MainMenuCanvas Canvas;
         public readonly MainMenuViewModel ViewModel;
+        public readonly CanvasScaler CanvasScaler;
         
         public MotionHandle StartAnimation;
         public long LastSelectSoundTime;

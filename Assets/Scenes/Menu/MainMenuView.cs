@@ -5,6 +5,7 @@ using Scenes.Menu.OptionCard;
 using Scenes.Menu.Saves;
 using Scenes.Menu.Settings;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using UxmlViewBindings;
 
@@ -15,6 +16,7 @@ namespace Scenes.Menu
         [SerializeField] private AudioStorage _audioStorage;
         [SerializeField] private UIDocument _document;
         [SerializeField] private MainMenuCanvas _canvas;
+        [SerializeField] private CanvasScaler _canvasScaler;
         [SerializeField] private MainMenuViewModel _viewModel;
         
         private MotionHandle _startAnimation;

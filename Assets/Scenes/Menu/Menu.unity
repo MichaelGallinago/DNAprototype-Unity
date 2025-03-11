@@ -175,8 +175,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 1
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 640, y: 360}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -242,6 +242,7 @@ MonoBehaviour:
   _audioStorage: {fileID: 11400000, guid: d40762307c84bdb48b7208457ac173e0, type: 2}
   _document: {fileID: 278241483}
   _canvas: {fileID: 278241485}
+  _canvasScaler: {fileID: 0}
   _viewModel: {fileID: 278241484}
 --- !u!114 &278241483
 MonoBehaviour:
@@ -374,10 +375,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 278241481}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 640, y: 360}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &435474622
 MonoBehaviour:
@@ -726,10 +727,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.041666668
-    width: 0.25
-    height: 0.25
+    x: 0.25838622
+    y: 0.12348264
+    width: 0.4835298
+    height: 0.7534534
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

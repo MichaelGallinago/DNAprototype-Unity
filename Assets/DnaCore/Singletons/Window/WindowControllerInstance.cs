@@ -48,7 +48,7 @@ namespace DnaCore.Singletons.Window
                 } while (resolution.x > currentInfo.width || resolution.y > currentInfo.height || scale == 0);
                 
                 Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode);
-                _renderTextureMatcher.MatchRenderTexture(resolution);
+                _renderTextureMatcher.MatchRenderTexture(minResolution);
             }
         }
 
