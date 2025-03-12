@@ -10,6 +10,7 @@ using UxmlViewBindings;
 // ReSharper disable UnusedParameter.Local
 namespace Scenes.Menu.Settings.Options
 {
+    // TODO: replace MainMenuArgs to OptionsArgs for reuse in pause menu
     public static class OptionsUtilities
     {
         public static void Initialize(MainMenuArgs args)
@@ -34,15 +35,14 @@ namespace Scenes.Menu.Settings.Options
             
             viewModel.UpdateAspectRatios(currentInfo);
             
-            SetSliderVariants(binding.AspectRatio.Slider, viewModel.RatioNames);
-            SetSliderVariants(binding.Resolution.Slider, viewModel.ResolutionNames);
+            SetSliderVariants(binding.AspectRatio.Slider, viewModel.GetRatioNames());
+            SetSliderVariants(binding.Resolution.Slider, viewModel.GetResolutionNames(currentInfo));
 
             binding.FrameRate.Slider.highValue = 
                 Math.Max(binding.FrameRate.Slider.lowValue, (int)currentInfo.refreshRate.value);
 
             binding.SimulationRate.Slider.highValue = DnaCore.Settings.Options.MaxSimulationRate;
             
-            //TODO: fullscreen
             binding.AspectRatio.Slider.SetInitialValue(viewModel.Ratio);
             binding.Resolution.Slider.SetInitialValue(viewModel.Scale);
             binding.VSync.Slider.SetInitialValue(viewModel.VSync);
@@ -103,13 +103,16 @@ namespace Scenes.Menu.Settings.Options
             OnApply(e, args);
             args.Binding.Settings.Submenus.OptionsButton.Focus();
         }
-        
-        //TODO: use or remove
-        private static void OnFullScreenChanged(ChangeEvent<int> e, MainMenuArgs args) =>
-            args.ViewModel.FullScreen = e.newValue > 0;
-        
-        private static void OnAspectRatioChanged(ChangeEvent<int> e, MainMenuArgs args) =>
+
+        private static void OnAspectRatioChanged(ChangeEvent<int> e, MainMenuArgs args)
+        {
             args.ViewModel.Ratio = e.newValue;
+            SetSliderVariants(
+                args.Binding.Settings.Options.Resolution.Slider, 
+                args.ViewModel.GetResolutionNames(Screen.mainWindowDisplayInfo)
+            );
+            args.Binding.Settings.Options.Resolution.Slider.SetInitialValue(args.ViewModel.Scale);
+        }
         
         private static void OnResolutionChanged(ChangeEvent<int> e, MainMenuArgs args) =>
             args.ViewModel.Scale = e.newValue;

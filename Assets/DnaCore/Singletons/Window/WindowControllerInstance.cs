@@ -18,15 +18,10 @@ namespace DnaCore.Singletons.Window
             get => AppSettings.Options.Scale;
             set
             {
-                Vector2Int resolution = AppSettings.Options.AspectRatio.GetScaledResolution(value + 1);                     
+                AppSettings.Options.Scale = value;
+                Vector2Int resolution = AppSettings.Options.AspectRatio.GetScaledResolution(value + 1);
                 Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode); 
             }
-        }
-
-        public bool FullScreen
-        {
-            get => AppSettings.Options.FullScreen;
-            set => Screen.fullScreen = AppSettings.Options.FullScreen = value;
         }
 
         public AspectRatio Ratio
@@ -34,8 +29,8 @@ namespace DnaCore.Singletons.Window
             get => AppSettings.Options.AspectRatio;
             set
             {
+                AppSettings.Options.AspectRatio = value;
                 Vector2Int minResolution = value.MinResolution;
-                Debug.Log(minResolution);
                 SetupPixelPerfectCamera(minResolution);
                 
                 DisplayInfo currentInfo = Screen.mainWindowDisplayInfo;
@@ -45,10 +40,10 @@ namespace DnaCore.Singletons.Window
                 {
                     resolution = minResolution * scale;
                     scale--;
-                } while (resolution.x > currentInfo.width || resolution.y > currentInfo.height || scale == 0);
-                
-                Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode);
+                } while ((resolution.x > currentInfo.width || resolution.y > currentInfo.height) && scale != 0);
+
                 _renderTextureMatcher.MatchRenderTexture(minResolution);
+                Scale = scale;
             }
         }
 
@@ -56,7 +51,6 @@ namespace DnaCore.Singletons.Window
         {
             Ratio = AppSettings.Options.AspectRatio;
             Scale = AppSettings.Options.Scale;
-            FullScreen = AppSettings.Options.FullScreen;
         }
 
         /// <summary>

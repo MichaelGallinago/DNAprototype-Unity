@@ -16,15 +16,9 @@ namespace DnaCore.Singletons.Window
         {                                                                                                                  
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.Scale;                                                                           
             [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.Scale = value;                 
-        }                                                                                                                  
+        }
                                                                                                                            
-        public static bool FullScreen                                                                                             
-        {                                                                                                                  
-            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.FullScreen;                                                                         
-            [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.FullScreen = value;                             
-        }                                                                                                                  
-                                                                                                                           
-        public static AspectRatio Ratio                                                                                           
+        public static AspectRatio Ratio
         {                                                                                                                  
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Instance.Ratio;                                            
             [MethodImpl(MethodImplOptions.AggressiveInlining)] set => Instance.Ratio = value;                                                                                              

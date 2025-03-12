@@ -11,7 +11,6 @@ namespace Scenes.Menu
         public readonly AudioStorage AudioStorage;
         public readonly MainMenuCanvas Canvas;
         public readonly MainMenuViewModel ViewModel;
-        public readonly CanvasScaler CanvasScaler;
         
         public MotionHandle StartAnimation;
         public long LastSelectSoundTime;

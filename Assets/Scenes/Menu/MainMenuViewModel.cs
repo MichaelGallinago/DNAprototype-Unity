@@ -12,23 +12,17 @@ namespace Scenes.Menu
         private AspectRatio _lastAspectRatio;
         private AspectRatio[] _ratios;
         
-        public string[] RatioNames => AspectRatio.GetRatiosNames(_ratios);
+        public string[] GetRatioNames() => AspectRatio.GetRatiosNames(_ratios);
 
-        public string[] ResolutionNames => 
-            AppSettings.Options.AspectRatio.GetResolutionNames(Screen.mainWindowDisplayInfo);
-
-        public bool FullScreen
-        {
-            get => WindowController.FullScreen;
-            set => WindowController.FullScreen = value;
-        }
+        public string[] GetResolutionNames(DisplayInfo displayInfo) => 
+            AppSettings.Options.AspectRatio.GetResolutionNames(displayInfo);
         
         public int Ratio
         {
             get => Array.IndexOf(_ratios, WindowController.Ratio);
             set => WindowController.Ratio = _ratios[value];
         }
-        
+
         public int Scale
         {
             get => WindowController.Scale;

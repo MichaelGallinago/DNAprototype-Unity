@@ -7,8 +7,7 @@ namespace DnaCore.Settings
     {
         public const int BaseFrameRate = 60;
         public const int MaxSimulationRate = 600;
-
-        public bool FullScreen;
+        
         public AspectRatio AspectRatio;
         public int Scale;
         public int VSync;
@@ -23,7 +22,6 @@ namespace DnaCore.Settings
             int targetFrameRate, 
             int simulationRate)
         {
-            FullScreen = fullScreen;
             AspectRatio = aspectRatio;
             Scale = scale;
             VSync = vSync;

@@ -15,11 +15,11 @@
                 <AttributeOverrides element-name="Slider" label="VSYNC" variants="OFF,ON,HALF" high-value="2" />
             </engine:Instance>
             <engine:Instance template="LabeledSlider" name="FrameRate" style="flex-direction: column-reverse;">
-                <AttributeOverrides element-name="Slider" label="FRAMERATE" value="600" high-value="60" low-value="30" page-size="5" />
+                <AttributeOverrides element-name="Slider" label="FRAMERATE" value="600" high-value="60" low-value="30" fill="false" />
                 <AttributeOverrides element-name="ValueLabel" text="60" />
             </engine:Instance>
             <engine:Instance template="LabeledSlider" name="SimulationRate">
-                <AttributeOverrides element-name="Slider" label="SIMULATION" value="0" high-value="60" low-value="60" page-size="5" />
+                <AttributeOverrides element-name="Slider" label="SIMULATION" value="0" high-value="60" low-value="60" />
                 <AttributeOverrides element-name="ValueLabel" text="60" />
             </engine:Instance>
         </engine:ScrollView>

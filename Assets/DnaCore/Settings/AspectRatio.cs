@@ -14,7 +14,7 @@ namespace DnaCore.Settings
         
         public static readonly AspectRatio[] BuiltIn =
         {
-            Reference, new(8, 5), new(7, 3), new(32, 9), new(4, 3)
+            Reference, new(8, 5), new(4, 3), new(7, 3), new(32, 9)
         };
 
         public static readonly Dictionary<AspectRatio, string> AspectNameOverrides = new()
