@@ -19,8 +19,15 @@ namespace DnaCore.Singletons.Window
             set
             {
                 AppSettings.Options.Scale = value;
-                Vector2Int resolution = AppSettings.Options.AspectRatio.GetScaledResolution(value + 1);
-                Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreenMode); 
+                if (value == 0)
+                {
+                    DisplayInfo displayInfo = Screen.mainWindowDisplayInfo;
+                    Screen.SetResolution(displayInfo.width, displayInfo.height, FullScreenMode.FullScreenWindow);
+                    return;
+                }
+                
+                Vector2Int resolution = Ratio.GetScaledResolution(value);
+                Screen.SetResolution(resolution.x, resolution.y, FullScreenMode.Windowed);
             }
         }
 
@@ -33,14 +40,14 @@ namespace DnaCore.Singletons.Window
                 Vector2Int minResolution = value.MinResolution;
                 SetupPixelPerfectCamera(minResolution);
                 
-                DisplayInfo currentInfo = Screen.mainWindowDisplayInfo;
+                DisplayInfo displayInfo = Screen.mainWindowDisplayInfo;
                 Vector2Int resolution;
-                int scale = AppSettings.Options.Scale + 1;
+                int scale = Scale + 1;
                 do
                 {
                     resolution = minResolution * scale;
                     scale--;
-                } while ((resolution.x > currentInfo.width || resolution.y > currentInfo.height) && scale != 0);
+                } while ((resolution.x > displayInfo.width || resolution.y > displayInfo.height) && scale != 0);
 
                 _renderTextureMatcher.MatchRenderTexture(minResolution);
                 Scale = scale;

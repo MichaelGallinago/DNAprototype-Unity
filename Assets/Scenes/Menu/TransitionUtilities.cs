@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DnaCore.Singletons.Audio;
+using DnaCore.Utilities;
 using LitMotion;
 using Scenes.Menu.Logo;
 using Scenes.Menu.Model;
@@ -18,7 +19,10 @@ namespace Scenes.Menu
                 .Join(LogoUtilities.Show(args))
                 .Run();
             
-            _ = CardsUtilities.Show(args, 1f);
+            _ = LSequence.Create()
+                .Append(CardsUtilities.Show(args, 1f))
+                .AppendAction(args, motionArgs => motionArgs.Binding.CardSaves.Button.Focus())
+                .RunAfterAction();
         }
         
         public static async UniTask Quit(MainMenuArgs args)

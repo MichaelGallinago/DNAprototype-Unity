@@ -22,7 +22,7 @@ namespace Scenes.Menu.Settings.CustomElements.Slider
 
         public void SetInitialValue(int initialValue) => UpdateLabelVariant(value = initialValue);
         
-        private void UpdateLabelVariant(int newValue) => 
-            _valueLabel.text = Variants is { Length: > 0 } ? Variants[newValue % Variants.Length] : string.Empty;
+        private void UpdateLabelVariant(int newValue) => _valueLabel.text = Variants is { Length: > 0 } 
+            ? Variants[(newValue - lowValue + highValue + 1) % (highValue + 1) % Variants.Length] : string.Empty;
     }
 }

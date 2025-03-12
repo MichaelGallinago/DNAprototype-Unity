@@ -36,7 +36,7 @@ namespace Scenes.Menu.Settings.Options
             viewModel.UpdateAspectRatios(currentInfo);
             
             SetSliderVariants(binding.AspectRatio.Slider, viewModel.GetRatioNames());
-            SetSliderVariants(binding.Resolution.Slider, viewModel.GetResolutionNames(currentInfo));
+            SetSliderVariants(binding.Resolution.Slider, viewModel.GetResolutionNames(currentInfo), 1);
 
             binding.FrameRate.Slider.highValue = 
                 Math.Max(binding.FrameRate.Slider.lowValue, (int)currentInfo.refreshRate.value);
@@ -44,16 +44,17 @@ namespace Scenes.Menu.Settings.Options
             binding.SimulationRate.Slider.highValue = DnaCore.Settings.Options.MaxSimulationRate;
             
             binding.AspectRatio.Slider.SetInitialValue(viewModel.Ratio);
-            binding.Resolution.Slider.SetInitialValue(viewModel.Scale);
+            binding.Resolution.Slider.SetInitialScale(viewModel.Scale);
             binding.VSync.Slider.SetInitialValue(viewModel.VSync);
             binding.FrameRate.Slider.SetInitialValue(viewModel.FrameRate);
             binding.SimulationRate.Slider.SetInitialValue(viewModel.SimulationRate);
         }
 
-        private static void SetSliderVariants(VariantsSlider slider, string[] variants)
+        private static void SetSliderVariants(VariantsSlider slider, string[] variants, int offset = 0)
         {
             slider.Variants = variants;
-            slider.highValue = variants.Length - 1;
+            slider.highValue = variants.Length - 1 + offset;
+            slider.lowValue = offset;
         }
 
         private static void RegisterCallbacks(in OptionsViewBinding binding, MainMenuArgs args) =>
@@ -107,16 +108,15 @@ namespace Scenes.Menu.Settings.Options
         private static void OnAspectRatioChanged(ChangeEvent<int> e, MainMenuArgs args)
         {
             args.ViewModel.Ratio = e.newValue;
-            SetSliderVariants(
-                args.Binding.Settings.Options.Resolution.Slider, 
-                args.ViewModel.GetResolutionNames(Screen.mainWindowDisplayInfo)
-            );
-            args.Binding.Settings.Options.Resolution.Slider.SetInitialValue(args.ViewModel.Scale);
+            
+            VariantsSlider slider = args.Binding.Settings.Options.Resolution.Slider;
+            SetSliderVariants(slider, args.ViewModel.GetResolutionNames(Screen.mainWindowDisplayInfo), 1);
+            slider.SetInitialScale(args.ViewModel.Scale);
         }
         
         private static void OnResolutionChanged(ChangeEvent<int> e, MainMenuArgs args) =>
-            args.ViewModel.Scale = e.newValue;
-
+            args.ViewModel.Scale = e.newValue % args.Binding.Settings.Options.Resolution.Slider.highValue;
+        
         private static void OnVSyncChanged(ChangeEvent<int> e, MainMenuArgs args) => 
             args.ViewModel.VSync = e.newValue;
 
@@ -125,5 +125,8 @@ namespace Scenes.Menu.Settings.Options
         
         private static void OnSimulationRateChanged(ChangeEvent<int> e, MainMenuArgs args) => 
             args.ViewModel.SimulationRate = e.newValue;
+
+        private static void SetInitialScale(this VariantsSlider scaleSlider, int viewModelScale) =>
+            scaleSlider.SetInitialValue(viewModelScale == 0 ? scaleSlider.highValue: viewModelScale);
     }
 }

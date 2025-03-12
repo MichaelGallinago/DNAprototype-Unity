@@ -67,12 +67,14 @@ namespace DnaCore.Settings
         public string[] GetResolutionNames(DisplayInfo displayInfo)
         {
             int count = GetMaxScale(displayInfo.width, displayInfo.height);
-            var aspectRatios = new string[count];
+            var aspectRatios = new string[count + 1];
             for (var i = 0; i < count; i++)
             {
                 Vector2Int resolution = GetScaledResolution(i + 1);
                 aspectRatios[i] = ZString.Concat(resolution.x, ":", resolution.y);
             }
+            
+            aspectRatios[count] = "FULL";
             return aspectRatios;
         }
 
