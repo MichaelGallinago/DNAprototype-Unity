@@ -58,9 +58,14 @@ namespace Scenes.Menu.Settings.Submenus
                 return;
             }
             
+            args.IsFocusMuted = true;
             _ = LSequence.Create()
                 .Append(CardsUtilities.Show(args))
-                .AppendAction(args, motionArgs => motionArgs.Binding.CardSettings.Button.Focus())
+                .AppendAction(args, motionArgs =>
+                {
+                    motionArgs.Binding.CardSettings.Button.Focus();
+                    motionArgs.IsFocusMuted = false;
+                })
                 .RunAfterAction();
         }
         

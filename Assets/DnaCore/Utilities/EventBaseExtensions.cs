@@ -4,7 +4,6 @@ namespace DnaCore.Utilities
 {
     public static class EventBaseExtensions
     {
-        
         /// <summary>
         /// Replacement for UnityEngine.UIElements.EventBase.PreventDefault()
         /// </summary>

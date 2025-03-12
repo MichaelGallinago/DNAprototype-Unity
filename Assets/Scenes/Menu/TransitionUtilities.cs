@@ -19,9 +19,14 @@ namespace Scenes.Menu
                 .Join(LogoUtilities.Show(args))
                 .Run();
             
+            args.IsFocusMuted = true;
             _ = LSequence.Create()
-                .Append(CardsUtilities.Show(args, 1f))
-                .AppendAction(args, motionArgs => motionArgs.Binding.CardSaves.Button.Focus())
+                .AppendAndInterval(CardsUtilities.Show(args, 1f), 1f)
+                .AppendAction(args, motionArgs =>
+                {
+                    motionArgs.Binding.CardSaves.Button.Focus();
+                    motionArgs.IsFocusMuted = false;
+                })
                 .RunAfterAction();
         }
         

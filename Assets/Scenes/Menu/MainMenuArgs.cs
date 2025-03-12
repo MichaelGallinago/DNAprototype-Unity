@@ -14,6 +14,7 @@ namespace Scenes.Menu
         
         public MotionHandle StartAnimation;
         public long LastSelectSoundTime;
+        public bool IsFocusMuted;
         
         public MainMenuArgs(
             in MainMenuViewBinding binding, 

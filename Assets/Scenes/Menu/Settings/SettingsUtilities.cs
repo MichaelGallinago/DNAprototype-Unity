@@ -30,6 +30,6 @@ namespace Scenes.Menu.Settings
         private static void RegisterCallbacks(in SettingsViewBinding binding, MainMenuArgs args) =>
             new CallbackBuilder<MainMenuArgs>(args)
                 .SetTarget(binding.Root)
-                .Register<FocusInEvent>(static (evt, userArgs) => SoundUtilities.PlayFocus(evt, userArgs));
+                .Register<FocusInEvent>(static (_, userArgs) => SoundUtilities.PlayFocus(userArgs));
     }
 }

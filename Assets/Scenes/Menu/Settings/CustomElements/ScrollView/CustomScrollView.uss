@@ -1,7 +1,7 @@
 ScrollView VisualElement#unity-dragger {
     max-width: 14px;
     left: 0;
-    background-image: url("project://database/Assets/Scenes/Menu/Settings/slider.png?fileID=2800000&guid=709cda45bc6aaf149b89dbdb96b943d2&type=3#slider");
+    background-image: url("project://database/Assets/Scenes/Menu/Settings/CustomElements/ScrollView/Slider.png?fileID=2800000&guid=320c39693fb174a42bedfd904e891fdb&type=3#Slider");
     -unity-background-scale-mode: stretch-to-fill;
     -unity-slice-left: 9;
     -unity-slice-right: 6;

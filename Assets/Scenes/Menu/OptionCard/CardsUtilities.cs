@@ -5,7 +5,6 @@ using LitMotion;
 using Scenes.Menu.Audio;
 using Scenes.Menu.Settings;
 using UnityEngine.UIElements;
-using UxmlViewBindings;
 
 //TODO: replace "static (evt, userArgs) => ..." to method group after C# 11 in unity
 // ReSharper disable UnusedParameter.Local
@@ -15,31 +14,30 @@ namespace Scenes.Menu.OptionCard
     {
         public static void RegisterCallbacks(MainMenuArgs args) => new CallbackBuilder<MainMenuArgs>(args)
             .SetTarget(args.Binding.CardSaves.Button)
-            .Register<FocusInEvent>(static (evt, userArgs) => SoundUtilities.PlayFocus(evt, userArgs))
+            .Register<FocusInEvent>(static (evt, userArgs) => PlayFocusSound(evt, userArgs))
             .Register<ClickEvent>(static (evt, userArgs) => OnSavesPressed(evt, userArgs))
             .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnSavesPressedFocused(evt, userArgs))
             
             .SetTarget(args.Binding.CardSettings.Button)
-            .Register<FocusInEvent>(static (evt, userArgs) => SoundUtilities.PlayFocus(evt, userArgs))
+            .Register<FocusInEvent>(static (evt, userArgs) => PlayFocusSound(evt, userArgs))
             .Register<ClickEvent>(static (evt, userArgs) => OnSettingsPressed(evt, userArgs))
             .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnSettingsPressedFocused(evt, userArgs))
             
             .SetTarget(args.Binding.CardShutdown.Button)
-            .Register<FocusInEvent>(static (evt, userArgs) => SoundUtilities.PlayFocus(evt, userArgs))
+            .Register<FocusInEvent>(static (evt, userArgs) => PlayFocusSound(evt, userArgs))
             .Register<ClickEvent>(static (evt, userArgs) => OnShutdownPressed(evt, userArgs))
             .Register<NavigationSubmitEvent>(static (evt, userArgs) => OnShutdownPressed(evt, userArgs));
 
-        public static MotionHandle Show(MainMenuArgs args, float delay = 0f) => 
-            LSequence.Create()
-                .AppendInterval(delay)
-                .AppendAction(args, motionArgs => SetCardsEnabled(true, motionArgs))
-                .AppendInterval(0.1f)
-                .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
-                .AppendInterval(0.2f)
-                .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
-                .AppendInterval(0.2f)
-                .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
-                .RunAfterAction();
+        public static MotionHandle Show(MainMenuArgs args, float delay = 0f) => LSequence.Create()
+            .AppendInterval(delay)
+            .AppendAction(args, motionArgs => SetCardsEnabled(true, motionArgs))
+            .AppendInterval(0.1f)
+            .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
+            .AppendInterval(0.2f)
+            .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
+            .AppendInterval(0.2f)
+            .AppendAction(args, static motionArgs => PlayCardSound(motionArgs))
+            .RunAfterAction();
 
         private static async UniTask Hide(MainMenuArgs args)
         {
@@ -91,6 +89,12 @@ namespace Scenes.Menu.OptionCard
             SoundUtilities.PlaySelect(args);
             _ = Hide(args);
             _ = TransitionUtilities.Quit(args);
+        }
+
+        private static void PlayFocusSound(FocusInEvent e, MainMenuArgs args)
+        {
+            if (args.IsFocusMuted) return;
+            SoundUtilities.PlayFocus(args);
         }
     }
 }

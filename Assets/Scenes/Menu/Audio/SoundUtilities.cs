@@ -5,7 +5,7 @@ namespace Scenes.Menu.Audio
 {
     public static class SoundUtilities
     {
-        public static void PlayFocus(EventBase e, MainMenuArgs args) => 
+        public static void PlayFocus(MainMenuArgs args) => 
             AudioPlayer.PlaySfx(args.AudioStorage.Focus, 0.05f);
         
         public static void PlaySelect(MainMenuArgs args) => 
