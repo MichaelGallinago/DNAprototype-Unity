@@ -22,8 +22,8 @@ namespace DnaCore.Singletons.Audio
 
         private void Start()
         {
-            SfxVolume = AppSettings.Audio.SfxVolume;
-            BgmVolume = AppSettings.Audio.BgmVolume;
+            SfxVolume = AppSettings.Audio.SfxVolume / 100f;
+            BgmVolume = AppSettings.Audio.BgmVolume / 100f;
         }
 
         public float BgmVolume
