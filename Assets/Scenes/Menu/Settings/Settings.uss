@@ -1,0 +1,41 @@
+.settings {
+    flex-grow: 1;
+    position: absolute;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: auto;
+    align-items: stretch;
+    align-self: stretch;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    transition-timing-function: ease-in-out-back;
+    transition-duration: 1s;
+    transform-origin: bottom;
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    -unity-font-definition: url("project://database/Assets/Scenes/Menu/Font/Prototype.asset?fileID=11400000&guid=ba317d4c33a45ac46823198b6eed1742&type=2#Prototype");
+}
+
+.settings:disabled {
+    translate: 0 240px;
+    opacity: 0;
+}

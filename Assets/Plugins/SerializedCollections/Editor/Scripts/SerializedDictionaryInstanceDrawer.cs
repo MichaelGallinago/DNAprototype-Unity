@@ -60,11 +60,6 @@ namespace AYellowpaper.SerializedCollections.Editor
             _fieldInfo = fieldInfo;
             ListProperty = property.FindPropertyRelative(SerializedDictionaryDrawer.SerializedListName);
 
-            _keyValueStyle = new GUIStyle(EditorStyles.toolbarButton);
-            _keyValueStyle.padding = new RectOffset(0, 0, 0, 0);
-            _keyValueStyle.border = new RectOffset(0, 0, 0, 0);
-            _keyValueStyle.alignment = TextAnchor.MiddleCenter;
-
             DefaultState = new DefaultListState(this);
             SearchState = new SearchListState(this);
             _activeState = DefaultState;
@@ -108,6 +103,19 @@ namespace AYellowpaper.SerializedCollections.Editor
             {
                 ListProperty.serializedObject.ApplyModifiedProperties();
             }
+
+            InitializeKeyValueStyle();
+        }
+
+        private void InitializeKeyValueStyle()
+        {
+            if (_keyValueStyle != null) return;
+            _keyValueStyle = new GUIStyle(EditorStyles.toolbarButton)
+            {
+                padding = new RectOffset(0, 0, 0, 0),
+                border = new RectOffset(0, 0, 0, 0),
+                alignment = TextAnchor.MiddleCenter
+            };
         }
 
         public float GetPropertyHeight(GUIContent label)

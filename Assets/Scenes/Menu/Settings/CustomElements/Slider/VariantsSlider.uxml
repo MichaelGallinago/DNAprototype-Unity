@@ -1,0 +1,4 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/Menu/Settings/CustomElements/Slider/Slider.uss?fileID=7433441132597879392&amp;guid=9b96af20a23a3384eb7e1935f3b10a8a&amp;type=3#Slider" />
+    <Scenes.Menu.Settings.CustomElements.Slider.VariantsSlider label="NAME" variants="VARIANT" name="Slider" class="custom-slider" />
+</engine:UXML>

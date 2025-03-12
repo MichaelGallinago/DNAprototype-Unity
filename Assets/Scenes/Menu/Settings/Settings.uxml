@@ -1,0 +1,13 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="Options" src="project://database/Assets/Scenes/Menu/Settings/Options/Options.uxml?fileID=9197481963319205126&amp;guid=932055de28d400e44973f835708846a8&amp;type=3#Options" />
+    <engine:Template name="Control" src="project://database/Assets/Scenes/Menu/Settings/Control/Control.uxml?fileID=9197481963319205126&amp;guid=4c88c53b9afd2f3479725d861573ceb5&amp;type=3#Control" />
+    <engine:Template name="Audio" src="project://database/Assets/Scenes/Menu/Settings/Audio/Audio.uxml?fileID=9197481963319205126&amp;guid=c32b3b6bb21be9342a5f921d0c0dc827&amp;type=3#Audio" />
+    <engine:Template name="Submenus" src="project://database/Assets/Scenes/Menu/Settings/Submenus/Submenus.uxml?fileID=9197481963319205126&amp;guid=cd799a8d0914d4d47a098a78c26a67a0&amp;type=3#Submenus" />
+    <Style src="project://database/Assets/Scenes/Menu/Settings/Settings.uss?fileID=7433441132597879392&amp;guid=80ea76051e313a14e983470807b828cc&amp;type=3#Settings" />
+    <engine:VisualElement enabled="true" name="VisualElement" class="settings" style="flex-grow: 1; justify-content: space-between;">
+        <engine:Instance template="Options" name="Options" enabled="true" style="display: none; justify-content: space-between; flex-grow: 1;" />
+        <engine:Instance template="Control" name="Control" style="display: none; flex-grow: 1;" />
+        <engine:Instance template="Audio" name="Audio" style="display: none; flex-grow: 1;" />
+        <engine:Instance template="Submenus" name="Submenus" style="flex-grow: 1;" />
+    </engine:VisualElement>
+</engine:UXML>

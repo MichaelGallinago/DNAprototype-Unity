@@ -1,8 +1,5 @@
-using System;
-using Cysharp.Threading.Tasks;
 using LitMotion;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Scenes.Menu.Tube
@@ -10,35 +7,26 @@ namespace Scenes.Menu.Tube
     public class TubeAnimation : MonoBehaviour
     {
         [SerializeField] private Image _image;
-        [SerializeField] private float _scaleDuration = 5f;
         [SerializeField] private float _scaleTarget = 1f;
-        [SerializeField] private float _initialValue;
-        [SerializeField] private float _delay;
-        [SerializeField] private AudioClip _audioClip;
         
-        [SerializeField] private UnityEvent<AudioClip, float> _onSoundEmitted;
-        [SerializeField] private UnityEvent _onAnimationFinished;
+        private MotionHandle _animation;
+        private float _scale;
         
-        private void Start() => _ = PlayAnimation();
+        private void Start() => UpdateScale(_scale);
         
-        private async UniTask PlayAnimation()
-        {
-            UpdateScale(_initialValue);
-            
-            await UniTask.WaitForSeconds(_delay);
-            
-            _ = LMotion.Create(_initialValue, _scaleTarget, _scaleDuration)
-                .WithEase(Ease.OutSine)
-                .Bind(UpdateScale);
-            
-            await UniTask.WaitForSeconds(0.5f);
-            _onSoundEmitted?.Invoke(_audioClip, 0.5f);
-            
-            await UniTask.WaitForSeconds(MathF.Max(_audioClip.length - 1f, 0f));
+        public MotionHandle PlayAppear(float duration) => StartScaleAnimation(_scale, _scaleTarget, duration);
+        public MotionHandle PlayHide(float duration) => StartScaleAnimation(_scale, 0f, duration);
 
-            _onAnimationFinished?.Invoke();
+        private MotionHandle StartScaleAnimation(float from, float to, float duration)
+        {
+            if (_animation.IsPlaying())
+            {
+                _animation.Cancel();
+            }
+            
+            return _animation = LMotion.Create(from, to, duration).WithEase(Ease.OutSine).Bind(UpdateScale);
         }
         
-        private void UpdateScale(float value) => _image.material.SetFloat(TubeShaderProperties.ScaleId, value);
+        private void UpdateScale(float value) => _image.material.SetFloat(TubeShaderProperties.ScaleId, _scale = value);
     }
 }

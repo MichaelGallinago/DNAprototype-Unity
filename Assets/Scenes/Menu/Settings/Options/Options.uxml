@@ -1,0 +1,30 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="VariantsSlider" src="project://database/Assets/Scenes/Menu/Settings/CustomElements/Slider/VariantsSlider.uxml?fileID=9197481963319205126&amp;guid=de6663ca1f698074894141dbc5301ee6&amp;type=3#VariantsSlider" />
+    <engine:Template name="LabeledSlider" src="project://database/Assets/Scenes/Menu/Settings/CustomElements/Slider/LabeledSlider.uxml?fileID=9197481963319205126&amp;guid=a8a2dea0689b2e440b8426c4e94f354f&amp;type=3#LabeledSlider" />
+    <engine:Template name="BackButton" src="project://database/Assets/Scenes/Menu/Settings/CustomElements/ApplyButton/ApplyButton.uxml?fileID=9197481963319205126&amp;guid=bd9692381d32df24ab0107f54a5df0e0&amp;type=3#ApplyButton" />
+    <Style src="project://database/Assets/Scenes/Menu/Settings/CustomElements/ScrollView/CustomScrollView.uss?fileID=7433441132597879392&amp;guid=6a4d1fbc01635e4409db8add966e3448&amp;type=3#CustomScrollView" />
+    <engine:VisualElement style="flex-grow: 1; justify-content: space-between;">
+        <engine:ScrollView enabled="true" nested-interaction-kind="StopScrolling" name="ScrollView" class="scroller">
+            <engine:Instance template="VariantsSlider" name="AspectRatio">
+                <AttributeOverrides element-name="Slider" label="ASPECT       RATIO" />
+            </engine:Instance>
+            <engine:Instance template="VariantsSlider" name="Resolution">
+                <AttributeOverrides element-name="Slider" label="RESOLUTION" />
+            </engine:Instance>
+            <engine:Instance template="VariantsSlider" name="VSync">
+                <AttributeOverrides element-name="Slider" label="VSYNC" variants="OFF,ON,HALF" high-value="2" />
+            </engine:Instance>
+            <engine:Instance template="LabeledSlider" name="FrameRate" style="flex-direction: column-reverse;">
+                <AttributeOverrides element-name="Slider" label="FRAMERATE" value="600" high-value="60" low-value="30" fill="false" />
+                <AttributeOverrides element-name="ValueLabel" text="60" />
+            </engine:Instance>
+            <engine:Instance template="LabeledSlider" name="SimulationRate">
+                <AttributeOverrides element-name="Slider" label="SIMULATION" value="0" high-value="60" low-value="60" />
+                <AttributeOverrides element-name="ValueLabel" text="60" />
+            </engine:Instance>
+        </engine:ScrollView>
+        <engine:Instance template="BackButton" name="Apply">
+            <AttributeOverrides element-name="Button" tabindex="2" />
+        </engine:Instance>
+    </engine:VisualElement>
+</engine:UXML>

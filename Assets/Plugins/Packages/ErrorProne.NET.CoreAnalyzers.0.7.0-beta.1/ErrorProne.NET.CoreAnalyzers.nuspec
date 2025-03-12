@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>ErrorProne.NET.CoreAnalyzers</id>
+    <version>0.7.0-beta.1</version>
+    <authors>Sergey Teplyakov</authors>
+    <developmentDependency>true</developmentDependency>
+    <licenseUrl>https://github.com/SergeyTeplyakov/ErrorProne.NET/blob/master/LICENSE</licenseUrl>
+    <description>Core .NET analyzers for detecting the most common coding issues</description>
+    <releaseNotes>0.7.0
+        * Add EventSource analyzers
+        * Warn on using tasks in 'using' block or 'using' statements.
+      0.6.1
+        * Add Enumerable.Contains(HashSet{T}) analyzer.
+        * Move DefaultEqualsOrHashCodeUsageAnalyzer and HashTableIncompatibilityAnalyzer moved from structs analyzers to core analyzers.
+        * Changed DefaultEqualsOrHashCodeUsageAnalyzer to warn on any usages of ValueType.Equals/ValueType.GetHashCode in any place.
+      0.6.0
+        * Update all the dependendencies.
+      0.5.0
+        * Remove runtime dependencies for the prjoect (no RuntimeContracts, and no ErrorProne.Net.Core)
+          to simplify deployment and to allow the customers to reference different versions of 'ErrorProne.Net.CoreAnalyzers'
+          and 'ErrorProne.Net.StructAnalyzers' that was not possible before due to a common dependencies to 'ErrorProne.Net.Core.dll'.
+      0.4.0
+        * Performance improvements and bug fixes
+        * Embed pdbs
+
+      0.3.1
+        * EPC18: warn for an implicit Task to string conversion.
+        * EPC19: warn on non-observed Register calls to a potentially long-lived CancellationToken instances.
+
+      0.3.0
+        * EPC17: warns when async void delegate is accidentally created where `Action` should be used.
+        * ERP031: warns when some unsafe methods are used for `ConcurrentDictionary` instance like `ToArray`.
+
+        0.2.0
+          * EPC11: warns when Equals method is potentially implemented incorrectly.
+          * EPC12: warns when generic exception instance is not fully observed (only `Message` was accessed in catch block).
+          * EPC13: warns when possible-like result is not observed.
+          * EPC14: warns when `ConfigureAwait(false)` is used even though a project is configured not to use it.
+          * EPC15: warns when `ConfigureAwait(false)` is not used on an awaited task but a project is configured to always use it.
+          * EPC16: null-conditional operator is used in await expression causing NRE if a task is null.</releaseNotes>
+    <copyright>Copyright Sergey Teplyakov</copyright>
+    <tags>ErrorProne.NET, analyzers</tags>
+    <repository url="https://github.com/SergeyTeplyakov/ErrorProne.NET/" />
+  </metadata>
+</package>
