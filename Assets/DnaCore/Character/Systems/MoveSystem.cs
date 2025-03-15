@@ -110,11 +110,11 @@ namespace DnaCore.Character.Systems
         {
             if (input.Down.Right)
             {
-                WalkOnGround(ref rotation, ref groundSpeed, physicsData, Direction.Positive);
+                WalkOnGround(ref rotation, ref groundSpeed, in physicsData, Direction.Positive);
             }
             else if (input.Down.Left)
             {
-                WalkOnGround(ref rotation, ref groundSpeed, physicsData, Direction.Negative);
+                WalkOnGround(ref rotation, ref groundSpeed, in physicsData, Direction.Negative);
             }
             else
             {
