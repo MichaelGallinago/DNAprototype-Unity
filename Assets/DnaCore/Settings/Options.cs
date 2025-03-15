@@ -5,7 +5,7 @@ namespace DnaCore.Settings
     [Serializable]
     public struct Options
     {
-        public const int BaseFrameRate = 60;
+        public const int MinSimulationRate = 60;
         public const int MaxSimulationRate = 600;
         
         public AspectRatio AspectRatio;

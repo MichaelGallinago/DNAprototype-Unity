@@ -1,26 +1,25 @@
 using DnaCore.Settings;
 using Unity.Burst;
 using Unity.Entities;
+using UnityEngine;
 
 namespace DnaCore.PhysicsEcs2D.Systems
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup), OrderFirst = true)]
     public partial class TimeSystem : SystemBase
     {
-        public static float Speed => UnityEngine.Time.deltaTime * SimulationFrameRate.Data;
+        public static float Speed => SimulationSpeed.Data;
         
         private abstract class SimulationFrameRateKey {}
-        private static readonly SharedStatic<float> SimulationFrameRate = 
+        private static readonly SharedStatic<float> SimulationSpeed =
             SharedStatic<float>.GetOrCreate<TimeSystem, SimulationFrameRateKey>();
         
-        protected override void OnCreate()
-        {
-            SimulationFrameRate.Data = AppSettings.Options.SimulationRate;
-            
-            var systemGroup = World.GetExistingSystemManaged<FixedStepSimulationSystemGroup>();
-            systemGroup.Timestep = 1f / AppSettings.Options.SimulationRate;
-        }
+        protected override void OnCreate() =>
+            World.GetExistingSystemManaged<FixedStepSimulationSystemGroup>().Timestep =
+                1f / AppSettings.Options.SimulationRate;
 
-        protected override void OnUpdate() {}
+
+        protected override void OnUpdate() =>
+            SimulationSpeed.Data = Options.MinSimulationRate * SystemAPI.Time.DeltaTime;
     }
 }

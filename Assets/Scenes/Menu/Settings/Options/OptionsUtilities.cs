@@ -42,6 +42,7 @@ namespace Scenes.Menu.Settings.Options
                 Math.Max(binding.FrameRate.Slider.lowValue, (int)currentInfo.refreshRate.value);
 
             binding.SimulationRate.Slider.highValue = DnaCore.Settings.Options.MaxSimulationRate;
+            binding.SimulationRate.Slider.lowValue = DnaCore.Settings.Options.MinSimulationRate;
             
             binding.AspectRatio.Slider.SetInitialValue(viewModel.Ratio);
             binding.Resolution.Slider.SetInitialScale(viewModel.Scale);
