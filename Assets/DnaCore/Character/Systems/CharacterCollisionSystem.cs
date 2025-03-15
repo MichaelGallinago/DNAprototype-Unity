@@ -48,7 +48,7 @@ namespace DnaCore.Character.Systems
             in FloorSensors floorSensors,
             EnabledRefRW<LandEvent> isLandEventEnabled)
         {
-            TileSensor sensor = FindClosest(ref SensorLookup, floorSensors);
+            TileSensor sensor = FindClosest(ref SensorLookup, in floorSensors);
 
             if (!sensor.IsInside) return;
             behaviour.Current = Behaviours.Ground;
@@ -70,7 +70,7 @@ namespace DnaCore.Character.Systems
             ref Rotation rotation, ref LocalTransform transform, ref BehaviourTree behaviour,
             in Velocity velocity, in FloorSensors floorSensors)
         {
-            TileSensor sensor = FindClosest(ref SensorLookup, floorSensors);
+            TileSensor sensor = FindClosest(ref SensorLookup, in floorSensors);
             
             if (sensor.Distance < -MaxTolerance) return;
             
@@ -80,7 +80,7 @@ namespace DnaCore.Character.Systems
                 return;
             }
             
-            ApplySensorData(ref rotation, ref transform, sensor);
+            ApplySensorData(ref rotation, ref transform, in sensor);
         }
         
         private static bool TryGoAirborne(float2 velocityVector, int distance)
@@ -103,10 +103,10 @@ namespace DnaCore.Character.Systems
             ref LandEvent landEvent,
             EnabledRefRW<LandEvent> isLandEventEnabled)
         {
-            //TODO: check if deltaTime transition needed
-            groundSpeed.Value = MathUtilities.ProjectOnPlane(velocity.Vector, landEvent.Sensor.Angle);
+            //TODO: check if DeltaTime transition needed
+            groundSpeed.Value = MathUtilities.ProjectOnPlane(velocity.Vector, landEvent.Sensor.Radians);
             velocity.Vector = default;
-            ApplySensorData(ref rotation, ref transform, landEvent.Sensor);
+            ApplySensorData(ref rotation, ref transform, in landEvent.Sensor);
             isLandEventEnabled.ValueRW = false;
         }
     }
@@ -123,7 +123,7 @@ namespace DnaCore.Character.Systems
         
         public static void ApplySensorData(ref Rotation rotation, ref LocalTransform transform, in TileSensor sensor)
         {
-            rotation.Angle = sensor.Angle;
+            rotation.Radians = sensor.Radians;
             transform.Position.xy = sensor.AddOffset(transform.Position.xy);
         }
     }

@@ -8,7 +8,7 @@ namespace DnaCore.Character.Input
     {
         private readonly IPlayerInputSource _source = new PlayerInputSource();
 
-        protected override void OnCreate() => RequireForUpdate<PlayerInput>();
+        protected override void OnCreate() => RequireForUpdate<CharacterInput>();
         protected override void OnStartRunning() => _source.Enable();
         protected override void OnStopRunning() => _source.Disable();
         protected override void OnUpdate() =>
@@ -18,8 +18,8 @@ namespace DnaCore.Character.Input
     [BurstCompile]
     public partial struct SetFixedInputSystem : IJobEntity
     {
-        public PlayerInput Input;
+        public CharacterInput Input;
 
-        private readonly void Execute(ref PlayerInput input) => input = Input;
+        private readonly void Execute(ref CharacterInput input) => input = Input;
     }
 }

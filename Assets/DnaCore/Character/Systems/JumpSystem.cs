@@ -1,11 +1,14 @@
+using System;
 using DnaCore.Character.Components;
 using DnaCore.Character.Input;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Systems;
 using DnaCore.PhysicsEcs2D.Tiles.Collision;
+using DnaCore.Utilities;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace DnaCore.Character.Systems
 {
@@ -28,7 +31,7 @@ namespace DnaCore.Character.Systems
     {
         private static void Execute(
             ref BehaviourTree behaviour, ref Jump jump, ref Velocity velocity,
-            in Rotation rotation, in PlayerInput input)
+            in Rotation rotation, in CharacterInput input)
         {
             switch (behaviour.Current)
             {
@@ -46,7 +49,7 @@ namespace DnaCore.Character.Systems
             }
 
             if (!input.Press.Jump) return;
-            PerformJump(ref behaviour, ref jump, ref velocity, rotation);
+            PerformJump(ref behaviour, ref jump, ref velocity, in rotation);
         }
 
         private static void PerformJump(
@@ -55,12 +58,15 @@ namespace DnaCore.Character.Systems
         {
             jump.CoyoteTime = 0f;
             behaviour.Current = Behaviours.Air;
-            float radians = math.radians(rotation.Angle);
-            float2 jumpVector = jump.Speed * new float2(math.sin(radians), math.cos(radians));
+            float2 jumpVector = jump.Speed * new float2(-math.sin(rotation.Radians), math.cos(rotation.Radians));
 
-            float2 trueValue = velocity.Vector + jumpVector;
-            bool2 test = math.abs(jumpVector) < math.abs(trueValue);
-            velocity.Vector = math.select(jumpVector, trueValue, test);
+            bool isVerticalQuadrant = rotation.Quadrant is Quadrant.Down or Quadrant.Up;
+            var isAdditiveJump = new bool2(isVerticalQuadrant, !isVerticalQuadrant);
+
+            float2 additiveVector = velocity.Vector + jumpVector;
+            isAdditiveJump |= math.abs(jumpVector) < math.abs(additiveVector);
+
+            velocity.Vector = math.select(jumpVector, additiveVector, isAdditiveJump);
         }
     }
 }

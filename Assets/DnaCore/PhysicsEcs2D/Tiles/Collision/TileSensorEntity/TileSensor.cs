@@ -10,7 +10,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity
     {
         public Quadrant Quadrant;
         public int Distance;
-        public float Angle;
+        public float Radians;
         
         public bool IsInside => Distance < 0;
         

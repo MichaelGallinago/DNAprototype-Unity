@@ -4,7 +4,7 @@ using Unity.Mathematics;
 
 namespace DnaCore.Character.Input
 {
-    public struct PlayerInput : IComponentData
+    public struct CharacterInput : IComponentData
     {
         public Buttons Down;
         public Buttons Press;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace DnaCore.IK2D.Bodies
 {
-    public class AnthroBody : MonoBehaviour
+    public class AnthroBodyAuthoring : MonoBehaviour
     {
-        [Header(nameof(AnthroBody))]
+        [Header(nameof(AnthroBodyAuthoring))]
         [SerializeField] private AnthroHead _head;
         [SerializeField] private Transform _body;
         [SerializeField] private AbstractLimb _frontHand;

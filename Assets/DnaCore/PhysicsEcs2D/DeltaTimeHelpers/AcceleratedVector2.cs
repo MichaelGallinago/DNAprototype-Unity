@@ -67,12 +67,11 @@ namespace DnaCore.PhysicsEcs2D.DeltaTimeHelpers
             Y.SetMax(value.y);
         }
         
-        public void SetDirectionalValue(AcceleratedValue value, float angle)
+        public void SetDirectionalValue(AcceleratedValue value, float radians)
         {
             float floatValue = value;
-            float radians = math.radians(angle);
             X = floatValue * math.cos(radians);
-            Y = floatValue * -math.sin(radians);
+            Y = floatValue * math.sin(radians);
             //TODO: check IsAccelerated
             //if (value.IsAccelerated) return; 
             ResetInstanceValue();

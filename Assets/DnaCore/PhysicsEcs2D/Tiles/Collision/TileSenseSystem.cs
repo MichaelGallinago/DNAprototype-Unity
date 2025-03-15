@@ -91,12 +91,12 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 			        FindFurtherTile(targetPosition, inTilePosition, ref sensor);
 			        break;
 		        case Size:
-			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+			        sensor.Radians = tile.GetAngle(sensor.Quadrant);
 			        FindCloserTile(targetPosition, inTilePosition, ref sensor);
 			        break;
 		        default:
 			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - size;
-			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+			        sensor.Radians = tile.GetAngle(sensor.Quadrant);
 			        break;
 	        }
         }
@@ -111,13 +111,13 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 		        if (size > 0)
 		        {
 			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - size + Size;
-			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+			        sensor.Radians = tile.GetAngle(sensor.Quadrant);
 			        return;
 		        }
 	        }
 
 	        sensor.Distance = MaxDistance;
-	        sensor.Angle = float.NaN;
+	        sensor.Radians = float.NaN;
         }
 
         private void FindCloserTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
@@ -130,7 +130,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 
 		        if (size > 0)
 		        {
-			        sensor.Angle = tile.GetAngle(sensor.Quadrant);
+			        sensor.Radians = tile.GetAngle(sensor.Quadrant);
 		        }
 	        }
 	        else

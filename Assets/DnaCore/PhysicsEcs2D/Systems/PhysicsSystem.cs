@@ -3,7 +3,6 @@ using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using Unity.Burst;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace DnaCore.PhysicsEcs2D.Systems
@@ -14,18 +13,14 @@ namespace DnaCore.PhysicsEcs2D.Systems
     {
         private EntityQuery _moveableQuery;
         
-        public readonly void OnCreate(ref SystemState state)
-        {
+        public readonly void OnCreate(ref SystemState state) =>
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
-        }
 
-        [SuppressMessage("Performance", "EPS12:A struct member can be made readonly")]
         public void OnUpdate(ref SystemState state)
         {
             state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
-            state.Dependency = new GravityJob().ScheduleParallel(state.Dependency); 
+            state.Dependency = new GravityJob().ScheduleParallel(state.Dependency);
             state.Dependency = new MovementJob().ScheduleParallel(state.Dependency);
-            state.Dependency = new RotationJob().ScheduleParallel(state.Dependency);
             state.Dependency.Complete();
 
             UpdateTransformSystemGroup();
@@ -63,15 +58,6 @@ namespace DnaCore.PhysicsEcs2D.Systems
         {
             transform.Position.xy += velocity.Vector.GetValueDelta(TimeSystem.Speed);
             velocity.Vector.ResetInstanceValue();
-        }
-    }
-    
-    [BurstCompile]
-    public partial struct RotationJob : IJobEntity
-    {
-        private static void Execute(ref LocalTransform transform, in Rotation rotation)
-        {
-            transform.Rotation = quaternion.RotateZ(rotation.Angle);
         }
     }
 }

@@ -9,9 +9,9 @@ namespace DnaCore.Character.Input
         
         private Buttons _pressBuffer;
         private Buttons _fixedPressBuffer;
-        private PlayerInput _input;
+        private CharacterInput _input;
         
-        public PlayerInput FixedInput
+        public CharacterInput FixedInput
         {
             get
             {
@@ -21,7 +21,7 @@ namespace DnaCore.Character.Input
             }
         }
         
-        public PlayerInput Input
+        public CharacterInput Input
         {
             get
             {

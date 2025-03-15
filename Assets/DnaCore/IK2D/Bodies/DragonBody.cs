@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace DnaCore.IK2D.Bodies
 {
-    public class DragonBody : AnthroBody
+    public class DragonBodyAuthoring : AnthroBodyAuthoring
     {
-        [Header(nameof(DragonBody))]
+        [Header(nameof(DragonBodyAuthoring))]
         [SerializeField] private Transform _tail;
         [SerializeField] private Transform _wings;
     }

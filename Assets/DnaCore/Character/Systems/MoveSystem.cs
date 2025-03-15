@@ -31,7 +31,7 @@ namespace DnaCore.Character.Systems
     {
         private static void Execute(
             ref Rotation rotation, ref Velocity velocity, 
-            in AirLock airLock, in PlayerInput input, in PhysicsData physicsData)
+            in AirLock airLock, in CharacterInput input, in PhysicsData physicsData)
         {
             Rotate(ref rotation);
             velocity.Vector.Clamp(-physicsData.VelocityCap, physicsData.VelocityCap);
@@ -41,20 +41,20 @@ namespace DnaCore.Character.Systems
         
         private static void Rotate(ref Rotation rotation)
         {
-            if (Mathf.Approximately(rotation.Angle, 0f)) return;
+            if (Mathf.Approximately(rotation.Radians, 0f)) return;
 		
             float speed = Circle.ByteStep * TimeSystem.Speed;
-            rotation.Angle += rotation.Angle >= Circle.Half ? speed : -speed;
+            rotation.Radians += rotation.Radians >= Circle.Half ? speed : -speed;
 		
-            if (rotation.Angle is < 0f or >= Circle.Full)
+            if (rotation.Radians is < 0f or >= Circle.Full)
             {
-                rotation.Angle = 0f;
+                rotation.Radians = 0f;
             }
         }
         
         private static void MoveHorizontally(
             ref Velocity velocity, ref Rotation rotation,
-            in AirLock airLock, in PlayerInput input, in PhysicsData physicsData)
+            in AirLock airLock, in CharacterInput input, in PhysicsData physicsData)
         {
             if (airLock.IsLocked) return;
 		
@@ -106,7 +106,7 @@ namespace DnaCore.Character.Systems
     {
         private static void Execute(
             ref Rotation rotation, ref GroundSpeed groundSpeed, ref Velocity velocity,
-            in PlayerInput input, in PhysicsData physicsData)
+            in CharacterInput input, in PhysicsData physicsData)
         {
             if (input.Down.Right)
             {
@@ -121,7 +121,8 @@ namespace DnaCore.Character.Systems
                 groundSpeed.Value.ApplyFriction(physicsData.Friction, TimeSystem.Speed);
             }
             
-            velocity.Vector.SetDirectionalValue(groundSpeed.Value, rotation.Angle);
+            velocity.Vector.SetDirectionalValue(groundSpeed.Value, rotation.Radians);
+            Debug.Log($"{(float2)velocity.Vector}");
         }
         
         private static void WalkOnGround(
