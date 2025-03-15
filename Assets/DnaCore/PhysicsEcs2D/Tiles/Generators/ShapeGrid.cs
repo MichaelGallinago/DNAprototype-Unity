@@ -1,7 +1,8 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
-namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
+namespace DnaCore.PhysicsEcs2D.Tiles.Generators
 {
     public class ShapeGrid : MonoBehaviour
     {
@@ -22,3 +23,4 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
         }
     }
 }
+#endif

@@ -35,7 +35,7 @@ namespace DnaCore.Character.Systems
         {
             Rotate(ref rotation);
             velocity.Vector.Clamp(-physicsData.VelocityCap, physicsData.VelocityCap);
-            MoveHorizontally(ref velocity, ref rotation, airLock, input, physicsData);
+            MoveHorizontally(ref velocity, ref rotation, in airLock, in input, in physicsData);
             ApplyDrag(ref velocity);
         }
         
@@ -60,11 +60,11 @@ namespace DnaCore.Character.Systems
 		
             if (input.Down.Left)
             {
-                MoveTo(ref velocity, ref rotation, physicsData, Direction.Negative);
+                MoveTo(ref velocity, ref rotation, in physicsData, Direction.Negative);
             }
             else if (input.Down.Right)
             {
-                MoveTo(ref velocity, ref rotation, physicsData, Direction.Positive);
+                MoveTo(ref velocity, ref rotation, in physicsData, Direction.Positive);
             }
         }
         
