@@ -1,4 +1,3 @@
-using System;
 using DnaCore.Character.Components;
 using DnaCore.Character.Input;
 using DnaCore.PhysicsEcs2D.Components;
@@ -8,7 +7,6 @@ using DnaCore.Utilities;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
 
 namespace DnaCore.Character.Systems
 {
@@ -60,7 +58,7 @@ namespace DnaCore.Character.Systems
             behaviour.Current = Behaviours.Air;
             float2 jumpVector = jump.Speed * new float2(-math.sin(rotation.Radians), math.cos(rotation.Radians));
 
-            bool isVerticalQuadrant = rotation.Quadrant is Quadrant.Down or Quadrant.Up;
+            bool isVerticalQuadrant = MathUtilities.GetQuadrant(rotation.Radians) is Quadrant.Down or Quadrant.Up;
             var isAdditiveJump = new bool2(isVerticalQuadrant, !isVerticalQuadrant);
 
             float2 additiveVector = velocity.Vector + jumpVector;

@@ -1,4 +1,5 @@
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 
 namespace DnaCore.Character.Input
@@ -18,7 +19,7 @@ namespace DnaCore.Character.Input
     [BurstCompile]
     public partial struct SetFixedInputSystem : IJobEntity
     {
-        public CharacterInput Input;
+        [ReadOnly] public CharacterInput Input;
 
         private readonly void Execute(ref CharacterInput input) => input = Input;
     }

@@ -12,6 +12,7 @@ namespace DnaCore.Character.Authoring
     public class CharacterAuthoring : MonoBehaviour
     {
         [SerializeField] private AnthroBodyAuthoring bodyAuthoring;
+        [SerializeField] private Transform _physicsBody;
         [SerializeField] private PhysicsConfig _physicsConfig;
         [SerializeField] private TileSensorAuthoring _tileSensorFloor1;
         [SerializeField] private TileSensorAuthoring _tileSensorFloor2;
@@ -38,6 +39,10 @@ namespace DnaCore.Character.Authoring
                         AccelerationAir = authoring._physicsConfig.AccelerationAir,
                         AccelerationTop = authoring._physicsConfig.AccelerationTop,
                         VelocityCap = authoring._physicsConfig.VelocityCap
+                    },
+                    new PhysicsBody
+                    {
+                        Entity = GetEntity(DependsOn(authoring._physicsBody), TransformUsageFlags.Dynamic)
                     }
                 );
         }

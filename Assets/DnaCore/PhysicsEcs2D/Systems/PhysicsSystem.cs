@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using Unity.Burst;
@@ -28,12 +27,8 @@ namespace DnaCore.PhysicsEcs2D.Systems
         
         public readonly void OnDestroy(ref SystemState state) {}
         
-        private readonly void UpdateTransformSystemGroup()
-        {
-            var world = World.DefaultGameObjectInjectionWorld;
-            var transformSystemGroup = world.GetOrCreateSystemManaged<TransformSystemGroup>();
-            transformSystemGroup.Update();
-        }
+        private readonly void UpdateTransformSystemGroup() =>
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<TransformSystemGroup>().Update();
     }
     
     [BurstCompile]

@@ -1,5 +1,6 @@
 using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
+using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using DnaCore.Utilities;
 using Unity.Burst;
@@ -8,7 +9,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using static DnaCore.Character.Systems.CollisionJobUtilities;
-using TileSenseSystem = DnaCore.PhysicsEcs2D.Tiles.Collision.TileSenseSystem;
 
 namespace DnaCore.Character.Systems
 {
@@ -104,7 +104,10 @@ namespace DnaCore.Character.Systems
             EnabledRefRW<LandEvent> isLandEventEnabled)
         {
             //TODO: check if DeltaTime transition needed
-            groundSpeed.Value = MathUtilities.ProjectOnPlane(velocity.Vector, landEvent.Sensor.Radians);
+            float sector = MathUtilities.GetSector(landEvent.Sensor.Radians, rotation.Radians);
+            float angle = sector <= Circle.OneTwelfth ? rotation.Radians : landEvent.Sensor.Radians;
+
+            groundSpeed.Value = MathUtilities.ProjectOnPlane(velocity.Vector, angle);
             velocity.Vector = default;
             ApplySensorData(ref rotation, ref transform, in landEvent.Sensor);
             isLandEventEnabled.ValueRW = false;

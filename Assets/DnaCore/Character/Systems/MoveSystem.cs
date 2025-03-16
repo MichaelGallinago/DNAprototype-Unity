@@ -122,7 +122,6 @@ namespace DnaCore.Character.Systems
             }
             
             velocity.Vector.SetDirectionalValue(groundSpeed.Value, rotation.Radians);
-            Debug.Log($"{(float2)velocity.Vector}");
         }
         
         private static void WalkOnGround(

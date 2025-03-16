@@ -1,14 +1,28 @@
-using System;
 using Unity.Burst;
 using Unity.Mathematics;
+using Unity.Mathematics.Geometry;
+using UnityEngine;
 
 namespace DnaCore.Utilities
 {
     [BurstCompile]
     public static class MathUtilities
     {
-        public static float ProjectOnPlane(float2 vector, float angle) => 
-            math.csum(vector * math.abs(new float2(math.cos(angle), math.sin(angle))));
+        public static float GetSector(float startRadians, float endRadians)
+        {
+            float radians = (endRadians - startRadians) % math.PI2;
+            if (radians < 0) radians += math.PI2;
+            return math.min(radians, math.PI2 - radians);
+        }
+
+        public static Quadrant GetQuadrant(float radians)
+        {
+            radians = radians % Circle.Full + (radians < 0f ? Circle.Full + Circle.OneEighth : Circle.OneEighth);
+            return (Quadrant)((int)radians / 90 & 3);
+        }
+
+        public static float ProjectOnPlane(float2 vector, float radians) =>
+            math.csum(vector * new float2(math.cos(radians), math.sin(radians)));
         
         public static float FloatToDb(float value) => 
             math.log10(math.clamp(value, 0.0001f, 1f)) * 20f;
@@ -18,38 +32,41 @@ namespace DnaCore.Utilities
             if (x == 0) return y;
             if (y == 0) return x;
 
-            x = math.abs(x);
-            y = math.abs(y);
+            int2 vector = math.abs(new int2(x, y));
    
             var shift = 0;
-            while (((x | y) & 1) == 0)
+            while (((vector.x | vector.y) & 1) == 0)
             {
-                x >>= 1;
-                y >>= 1;
+                vector >>= 1;
                 shift++;
             }
     
-            while ((x & 1) == 0) 
+            while ((vector.x & 1) == 0)
             {
-                x >>= 1;
+                vector.x >>= 1;
             }
     
+            return OffsetVector(vector) << shift;
+        }
+
+        private static int OffsetVector(int2 vector)
+        {
             do
             {
-                while ((y & 1) == 0) 
+                while ((vector.y & 1) == 0)
                 {
-                    y >>= 1;
+                    vector.y >>= 1;
                 }
 
-                if (x > y)
+                if (vector.x > vector.y)
                 {
-                    (x, y) = (y, x);
+                    (vector.x, vector.y) = (vector.y, vector.x);
                 }
-    
-                y -= x;
-            } while (y != 0);
-    
-            return x << shift;
+
+                vector.y -= vector.x;
+            } while (vector.y != 0);
+
+            return vector.x;
         }
     }
 }

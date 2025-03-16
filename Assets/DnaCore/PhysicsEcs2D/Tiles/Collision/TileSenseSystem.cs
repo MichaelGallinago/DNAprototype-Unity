@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using DnaCore.PhysicsEcs2D.Systems;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using DnaCore.PhysicsEcs2D.Tiles.Generators;
@@ -33,22 +32,16 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
         
         public void OnStartRunning(ref SystemState state)
         {
-            if (!SystemAPI.TryGetSingleton(out _tilemap))
-            {
-                Debug.LogError("No " + nameof(NativeTilemap) + " found");
-            }
+            if (SystemAPI.TryGetSingleton(out _tilemap)) return;
+            Debug.LogError("No " + nameof(NativeTilemap) + " found");
         }
-        
-        [SuppressMessage("Performance", "EPS12:A struct member can be made readonly")]
-        public void OnUpdate(ref SystemState state)
+
+        public void OnUpdate(ref SystemState state) => state.Dependency = new TileSenseJob
         {
-	        state.Dependency = new TileSenseJob
-	        {
-		        TilesBlob = _tilesBlob, 
-		        Tilemap = _tilemap
-	        }.ScheduleParallel(state.Dependency);
-        }
-        
+	        TilesBlob = _tilesBlob,
+	        Tilemap = _tilemap
+        }.ScheduleParallel(state.Dependency);
+
         public readonly void OnStopRunning(ref SystemState state) {}
         
         public void OnDestroy(ref SystemState state)
@@ -59,7 +52,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
             }
         }
     }
-    
+
     [BurstCompile]
     public partial struct TileSenseJob : IJobEntity
     {

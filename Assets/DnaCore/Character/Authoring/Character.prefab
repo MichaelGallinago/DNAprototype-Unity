@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyAuthoring: {fileID: 4344754961501881749}
+  _physicsBody: {fileID: 1191869411502698641}
   _physicsConfig: {fileID: 11400000, guid: a42d287d230d0574a93a1af86357e688, type: 2}
   _tileSensorFloor1: {fileID: 7567498615909664856}
   _tileSensorFloor2: {fileID: 4186559318082322120}

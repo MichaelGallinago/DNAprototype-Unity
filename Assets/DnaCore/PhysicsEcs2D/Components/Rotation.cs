@@ -9,7 +9,6 @@ namespace DnaCore.PhysicsEcs2D.Components
     {
         public float Radians;
         public float TurnAngle;
-        public Quadrant Quadrant;
         public Direction Facing;
     }
 }
