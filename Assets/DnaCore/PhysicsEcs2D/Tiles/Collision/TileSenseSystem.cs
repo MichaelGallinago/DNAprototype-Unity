@@ -13,7 +13,7 @@ using static DnaCore.PhysicsEcs2D.Tiles.TileConstants;
 namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 {
     [BurstCompile]
-    [UpdateAfter(typeof(PhysicsSystem))]
+    [UpdateAfter(typeof(TransformUpdateSystem))]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct TileSenseSystem : ISystem, ISystemStartStop
     {

@@ -10,8 +10,6 @@ namespace DnaCore.PhysicsEcs2D.Systems
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct PhysicsSystem : ISystem
     {
-        private EntityQuery _moveableQuery;
-        
         public readonly void OnCreate(ref SystemState state) =>
             state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
 
@@ -20,15 +18,9 @@ namespace DnaCore.PhysicsEcs2D.Systems
             state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
             state.Dependency = new GravityJob().ScheduleParallel(state.Dependency);
             state.Dependency = new MovementJob().ScheduleParallel(state.Dependency);
-            state.Dependency.Complete();
-
-            UpdateTransformSystemGroup();
         }
-        
+
         public readonly void OnDestroy(ref SystemState state) {}
-        
-        private readonly void UpdateTransformSystemGroup() =>
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<TransformSystemGroup>().Update();
     }
     
     [BurstCompile]

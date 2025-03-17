@@ -1,7 +1,6 @@
 using DnaCore.Settings;
 using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
 
 namespace DnaCore.PhysicsEcs2D.Systems
 {
