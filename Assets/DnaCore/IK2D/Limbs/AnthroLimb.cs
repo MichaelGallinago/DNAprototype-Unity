@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using DnaCore.Utilities;
+using DnaCore.Utilities.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 

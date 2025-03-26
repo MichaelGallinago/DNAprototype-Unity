@@ -3,6 +3,7 @@ using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using DnaCore.PhysicsEcs2D.Tiles.Generators;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator;
 using DnaCore.Utilities;
+using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;

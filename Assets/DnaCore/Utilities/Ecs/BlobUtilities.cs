@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Unity.Entities;
 
-namespace DnaCore.Utilities
+namespace DnaCore.Utilities.Ecs
 {
     public static class BlobUtilities
     {

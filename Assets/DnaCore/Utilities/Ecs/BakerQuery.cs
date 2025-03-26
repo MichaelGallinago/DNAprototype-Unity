@@ -1,19 +1,21 @@
 using System.Runtime.CompilerServices;
 using Unity.Entities;
 
-namespace DnaCore.Utilities
+namespace DnaCore.Utilities.Ecs
 {
     public readonly ref struct BakerQuery
     {
         private readonly IBaker _baker;
         private readonly Entity _entity;
-        
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public BakerQuery(IBaker baker, Entity entity)
         {
             _entity = entity;
             _baker = baker;
         }
-        
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public BakerQuery(IBaker baker, TransformUsageFlags flags)
         {
             _entity = baker.GetEntity(flags);
@@ -22,13 +24,13 @@ namespace DnaCore.Utilities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddComponent<T>(in T component) where T : unmanaged, IComponentData =>
-            _baker.AddComponent(_entity, component);
+            _baker.AddComponent(_entity, in component);
         
         public BakerQuery AddComponents<T1>(
             in T1 component1) 
             where T1 : unmanaged, IComponentData
         {
-            AddComponent(component1);
+            AddComponent(in component1);
             return this;
         }
         
@@ -38,8 +40,8 @@ namespace DnaCore.Utilities
             where T1 : unmanaged, IComponentData 
             where T2 : unmanaged, IComponentData
         {
-            AddComponent(component1);
-            AddComponent(component2);
+            AddComponent(in component1);
+            AddComponent(in component2);
             return this;
         }
         
@@ -51,9 +53,9 @@ namespace DnaCore.Utilities
             where T2 : unmanaged, IComponentData
             where T3 : unmanaged, IComponentData
         {
-            AddComponent(component1);
-            AddComponent(component2);
-            AddComponent(component3);
+            AddComponent(in component1);
+            AddComponent(in component2);
+            AddComponent(in component3);
             return this;
         }
         
@@ -67,10 +69,10 @@ namespace DnaCore.Utilities
             where T3 : unmanaged, IComponentData
             where T4 : unmanaged, IComponentData
         {
-            _baker.AddComponent(_entity, component1);
-            _baker.AddComponent(_entity, component2);
-            _baker.AddComponent(_entity, component3);
-            _baker.AddComponent(_entity, component4);
+            _baker.AddComponent(_entity, in component1);
+            _baker.AddComponent(_entity, in component2);
+            _baker.AddComponent(_entity, in component3);
+            _baker.AddComponent(_entity, in component4);
             return this;
         }
         
@@ -86,11 +88,11 @@ namespace DnaCore.Utilities
             where T4 : unmanaged, IComponentData
             where T5 : unmanaged, IComponentData
         {
-            _baker.AddComponent(_entity, component1);
-            _baker.AddComponent(_entity, component2);
-            _baker.AddComponent(_entity, component3);
-            _baker.AddComponent(_entity, component4);
-            _baker.AddComponent(_entity, component5);
+            _baker.AddComponent(_entity, in component1);
+            _baker.AddComponent(_entity, in component2);
+            _baker.AddComponent(_entity, in component3);
+            _baker.AddComponent(_entity, in component4);
+            _baker.AddComponent(_entity, in component5);
             return this;
         }
         
@@ -108,12 +110,12 @@ namespace DnaCore.Utilities
             where T5 : unmanaged, IComponentData
             where T6 : unmanaged, IComponentData
         {
-            _baker.AddComponent(_entity, component1);
-            _baker.AddComponent(_entity, component2);
-            _baker.AddComponent(_entity, component3);
-            _baker.AddComponent(_entity, component4);
-            _baker.AddComponent(_entity, component5);
-            _baker.AddComponent(_entity, component6);
+            _baker.AddComponent(_entity, in component1);
+            _baker.AddComponent(_entity, in component2);
+            _baker.AddComponent(_entity, in component3);
+            _baker.AddComponent(_entity, in component4);
+            _baker.AddComponent(_entity, in component5);
+            _baker.AddComponent(_entity, in component6);
             return this;
         }
         
@@ -133,13 +135,13 @@ namespace DnaCore.Utilities
             where T6 : unmanaged, IComponentData
             where T7 : unmanaged, IComponentData
         {
-            _baker.AddComponent(_entity, component1);
-            _baker.AddComponent(_entity, component2);
-            _baker.AddComponent(_entity, component3);
-            _baker.AddComponent(_entity, component4);
-            _baker.AddComponent(_entity, component5);
-            _baker.AddComponent(_entity, component6);
-            _baker.AddComponent(_entity, component7);
+            _baker.AddComponent(_entity, in component1);
+            _baker.AddComponent(_entity, in component2);
+            _baker.AddComponent(_entity, in component3);
+            _baker.AddComponent(_entity, in component4);
+            _baker.AddComponent(_entity, in component5);
+            _baker.AddComponent(_entity, in component6);
+            _baker.AddComponent(_entity, in component7);
             return this;
         }
         
@@ -161,14 +163,14 @@ namespace DnaCore.Utilities
             where T7 : unmanaged, IComponentData
             where T8 : unmanaged, IComponentData
         {
-            _baker.AddComponent(_entity, component1);
-            _baker.AddComponent(_entity, component2);
-            _baker.AddComponent(_entity, component3);
-            _baker.AddComponent(_entity, component4);
-            _baker.AddComponent(_entity, component5);
-            _baker.AddComponent(_entity, component6);
-            _baker.AddComponent(_entity, component7);
-            _baker.AddComponent(_entity, component8);
+            _baker.AddComponent(_entity, in component1);
+            _baker.AddComponent(_entity, in component2);
+            _baker.AddComponent(_entity, in component3);
+            _baker.AddComponent(_entity, in component4);
+            _baker.AddComponent(_entity, in component5);
+            _baker.AddComponent(_entity, in component6);
+            _baker.AddComponent(_entity, in component7);
+            _baker.AddComponent(_entity, in component8);
             return this;
         }
         
@@ -192,15 +194,15 @@ namespace DnaCore.Utilities
             where T8 : unmanaged, IComponentData
             where T9 : unmanaged, IComponentData
         {
-            _baker.AddComponent(_entity, component1);
-            _baker.AddComponent(_entity, component2);
-            _baker.AddComponent(_entity, component3);
-            _baker.AddComponent(_entity, component4);
-            _baker.AddComponent(_entity, component5);
-            _baker.AddComponent(_entity, component6);
-            _baker.AddComponent(_entity, component7);
-            _baker.AddComponent(_entity, component8);
-            _baker.AddComponent(_entity, component9);
+            _baker.AddComponent(_entity, in component1);
+            _baker.AddComponent(_entity, in component2);
+            _baker.AddComponent(_entity, in component3);
+            _baker.AddComponent(_entity, in component4);
+            _baker.AddComponent(_entity, in component5);
+            _baker.AddComponent(_entity, in component6);
+            _baker.AddComponent(_entity, in component7);
+            _baker.AddComponent(_entity, in component8);
+            _baker.AddComponent(_entity, in component9);
             return this;
         }
         
@@ -226,23 +228,23 @@ namespace DnaCore.Utilities
             where T9 : unmanaged, IComponentData
             where T10 : unmanaged, IComponentData
         {
-            _baker.AddComponent(_entity, component1);
-            _baker.AddComponent(_entity, component2);
-            _baker.AddComponent(_entity, component3);
-            _baker.AddComponent(_entity, component4);
-            _baker.AddComponent(_entity, component5);
-            _baker.AddComponent(_entity, component6);
-            _baker.AddComponent(_entity, component7);
-            _baker.AddComponent(_entity, component8);
-            _baker.AddComponent(_entity, component9);
-            _baker.AddComponent(_entity, component10);
+            _baker.AddComponent(_entity, in component1);
+            _baker.AddComponent(_entity, in component2);
+            _baker.AddComponent(_entity, in component3);
+            _baker.AddComponent(_entity, in component4);
+            _baker.AddComponent(_entity, in component5);
+            _baker.AddComponent(_entity, in component6);
+            _baker.AddComponent(_entity, in component7);
+            _baker.AddComponent(_entity, in component8);
+            _baker.AddComponent(_entity, in component9);
+            _baker.AddComponent(_entity, in component10);
             return this;
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddDisabledComponent<T>(in T component) where T : unmanaged, IComponentData, IEnableableComponent
         {
-            AddComponent(component);
+            AddComponent(in component);
             _baker.SetComponentEnabled<T>(_entity, false);
         }
         
@@ -250,7 +252,7 @@ namespace DnaCore.Utilities
             in T1 component) 
             where T1 : unmanaged, IComponentData, IEnableableComponent
         {
-            AddDisabledComponent(component);
+            AddDisabledComponent(in component);
             return this;
         }
         
@@ -260,8 +262,8 @@ namespace DnaCore.Utilities
             where T1 : unmanaged, IComponentData, IEnableableComponent
             where T2 : unmanaged, IComponentData, IEnableableComponent
         {
-            AddDisabledComponent(component1);
-            AddDisabledComponent(component2);
+            AddDisabledComponent(in component1);
+            AddDisabledComponent(in component2);
             return this;
         }
         
@@ -273,9 +275,9 @@ namespace DnaCore.Utilities
             where T2 : unmanaged, IComponentData, IEnableableComponent
             where T3 : unmanaged, IComponentData, IEnableableComponent
         {
-            AddDisabledComponent(component1);
-            AddDisabledComponent(component2);
-            AddDisabledComponent(component3);
+            AddDisabledComponent(in component1);
+            AddDisabledComponent(in component2);
+            AddDisabledComponent(in component3);
             return this;
         }
         
@@ -289,10 +291,10 @@ namespace DnaCore.Utilities
             where T3 : unmanaged, IComponentData, IEnableableComponent
             where T4 : unmanaged, IComponentData, IEnableableComponent
         {
-            AddDisabledComponent(component1);
-            AddDisabledComponent(component2);
-            AddDisabledComponent(component3);
-            AddDisabledComponent(component4);
+            AddDisabledComponent(in component1);
+            AddDisabledComponent(in component2);
+            AddDisabledComponent(in component3);
+            AddDisabledComponent(in component4);
             return this;
         }
 
@@ -306,7 +308,7 @@ namespace DnaCore.Utilities
             in T1 component1) 
             where T1 : class, IComponentData
         {
-            AddComponentObject(component1);
+            AddComponentObject(in component1);
             return this;
         }
         
@@ -316,8 +318,8 @@ namespace DnaCore.Utilities
             where T1 : class, IComponentData
             where T2 : class, IComponentData
         {
-            AddComponentObject(component1);
-            AddComponentObject(component2);
+            AddComponentObject(in component1);
+            AddComponentObject(in component2);
             return this;
         }
         
@@ -329,9 +331,9 @@ namespace DnaCore.Utilities
             where T2 : class, IComponentData
             where T3 : class, IComponentData
         {
-            AddComponentObject(component1);
-            AddComponentObject(component2);
-            AddComponentObject(component3);
+            AddComponentObject(in component1);
+            AddComponentObject(in component2);
+            AddComponentObject(in component3);
             return this;
         }
         
@@ -345,17 +347,17 @@ namespace DnaCore.Utilities
             where T3 : class, IComponentData
             where T4 : class, IComponentData
         {
-            AddComponentObject(component1);
-            AddComponentObject(component2);
-            AddComponentObject(component3);
-            AddComponentObject(component4);
+            AddComponentObject(in component1);
+            AddComponentObject(in component2);
+            AddComponentObject(in component3);
+            AddComponentObject(in component4);
             return this;
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddDisabledComponentObject<T>(in T component) where T : class, IComponentData, IEnableableComponent
         {
-            AddComponentObject(component);
+            AddComponentObject(in component);
             _baker.AddComponentObject(_entity, component);
         }
         
@@ -363,7 +365,7 @@ namespace DnaCore.Utilities
             in T1 component1) 
             where T1 : class, IComponentData, IEnableableComponent
         {
-            AddDisabledComponentObject(component1);
+            AddDisabledComponentObject(in component1);
             return this;
         }
         
@@ -373,8 +375,8 @@ namespace DnaCore.Utilities
             where T1 : class, IComponentData, IEnableableComponent
             where T2 : class, IComponentData, IEnableableComponent
         {
-            AddDisabledComponentObject(component1);
-            AddDisabledComponentObject(component2);
+            AddDisabledComponentObject(in component1);
+            AddDisabledComponentObject(in component2);
             return this;
         }
         
@@ -386,9 +388,9 @@ namespace DnaCore.Utilities
             where T2 : class, IComponentData, IEnableableComponent
             where T3 : class, IComponentData, IEnableableComponent
         {
-            AddDisabledComponentObject(component1);
-            AddDisabledComponentObject(component2);
-            AddDisabledComponentObject(component3);
+            AddDisabledComponentObject(in component1);
+            AddDisabledComponentObject(in component2);
+            AddDisabledComponentObject(in component3);
             return this;
         }
         
@@ -402,10 +404,10 @@ namespace DnaCore.Utilities
             where T3 : class, IComponentData, IEnableableComponent
             where T4 : class, IComponentData, IEnableableComponent
         {
-            AddDisabledComponentObject(component1);
-            AddDisabledComponentObject(component2);
-            AddDisabledComponentObject(component3);
-            AddDisabledComponentObject(component4);
+            AddDisabledComponentObject(in component1);
+            AddDisabledComponentObject(in component2);
+            AddDisabledComponentObject(in component3);
+            AddDisabledComponentObject(in component4);
             return this;
         }
         

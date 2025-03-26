@@ -1,4 +1,6 @@
 using DnaCore.Utilities;
+using DnaCore.Utilities.Ecs;
+using DnaCore.Utilities.Mathematics;
 using Unity.Entities;
 using UnityEngine;
 

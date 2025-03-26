@@ -1,6 +1,6 @@
 using System;
 
-namespace DnaCore.Utilities
+namespace DnaCore.Utilities.Mathematics
 {
     public static class CircleDouble
     {

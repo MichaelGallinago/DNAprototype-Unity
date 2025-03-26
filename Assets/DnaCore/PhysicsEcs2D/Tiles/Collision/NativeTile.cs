@@ -1,4 +1,5 @@
 using DnaCore.Utilities;
+using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;

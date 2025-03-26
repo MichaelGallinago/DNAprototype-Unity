@@ -3,6 +3,7 @@ using DnaCore.Settings;
 using DnaCore.Singletons.Audio;
 using DnaCore.Singletons.Window;
 using DnaCore.Utilities;
+using DnaCore.Utilities.Mathematics;
 using UnityEngine;
 
 namespace Scenes.Menu

@@ -7,6 +7,7 @@ using DnaCore.PhysicsEcs2D.Tiles.Generators;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
 using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
 using DnaCore.Utilities;
+using DnaCore.Utilities.Ecs;
 using DnaCore.Utilities.Editor;
 using Unity.Collections;
 using Unity.Entities;

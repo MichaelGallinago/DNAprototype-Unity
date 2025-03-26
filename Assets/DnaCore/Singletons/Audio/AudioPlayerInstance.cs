@@ -1,5 +1,6 @@
 using DnaCore.Settings;
 using DnaCore.Utilities;
+using DnaCore.Utilities.Mathematics;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;

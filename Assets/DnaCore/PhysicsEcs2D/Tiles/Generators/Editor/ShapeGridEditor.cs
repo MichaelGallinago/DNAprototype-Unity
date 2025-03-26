@@ -1,6 +1,7 @@
 using System;
 using DnaCore.Utilities;
 using DnaCore.Utilities.Editor;
+using DnaCore.Utilities.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;

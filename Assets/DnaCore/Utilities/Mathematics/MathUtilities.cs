@@ -1,9 +1,7 @@
 using Unity.Burst;
 using Unity.Mathematics;
-using Unity.Mathematics.Geometry;
-using UnityEngine;
 
-namespace DnaCore.Utilities
+namespace DnaCore.Utilities.Mathematics
 {
     [BurstCompile]
     public static class MathUtilities

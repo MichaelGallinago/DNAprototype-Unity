@@ -1,6 +1,6 @@
 ﻿using UnityEngine.UIElements;
 
-namespace DnaCore.Utilities
+namespace DnaCore.Utilities.UITK
 {
     public static class VisualElementExtensions
     {
