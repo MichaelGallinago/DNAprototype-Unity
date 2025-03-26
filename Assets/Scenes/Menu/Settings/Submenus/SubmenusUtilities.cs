@@ -1,5 +1,6 @@
 using DnaCore.Settings;
 using DnaCore.Utilities;
+using DnaCore.Utilities.LitMotion;
 using LitMotion;
 using Scenes.Menu.OptionCard;
 using Scenes.Menu.Settings.Audio;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator;
 using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
 using DnaCore.PhysicsEcs2D.Tiles.Storage.Editor;
 using DnaCore.Utilities;
@@ -39,12 +40,13 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
         private void ClearButton()
         {
             if (!GUILayout.Button("Clear")) return;
+
+            Tilemap tilemap = _baker.Tilemap;
+            tilemap.CompressBounds();
+            _tileStorage.DeleteTilesFromTilemap(tilemap.GetTilesBlock(tilemap.cellBounds));
+            tilemap.ClearAllTiles();
             
-            _baker.Tilemap.CompressBounds();
-            _tileStorage.DeleteTilesFromTilemap(_baker.Tilemap.GetTilesBlock(_baker.Tilemap.cellBounds));
-            _baker.Tilemap.ClearAllTiles();
-            
-            EditorUtility.SetDirty(_baker.Tilemap);
+            EditorUtility.SetDirty(tilemap);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
@@ -69,10 +71,11 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 
         private void RemoveTiles()
         {
-            _baker.Tilemap.CompressBounds();
+            Tilemap tilemap = _baker.Tilemap;
+            tilemap.CompressBounds();
             
-            BoundsInt bounds = _baker.Tilemap.cellBounds;
-            TileBase[] allTiles = _baker.Tilemap.GetTilesBlock(bounds);
+            BoundsInt bounds = tilemap.cellBounds;
+            TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
             
             int size = bounds.size.x * bounds.size.y;
             for (var i = 0; i < size; i++)
@@ -81,7 +84,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
                 _tileStorage.AddToRemove(tile);
             }
             
-            _baker.Tilemap.ClearAllTiles();
+            tilemap.ClearAllTiles();
         }
         
         private void SetTilesInRect(RectInt rect)
@@ -123,7 +126,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
                 Colliders.Clear();
             }
 
-            return bitTile.IsEmpty ? 
+            return bitTile.IsEmpty ?
                 null : _tileStorage.CreateIfDifferent(ref bitTile, GetFrequentSolidType(typeCounters));
         }
         

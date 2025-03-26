@@ -1,5 +1,6 @@
 using DnaCore.Singletons.Audio;
 using DnaCore.Utilities;
+using DnaCore.Utilities.LitMotion;
 using LitMotion;
 
 namespace Scenes.Menu.Model

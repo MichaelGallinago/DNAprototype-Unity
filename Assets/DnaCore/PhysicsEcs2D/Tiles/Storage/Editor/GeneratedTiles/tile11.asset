@@ -15,10 +15,10 @@ MonoBehaviour:
   <SolidType>k__BackingField: 0
   <Sprite>k__BackingField: {fileID: 21300000, guid: a3dbca0d60330f0459f405097d25e23b, type: 2}
   <Index>k__BackingField: 11
-  <Count>k__BackingField: 2
+  <Count>k__BackingField: 1
   <CollisionData>k__BackingField:
-    HeightsDown: 10101010101010101010101010101010
-    WidthsRight: 00000010101010101010101010101010
-    HeightsUp: 0d0d0d0d0d0c0c0c0c0c0c0c0c0c0c0c
-    WidthsLeft: 00000005101010101010101010101010
-    Angles: {x: 0, y: 1.5707964, z: 3.2322526, w: 3.2322526}
+    HeightsDown: 090a0a0b0b0b0c0c0d0e0e0f0f101010
+    WidthsRight: 1010101010101010100f0d0a08070503
+    HeightsUp: 10101010101010101010101010101010
+    WidthsLeft: 10101010101010101010101010101010
+    Angles: {x: 0.49394137, y: 0.49394137, z: 3.1415927, w: 4.712389}

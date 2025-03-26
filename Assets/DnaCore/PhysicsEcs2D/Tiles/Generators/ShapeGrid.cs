@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator;
 using UnityEditor;
 using UnityEngine;
 
