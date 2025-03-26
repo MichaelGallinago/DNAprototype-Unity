@@ -43,9 +43,11 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
 
             Tilemap tilemap = _baker.Tilemap;
             tilemap.CompressBounds();
-            _tileStorage.DeleteTilesFromTilemap(tilemap.GetTilesBlock(tilemap.cellBounds));
+            TileBase[] tiles = tilemap.GetTilesBlock(tilemap.cellBounds);
             tilemap.ClearAllTiles();
-            
+            _tileStorage.RemoveTiles(tiles);
+            _tileStorage.SaveAssets();
+
             EditorUtility.SetDirty(tilemap);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -61,10 +63,9 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
             {
                 SetTilesInRect(GetCeilRect(tileShape.Controller.spriteShapeRenderer.bounds));
             }
-            
-            EditorUtility.SetDirty(_baker.Tilemap);
+
             _tileStorage.SaveAssets();
-                        
+            EditorUtility.SetDirty(_baker.Tilemap);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
@@ -76,6 +77,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
             
             BoundsInt bounds = tilemap.cellBounds;
             TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
+            tilemap.ClearAllTiles();
             
             int size = bounds.size.x * bounds.size.y;
             for (var i = 0; i < size; i++)
@@ -83,8 +85,6 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
                 if (allTiles[i] is not GeneratedTile tile) continue;
                 _tileStorage.AddToRemove(tile);
             }
-            
-            tilemap.ClearAllTiles();
         }
         
         private void SetTilesInRect(RectInt rect)
@@ -100,6 +100,8 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
             }
 
             var bounds = new BoundsInt(rect.xMin, rect.yMin, 0, size.x, size.y, 1);
+
+            _tileStorage.RemoveTiles(_baker.Tilemap.GetTilesBlock(bounds));
             _baker.Tilemap.SetTilesBlock(bounds, tiles);
         }
         

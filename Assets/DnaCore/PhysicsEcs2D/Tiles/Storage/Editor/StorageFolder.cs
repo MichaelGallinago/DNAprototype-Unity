@@ -14,9 +14,8 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
         {
             StoragePath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(storageAsset));
 
-            Debug.Log($"{string.IsNullOrEmpty(Path).ToString()} : {AssetDatabase.IsValidFolder(Path)}");
             if (!string.IsNullOrEmpty(Path) && AssetDatabase.IsValidFolder(Path)) return;
-            
+
             AssetDatabase.CreateFolder(StoragePath, name);
             Path = $"{StoragePath}\\{name}";
         }

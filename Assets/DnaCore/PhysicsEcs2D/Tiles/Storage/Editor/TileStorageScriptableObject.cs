@@ -6,7 +6,6 @@ using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using DnaCore.PhysicsEcs2D.Tiles.Generators;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
 using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
-using DnaCore.Utilities;
 using DnaCore.Utilities.Ecs;
 using DnaCore.Utilities.Editor;
 using Unity.Collections;
@@ -39,7 +38,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
         private readonly List<GeneratedTile> _tilesToSave = new();
         private readonly List<GeneratedTile> _tilesToRemove = new();
         
-        private int MaxIndex => _tiles.Values.Select(tile => tile.Index).Prepend(0).Max();
+        private int MaxIndex => _tiles.Values.Select(tile => tile.Index).Prepend(-1).Max();
         
         private void OnEnable() => _folder.Init(this, "GeneratedTiles");
 
@@ -60,27 +59,28 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 
         public void SaveAssets()
         {
-            AssetDatabaseUtilities.BeginTransaction(SaveNewTiles);
-            AssetDatabaseUtilities.BeginTransaction(DeleteUnusedTiles);
-            
+            AssetDatabaseUtilities.BeginTransaction(() =>
+            {
+                SaveNewTiles();
+                DeleteUnusedTiles();
+            });
+
             _spriteStorage.SaveAssets();
             SaveBlobData();
 
             EditorUtility.SetDirty(this);
+            _freeSpaceMap.Shrink(MaxIndex);
         }
         
         public void AddToRemove(GeneratedTile tile) => _tilesToRemove.Add(tile);
         
-        public void DeleteTilesFromTilemap(TileBase[] tiles)
-        {
-            if (tiles.Length <= 0) return;
-            foreach (TileBase tileBase in tiles)
-            {
+        public void RemoveTiles(TileBase[] tiles) {
+            foreach (TileBase tileBase in tiles) {
                 if (tileBase is not GeneratedTile generatedTile) continue;
                 Remove(generatedTile);
             }
         }
-        
+
         private void SaveBlobData()
         {
             var builder = new BlobBuilder(Allocator.Temp);
@@ -148,7 +148,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
             
             Sprite sprite = tile.Sprite;
             tile.DeleteAsset();
-            
+
             if (ContainsSprite(sprite)) return;
             _spriteStorage.AddToRemove(sprite);
         }
@@ -186,7 +186,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
             {
                 if (_tiles.ContainsKey(new TileKey(sprite, type))) return true;
             }
-            
+
             return false;
         }
         

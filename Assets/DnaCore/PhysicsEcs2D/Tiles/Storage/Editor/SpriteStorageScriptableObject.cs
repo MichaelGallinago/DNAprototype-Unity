@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.Editor;
@@ -25,30 +27,24 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
         [field: SerializeField] public SpriteAtlas Atlas { get; private set; }
         
         [SerializeField] private FreeSpaceMap _freeSpaceMap;
-        
-        [SerializeField, HideInInspector] private string _atlasPath;
+
         [SerializeField, HideInInspector] private StorageFolder _folder;
         
         private static readonly Rect SpriteRect = new(0f, 0f, TileConstants.Size, TileConstants.Size);
         private static readonly Vector2 SpritePivot = new(0.5f, 0.5f);
         private static readonly string[] FolderPathTransferArray = new string[1];
+        private static readonly SpriteAtlas[] AtlasTransferArray = new SpriteAtlas[1];
         
         private readonly ushort[] _colorData = new ushort[TileConstants.PixelNumber];
-        private readonly HashSet<(Sprite sprite, string index)> _spritesToSave = new();
+        private readonly HashSet<(Sprite sprite, int index)> _spritesToSave = new();
         private readonly HashSet<Sprite> _spritesToRemove = new();
-        
-        private SpriteAtlasAsset _atlasAsset;
-        
-        private void OnEnable()
-        {
-            InitAtlasAsset();
-            _folder.Init(this, "GeneratedSprites");
-        }
+
+        private int MaxIndex => _sprites.Values.Select(sprite => sprite.Index).Prepend(-1).Max();
+
+        private void OnEnable() => _folder.Init(this, "GeneratedSprites");
         
         public void Clear()
         {
-            RemoveFromAtlas(Atlas.GetPackables());
-            
             _spritesToSave.Clear();
             _spritesToRemove.Clear();
             _sprites.Clear();
@@ -56,8 +52,8 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
             _bitTiles.Clear();
             
             AssetDatabaseUtilities.BeginTransaction(ClearFolder);
-
             EditorUtility.SetDirty(this);
+            RepackAtlas();
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -77,53 +73,29 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 
         public void SaveAssets()
         {
-            AssetDatabaseUtilities.BeginTransaction(SaveNewSprites);
-            
-            FillAtlas();
-            ClearAtlas();
-            
-            AssetDatabaseUtilities.BeginTransaction(DeleteUnusedSprites);
-            
-            EditorUtility.SetDirty(Atlas);
-            EditorUtility.SetDirty(_atlasAsset);
+            AssetDatabaseUtilities.BeginTransaction(() =>
+            {
+                SaveNewSprites();
+                DeleteUnusedSprites();
+            });
+
             EditorUtility.SetDirty(this);
+            RepackAtlas();
+            _freeSpaceMap.Shrink(MaxIndex);
         }
 
         private void SaveNewSprites()
         {
             if (_spritesToSave.Count <= 0) return;
-            foreach ((Sprite sprite, string index) in _spritesToSave)
+            foreach ((Sprite sprite, int index) in _spritesToSave)
             {
-                AssetDatabase.CreateAsset(sprite.texture, $"{_folder.Path}\\texture{index}.asset");
-                AssetDatabase.CreateAsset(sprite, $"{_folder.Path}\\sprite{index}.asset");
+                var stringIndex = index.ToString();
+                AssetDatabase.CreateAsset(sprite.texture, Path.Combine(_folder.Path, $"texture{stringIndex}.asset"));
+                AssetDatabase.CreateAsset(sprite, Path.Combine(_folder.Path, $"sprite{stringIndex}.asset"));
                 EditorUtility.SetDirty(sprite.texture);
                 EditorUtility.SetDirty(sprite);
             }
-        }
-
-        private void ClearAtlas()
-        {
-            var index = 0;
-            var spritesToAtlasDeletion = new Object[_spritesToRemove.Count];
-            foreach (Sprite sprite in _spritesToRemove)
-            {
-                spritesToAtlasDeletion[index++] = sprite;
-            }
-            
-            RemoveFromAtlas(spritesToAtlasDeletion);
-        }
-
-        private void FillAtlas()
-        {
-            var index = 0;
-            var spritesToAtlasInsertion = new Object[_spritesToSave.Count];
-            foreach ((Sprite sprite, string _) in _spritesToSave)
-            {
-                spritesToAtlasInsertion[index++] = sprite;
-            }
-            
             _spritesToSave.Clear();
-            _atlasAsset.Add(spritesToAtlasInsertion);
         }
 
         private void DeleteUnusedSprites()
@@ -134,24 +106,21 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
                 Remove(sprite);
             }
             _spritesToRemove.Clear();
+            _freeSpaceMap.Shrink(MaxIndex);
         }
 
         private void Remove(Sprite sprite)
         {
             if (!_bitTiles.TryGetValue(sprite, out BitTile bitTile)) return;
-            
+
+            SpriteStorageData data = _sprites[bitTile];
             _sprites.Remove(bitTile);
             _bitTiles.Remove(sprite);
+            _freeSpaceMap.Add(data.Index);
             
             Texture2D texture = sprite.texture;
             sprite.DeleteAsset();
             texture.DeleteAsset();
-        }
-
-        private void InitAtlasAsset()
-        {
-            if (!Atlas) return;
-            _atlasAsset = SpriteAtlasAsset.Load(_atlasPath = AssetDatabase.GetAssetPath(Atlas));
         }
         
         private void ClearFolder()
@@ -164,15 +133,12 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
             }
         }
 
-        private void RemoveFromAtlas(Object[] assets)
+        private void RepackAtlas()
         {
-            _atlasAsset.Remove(assets);
-            SpriteAtlasAsset.Save(_atlasAsset, _atlasPath);
-            AssetDatabaseUtilities.SetDirtyAndSave(_atlasAsset);
-            AssetDatabaseUtilities.SetDirtyAndSave(Atlas);
-            AssetDatabase.ImportAsset(_atlasPath);
+            AtlasTransferArray[0] = Atlas;
+            SpriteAtlasUtility.PackAtlases(AtlasTransferArray, BuildTarget.NoTarget);
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Sprite Create(ref BitTile bitTile)
         {
@@ -185,7 +151,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
             var sprite = Sprite.Create(CreateTexture(), SpriteRect, SpritePivot, 1f);
          
             int index = _freeSpaceMap.Take(_sprites.Count);
-            _spritesToSave.Add((sprite, index.ToString()));
+            _spritesToSave.Add((sprite, index));
             
             _sprites.Add(bitTile, new SpriteStorageData(index, sprite));
             _bitTiles.Add(sprite, bitTile);
