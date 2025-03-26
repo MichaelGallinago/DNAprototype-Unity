@@ -46,7 +46,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
         {
             if (!_sizeArrays.TryGetValue(value, out SizeMap<byte> key)) return;
             if (!_sizeMaps.TryGetValue(key, out SizeData data)) return;
-            
+
             EditorUtility.SetDirty(this);
             
             if (data.Count > 1)
@@ -100,27 +100,33 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
             
             for (byte i = 0; i < SizeMap<byte>.Length; i++)
             {
-                byte size = sizes[i];
-                if (size == 0) continue;
-
-                if (sizes[indexes.Last] != size)
-                {
-                    indexes.Previous = indexes.Last;
-                }
-                
-                indexes.Last = i;
-                
-                if (indexes.First == byte.MaxValue)
-                {
-                    indexes.First = i;
-                }
-                else if (size != sizes[indexes.First] && indexes.Second == byte.MaxValue)
-                {
-                    indexes.Second = i;
-                }
+                SetIndexes(ref indexes, sizes, i);
             }
             
             return indexes;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SetIndexes(ref SearchIndexes indexes, SizeMap<byte> sizes, byte index)
+        {
+            byte size = sizes[index];
+            if (size == 0) return;
+
+            if (sizes[indexes.Last] != size)
+            {
+                indexes.Previous = indexes.Last;
+            }
+
+            indexes.Last = index;
+
+            if (indexes.First == byte.MaxValue)
+            {
+                indexes.First = index;
+                return;
+            }
+
+            if (indexes.Second != byte.MaxValue || size == sizes[indexes.First]) return;
+            indexes.Second = index;
         }
 
         private ref struct SearchIndexes

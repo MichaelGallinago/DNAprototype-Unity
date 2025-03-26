@@ -12,6 +12,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles
         public const int PixelNumber = Size * Size;
         public static readonly Vector2Int CellSize = new(Size, Size);
         
-        public static string BlobPath => Path.Combine(Application.streamingAssetsPath, "Blobs", "TileStorage.blob");
+        public static readonly string BlobPath =
+            Path.Combine(Application.streamingAssetsPath, "Blobs", "TileStorage.blob");
     }
 }
