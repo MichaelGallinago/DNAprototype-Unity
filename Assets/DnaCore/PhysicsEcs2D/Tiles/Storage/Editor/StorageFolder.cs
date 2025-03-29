@@ -13,10 +13,6 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
         public void Init(UnityEngine.Object storageAsset, string name)
         {
             StoragePath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(storageAsset));
-
-            if (!string.IsNullOrEmpty(Path) && AssetDatabase.IsValidFolder(Path)) return;
-
-            AssetDatabase.CreateFolder(StoragePath, name);
             Path = $"{StoragePath}\\{name}";
         }
     }
