@@ -13,12 +13,636 @@ MonoBehaviour:
   m_Name: SpriteStorageScriptableObject
   m_EditorClassIdentifier: 
   _sprites:
-    _serializedList: []
+    _serializedList:
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 0
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 16f6bc62e65da424d97aa9335923fb91, type: 2}
+    - Key:
+        _data:
+          data1: 18374966859414961920
+          data2: 18374966859414961920
+          data3: 18374966859414961920
+          data4: 18374966859414961920
+      Value:
+        <Index>k__BackingField: 1
+        <Sprite>k__BackingField: {fileID: 21300000, guid: c710aa99c833c5349b25c9820a757246, type: 2}
+    - Key:
+        _data:
+          data1: 18410996618522853374
+          data2: 9223618331620212224
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 2
+        <Sprite>k__BackingField: {fileID: 21300000, guid: d6eb9c3b410a0634cb9ee4646db0e689, type: 2}
+    - Key:
+        _data:
+          data1: 18374966859414961920
+          data2: 18374966859414961920
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 3
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 570e32c077efdcd4e9158251e5374a55, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 4
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 4e671ceed1750cc49886bac485c392ec, type: 2}
+    - Key:
+        _data:
+          data1: 65024
+          data2: 0
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 5
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 0c38cf69e26cdb74caa60e47a36e8d5e, type: 2}
+    - Key:
+        _data:
+          data1: 16141181444255711231
+          data2: 0
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 6
+        <Sprite>k__BackingField: {fileID: 21300000, guid: ea62a58909718974d91614051d61f1dc, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 17294101849349095420
+          data3: 49152
+          data4: 0
+      Value:
+        <Index>k__BackingField: 7
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 9fb66c71ce3a11e44b794fe039a619e1, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18429011120111943679
+          data4: 16141173747641024256
+      Value:
+        <Index>k__BackingField: 8
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 132c550fc60326b4ebb2f6a26268cb53, type: 2}
+    - Key:
+        _data:
+          data1: 32768
+          data2: 0
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 9
+        <Sprite>k__BackingField: {fileID: 21300000, guid: c0064644c7596f7439243c1134ccb701, type: 2}
+    - Key:
+        _data:
+          data1: 18444773744577609727
+          data2: 18410996481082327024
+          data3: 17870560402597805824
+          data4: 13835304349644943360
+      Value:
+        <Index>k__BackingField: 10
+        <Sprite>k__BackingField: {fileID: 21300000, guid: e0828ede23851ce46b47890bdf08baf2, type: 2}
+    - Key:
+        _data:
+          data1: 18446462598732840959
+          data2: 18444773735987478526
+          data3: 18438018216286552048
+          data4: 18410996481080229856
+      Value:
+        <Index>k__BackingField: 11
+        <Sprite>k__BackingField: {fileID: 21300000, guid: d437a48694a8f8b47995fd613426c67c, type: 2}
+    - Key:
+        _data:
+          data1: 18374966859423350656
+          data2: 18158792977772772864
+          data3: 17870560402564250624
+          data4: 17294086456054183936
+      Value:
+        <Index>k__BackingField: 12
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 69ea95dc73e680242b5e675da9a93d66, type: 2}
+    - Key:
+        _data:
+          data1: 16141164951313117184
+          data2: 16141147358858633216
+          data3: 13835269164735971328
+          data4: 9223512777564405760
+      Value:
+        <Index>k__BackingField: 13
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 725620c1d41279b4cb8aad7272666c16, type: 2}
+    - Key:
+        _data:
+          data1: 9223512776490647552
+          data2: 140739635871744
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 14
+        <Sprite>k__BackingField: {fileID: 21300000, guid: f8f41646e292152408c5b8cfa31b7916, type: 2}
+    - Key:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 9223512776490614784
+          data4: 9223512776490647552
+      Value:
+        <Index>k__BackingField: 15
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 64af879ceb3b97443a25e3485a15904b, type: 2}
+    - Key:
+        _data:
+          data1: 13835269163662213120
+          data2: 13835269164735971328
+          data3: 16141147358858633216
+          data4: 17294086455919960064
+      Value:
+        <Index>k__BackingField: 16
+        <Sprite>k__BackingField: {fileID: 21300000, guid: f964a6daedc3d7d48b9983a5836f7ce1, type: 2}
+    - Key:
+        _data:
+          data1: 17870556004316409856
+          data2: 18158790778715961344
+          data3: 18302908165848628224
+          data4: 18410996206189739776
+      Value:
+        <Index>k__BackingField: 17
+        <Sprite>k__BackingField: {fileID: 21300000, guid: f7618fdb9ec78294c8cf2a21367fc8d8, type: 2}
+    - Key:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 0
+          data4: 9223372036854775808
+      Value:
+        <Index>k__BackingField: 18
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 16a7bf72d7bde834890d3df059af489b, type: 2}
+    - Key:
+        _data:
+          data1: 18438018078844452736
+          data2: 18442521884632350688
+          data3: 18446462585847742456
+          data4: 18446744073709551614
+      Value:
+        <Index>k__BackingField: 19
+        <Sprite>k__BackingField: {fileID: 21300000, guid: ca41179162941414ba4d449c452b1b1b, type: 2}
+    - Key:
+        _data:
+          data1: 17294068863465472000
+          data2: 18374965759853000704
+          data3: 18442521815910776704
+          data4: 18446744073709486072
+      Value:
+        <Index>k__BackingField: 20
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 201c72601771e9640b3a363ac9c51675, type: 2}
+    - Key:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 0
+          data4: 18302628885633695744
+      Value:
+        <Index>k__BackingField: 21
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 20dc06d6ddb93ce458646083c90d7f4a, type: 2}
+    - Key:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 0
+          data4: 18446744060807929856
+      Value:
+        <Index>k__BackingField: 22
+        <Sprite>k__BackingField: {fileID: 21300000, guid: faf40f9d41f645d4d830781efd945ff1, type: 2}
+    - Key:
+        _data:
+          data1: 0
+          data2: 13835058055282163712
+          data3: 18445899515601940480
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 23
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 30ed6066a0b444c46b18f6b35acdf8bb, type: 2}
+    - Key:
+        _data:
+          data1: 18374965759785885696
+          data2: 18446744069414125504
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+      Value:
+        <Index>k__BackingField: 24
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 17bb2d981ae131443bed826478acf4b8, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18410996618522853374
+          data4: 9223618331620212224
+      Value:
+        <Index>k__BackingField: 25
+        <Sprite>k__BackingField: {fileID: 21300000, guid: c6238eb45c27b614bb293e797c04d599, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 287966491213561855
+          data4: 1970457985089791
+      Value:
+        <Index>k__BackingField: 26
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 4567d77168a19384e95457ccc0538ec0, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 4222670178566143
+          data3: 1
+          data4: 0
+      Value:
+        <Index>k__BackingField: 27
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 2edaa2367626915459d1f995863b576a, type: 2}
+    - Key:
+        _data:
+          data1: 844970927849471
+          data2: 0
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 28
+        <Sprite>k__BackingField: {fileID: 21300000, guid: a6cbcef075a56d742bd61168c2182772, type: 2}
+    - Key:
+        _data:
+          data1: 63
+          data2: 0
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 29
+        <Sprite>k__BackingField: {fileID: 21300000, guid: f2034f6c615c0774481f32f3a6d0afda, type: 2}
+    - Key:
+        _data:
+          data1: 2305702271725338623
+          data2: 143838106984845311
+          data3: 8725994869293311
+          data4: 844454995361807
+      Value:
+        <Index>k__BackingField: 30
+        <Sprite>k__BackingField: {fileID: 21300000, guid: b9840ff520cf9b048b3f2c5b9fe6daf2, type: 2}
+    - Key:
+        _data:
+          data1: 1
+          data2: 0
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 31
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 7ac0553a5e0c6004db5ec9a991d861ee, type: 2}
+    - Key:
+        _data:
+          data1: 9223372036854775807
+          data2: 2305631899759902719
+          data3: 576196865486168063
+          data4: 287953294993590271
+      Value:
+        <Index>k__BackingField: 32
+        <Sprite>k__BackingField: {fileID: 21300000, guid: c2db92ff3c76bac4992cd83c8c41267e, type: 2}
+    - Key:
+        _data:
+          data1: 65537
+          data2: 0
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 33
+        <Sprite>k__BackingField: {fileID: 21300000, guid: b2bff018473d85e409b31ad4d4dd08a8, type: 2}
+    - Key:
+        _data:
+          data1: 17870560402597805824
+          data2: 9223583146845466624
+          data3: 0
+          data4: 0
+      Value:
+        <Index>k__BackingField: 34
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 4e5b30bd1580860469da549260949b83, type: 2}
+    - Key:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18444773735987609599
+          data4: 18410996481082327024
+      Value:
+        <Index>k__BackingField: 35
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 53b0f2179da6d3840ae22f24df5c2082, type: 2}
+    - Key:
+        _data:
+          data1: 71778313822994943
+          data2: 35747867511423231
+          data3: 17733194119839871
+          data4: 8725857424048159
+      Value:
+        <Index>k__BackingField: 36
+        <Sprite>k__BackingField: {fileID: 21300000, guid: d415ba6fe180ef043866c9dbd0763285, type: 2}
+    - Key:
+        _data:
+          data1: 4222189076152335
+          data2: 1970354902204431
+          data3: 844437815492615
+          data4: 844437815230467
+      Value:
+        <Index>k__BackingField: 37
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 9b228e8f27289cf4195bb259fe3a8729, type: 2}
+    - Key:
+        _data:
+          data1: 281479271743489
+          data2: 281479271743489
+          data3: 1
+          data4: 0
+      Value:
+        <Index>k__BackingField: 38
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 1e181cb888cff0447b3d30387018742c, type: 2}
   _bitTiles:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 21300000, guid: 16f6bc62e65da424d97aa9335923fb91, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: c710aa99c833c5349b25c9820a757246, type: 2}
+      Value:
+        _data:
+          data1: 18374966859414961920
+          data2: 18374966859414961920
+          data3: 18374966859414961920
+          data4: 18374966859414961920
+    - Key: {fileID: 21300000, guid: d6eb9c3b410a0634cb9ee4646db0e689, type: 2}
+      Value:
+        _data:
+          data1: 18410996618522853374
+          data2: 9223618331620212224
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: 570e32c077efdcd4e9158251e5374a55, type: 2}
+      Value:
+        _data:
+          data1: 18374966859414961920
+          data2: 18374966859414961920
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: 4e671ceed1750cc49886bac485c392ec, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: 0c38cf69e26cdb74caa60e47a36e8d5e, type: 2}
+      Value:
+        _data:
+          data1: 65024
+          data2: 0
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: ea62a58909718974d91614051d61f1dc, type: 2}
+      Value:
+        _data:
+          data1: 16141181444255711231
+          data2: 0
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: 9fb66c71ce3a11e44b794fe039a619e1, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 17294101849349095420
+          data3: 49152
+          data4: 0
+    - Key: {fileID: 21300000, guid: 132c550fc60326b4ebb2f6a26268cb53, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18429011120111943679
+          data4: 16141173747641024256
+    - Key: {fileID: 21300000, guid: c0064644c7596f7439243c1134ccb701, type: 2}
+      Value:
+        _data:
+          data1: 32768
+          data2: 0
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: e0828ede23851ce46b47890bdf08baf2, type: 2}
+      Value:
+        _data:
+          data1: 18444773744577609727
+          data2: 18410996481082327024
+          data3: 17870560402597805824
+          data4: 13835304349644943360
+    - Key: {fileID: 21300000, guid: d437a48694a8f8b47995fd613426c67c, type: 2}
+      Value:
+        _data:
+          data1: 18446462598732840959
+          data2: 18444773735987478526
+          data3: 18438018216286552048
+          data4: 18410996481080229856
+    - Key: {fileID: 21300000, guid: 69ea95dc73e680242b5e675da9a93d66, type: 2}
+      Value:
+        _data:
+          data1: 18374966859423350656
+          data2: 18158792977772772864
+          data3: 17870560402564250624
+          data4: 17294086456054183936
+    - Key: {fileID: 21300000, guid: 725620c1d41279b4cb8aad7272666c16, type: 2}
+      Value:
+        _data:
+          data1: 16141164951313117184
+          data2: 16141147358858633216
+          data3: 13835269164735971328
+          data4: 9223512777564405760
+    - Key: {fileID: 21300000, guid: f8f41646e292152408c5b8cfa31b7916, type: 2}
+      Value:
+        _data:
+          data1: 9223512776490647552
+          data2: 140739635871744
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: 64af879ceb3b97443a25e3485a15904b, type: 2}
+      Value:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 9223512776490614784
+          data4: 9223512776490647552
+    - Key: {fileID: 21300000, guid: f964a6daedc3d7d48b9983a5836f7ce1, type: 2}
+      Value:
+        _data:
+          data1: 13835269163662213120
+          data2: 13835269164735971328
+          data3: 16141147358858633216
+          data4: 17294086455919960064
+    - Key: {fileID: 21300000, guid: f7618fdb9ec78294c8cf2a21367fc8d8, type: 2}
+      Value:
+        _data:
+          data1: 17870556004316409856
+          data2: 18158790778715961344
+          data3: 18302908165848628224
+          data4: 18410996206189739776
+    - Key: {fileID: 21300000, guid: 16a7bf72d7bde834890d3df059af489b, type: 2}
+      Value:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 0
+          data4: 9223372036854775808
+    - Key: {fileID: 21300000, guid: ca41179162941414ba4d449c452b1b1b, type: 2}
+      Value:
+        _data:
+          data1: 18438018078844452736
+          data2: 18442521884632350688
+          data3: 18446462585847742456
+          data4: 18446744073709551614
+    - Key: {fileID: 21300000, guid: 201c72601771e9640b3a363ac9c51675, type: 2}
+      Value:
+        _data:
+          data1: 17294068863465472000
+          data2: 18374965759853000704
+          data3: 18442521815910776704
+          data4: 18446744073709486072
+    - Key: {fileID: 21300000, guid: 20dc06d6ddb93ce458646083c90d7f4a, type: 2}
+      Value:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 0
+          data4: 18302628885633695744
+    - Key: {fileID: 21300000, guid: faf40f9d41f645d4d830781efd945ff1, type: 2}
+      Value:
+        _data:
+          data1: 0
+          data2: 0
+          data3: 0
+          data4: 18446744060807929856
+    - Key: {fileID: 21300000, guid: 30ed6066a0b444c46b18f6b35acdf8bb, type: 2}
+      Value:
+        _data:
+          data1: 0
+          data2: 13835058055282163712
+          data3: 18445899515601940480
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: 17bb2d981ae131443bed826478acf4b8, type: 2}
+      Value:
+        _data:
+          data1: 18374965759785885696
+          data2: 18446744069414125504
+          data3: 18446744073709551615
+          data4: 18446744073709551615
+    - Key: {fileID: 21300000, guid: c6238eb45c27b614bb293e797c04d599, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18410996618522853374
+          data4: 9223618331620212224
+    - Key: {fileID: 21300000, guid: 4567d77168a19384e95457ccc0538ec0, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 287966491213561855
+          data4: 1970457985089791
+    - Key: {fileID: 21300000, guid: 2edaa2367626915459d1f995863b576a, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 4222670178566143
+          data3: 1
+          data4: 0
+    - Key: {fileID: 21300000, guid: a6cbcef075a56d742bd61168c2182772, type: 2}
+      Value:
+        _data:
+          data1: 844970927849471
+          data2: 0
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: f2034f6c615c0774481f32f3a6d0afda, type: 2}
+      Value:
+        _data:
+          data1: 63
+          data2: 0
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: b9840ff520cf9b048b3f2c5b9fe6daf2, type: 2}
+      Value:
+        _data:
+          data1: 2305702271725338623
+          data2: 143838106984845311
+          data3: 8725994869293311
+          data4: 844454995361807
+    - Key: {fileID: 21300000, guid: 7ac0553a5e0c6004db5ec9a991d861ee, type: 2}
+      Value:
+        _data:
+          data1: 1
+          data2: 0
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: c2db92ff3c76bac4992cd83c8c41267e, type: 2}
+      Value:
+        _data:
+          data1: 9223372036854775807
+          data2: 2305631899759902719
+          data3: 576196865486168063
+          data4: 287953294993590271
+    - Key: {fileID: 21300000, guid: b2bff018473d85e409b31ad4d4dd08a8, type: 2}
+      Value:
+        _data:
+          data1: 65537
+          data2: 0
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: 4e5b30bd1580860469da549260949b83, type: 2}
+      Value:
+        _data:
+          data1: 17870560402597805824
+          data2: 9223583146845466624
+          data3: 0
+          data4: 0
+    - Key: {fileID: 21300000, guid: 53b0f2179da6d3840ae22f24df5c2082, type: 2}
+      Value:
+        _data:
+          data1: 18446744073709551615
+          data2: 18446744073709551615
+          data3: 18444773735987609599
+          data4: 18410996481082327024
+    - Key: {fileID: 21300000, guid: d415ba6fe180ef043866c9dbd0763285, type: 2}
+      Value:
+        _data:
+          data1: 71778313822994943
+          data2: 35747867511423231
+          data3: 17733194119839871
+          data4: 8725857424048159
+    - Key: {fileID: 21300000, guid: 9b228e8f27289cf4195bb259fe3a8729, type: 2}
+      Value:
+        _data:
+          data1: 4222189076152335
+          data2: 1970354902204431
+          data3: 844437815492615
+          data4: 844437815230467
+    - Key: {fileID: 21300000, guid: 1e181cb888cff0447b3d30387018742c, type: 2}
+      Value:
+        _data:
+          data1: 281479271743489
+          data2: 281479271743489
+          data3: 1
+          data4: 0
   <Atlas>k__BackingField: {fileID: 100100200, guid: 2825648a9d940ef4281a2f65eeaa4550, type: 3}
   _freeSpaceMap:
     _list: 
   _folder:
-    <StoragePath>k__BackingField: Assets\DnaCore\PhysicsEcs2D\Tiles\Storage\Editor
-    <Path>k__BackingField: Assets\DnaCore\PhysicsEcs2D\Tiles\Storage\Editor\GeneratedSprites
+    <StoragePath>k__BackingField: Assets\DnaPrototype\Editor\TileStorage
+    <Path>k__BackingField: Assets\DnaPrototype\Editor\TileStorage\GeneratedSprites

@@ -2,7 +2,6 @@ using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
-using DnaCore.Utilities;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
@@ -23,7 +22,7 @@ namespace DnaCore.Character.Systems
         public void OnCreate(ref SystemState state)
         {
             _tileSensorLookup = state.GetComponentLookup<TileSensor>(true);
-            state.RequireForUpdate<FloorSensors>();
+            state.RequireForUpdate<CharacterSensors>();
         }
         
         public void OnUpdate(ref SystemState state)
@@ -36,6 +35,54 @@ namespace DnaCore.Character.Systems
         
         public readonly void OnDestroy(ref SystemState state) {}
     }
+    
+    [BurstCompile]
+    public partial struct SensorAdjustJob : IJobEntity
+    {
+        [ReadOnly] public ComponentLookup<TileSensor> SensorLookup;
+        
+        private void Execute(in Rotation rotation, in LocalToWorld transform, in CharacterSensors characterSensors)
+        {
+            var position = (int2)transform.Position.xy;
+            Quadrant quadrant = MathUtilities.GetQuadrant(rotation.Radians);
+            var sign = (int)rotation.Facing;
+            
+            characterSensors.FloorLeft.SetSensorData(
+                ref SensorLookup, position + new int2(-19, 0), quadrant.Combine(Quadrant.Down));
+            characterSensors.FloorRight.SetSensorData(
+                ref SensorLookup, position + new int2(19, 0), quadrant.Combine(Quadrant.Down));
+            characterSensors.WallBottom.SetSensorData(
+                ref SensorLookup, position + new int2(sign * 23, 12), quadrant.Combine(Quadrant.Right));
+            characterSensors.WallTop.SetSensorData(
+                ref SensorLookup, position + new int2(sign * 23, 52), quadrant.Combine(Quadrant.Right));
+        }
+    }
+    
+    [BurstCompile]
+    public static class TileSensorExtensions
+    {
+        public static void SetSensorData(this Entity entity, 
+            ref ComponentLookup<TileSensor> lookup, int2 position, Quadrant quadrant)
+        {
+            var sensor = lookup.GetRefRW(entity);
+            sensor.ValueRW.Position = position;
+            sensor.ValueRW.Quadrant = quadrant;
+        }
+        
+        public static void SetSensorData(this Entity entity, 
+            ref ComponentLookup<TileSensor> lookup, int2 position)
+        {
+            var sensor = lookup.GetRefRW(entity);
+            sensor.ValueRW.Position = position;
+        }
+        
+        public static void SetSensorData(this Entity entity, 
+            ref ComponentLookup<TileSensor> lookup, Quadrant quadrant)
+        {
+            var sensor = lookup.GetRefRW(entity);
+            sensor.ValueRW.Quadrant = quadrant;
+        }
+    }
 
     [BurstCompile]
     [WithAll(typeof(AirTag))]
@@ -46,10 +93,10 @@ namespace DnaCore.Character.Systems
         
         private void Execute(
             ref BehaviourTree behaviour, ref LandEvent landEvent,
-            in FloorSensors floorSensors,
+            in CharacterSensors characterSensors,
             EnabledRefRW<LandEvent> isLandEventEnabled)
         {
-            TileSensor sensor = FindClosest(ref SensorLookup, in floorSensors);
+            TileSensor sensor = FindClosest(ref SensorLookup, in characterSensors);
 
             if (!sensor.IsInside) return;
             behaviour.Current = Behaviours.Ground;
@@ -69,9 +116,9 @@ namespace DnaCore.Character.Systems
         
         private void Execute(
             ref Rotation rotation, ref LocalTransform transform, ref BehaviourTree behaviour,
-            in Velocity velocity, in FloorSensors floorSensors)
+            in Velocity velocity, in CharacterSensors characterSensors)
         {
-            TileSensor sensor = FindClosest(ref SensorLookup, in floorSensors);
+            TileSensor sensor = FindClosest(ref SensorLookup, in characterSensors);
             
             if (sensor.Distance < -MaxTolerance) return;
             
@@ -118,10 +165,12 @@ namespace DnaCore.Character.Systems
     [BurstCompile]
     public static class CollisionJobUtilities
     {
-        public static TileSensor FindClosest(ref ComponentLookup<TileSensor> sensorLookup, in FloorSensors floorSensors)
+        public static TileSensor FindClosest(
+            ref ComponentLookup<TileSensor> sensorLookup, 
+            in CharacterSensors characterSensors)
         {
-            TileSensor firstSensor = sensorLookup[floorSensors.First];
-            TileSensor secondSensor = sensorLookup[floorSensors.Second];
+            TileSensor firstSensor = sensorLookup[characterSensors.FloorLeft];
+            TileSensor secondSensor = sensorLookup[characterSensors.FloorRight];
             return firstSensor.Distance <= secondSensor.Distance ? firstSensor : secondSensor;
         }
         

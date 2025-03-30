@@ -23,8 +23,15 @@ namespace DnaCore.Utilities.Ecs
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static BakerQuery CreateAdditional(IBaker baker, TransformUsageFlags flags) =>
+            new(baker, baker.CreateAdditionalEntity(flags));
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AddComponent<T>(in T component) where T : unmanaged, IComponentData =>
             _baker.AddComponent(_entity, in component);
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Entity(BakerQuery bakerQuery) => bakerQuery._entity;
         
         public BakerQuery AddComponents<T1>(
             in T1 component1) 

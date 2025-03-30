@@ -1,4 +1,3 @@
-using DnaCore.Utilities;
 using DnaCore.Utilities.Ecs;
 using DnaCore.Utilities.Mathematics;
 using Unity.Entities;
@@ -12,7 +11,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity
         
         private class Baker : Baker<TileSensorAuthoring>
         {
-            public override void Bake(TileSensorAuthoring authoring) => new BakerQuery(this, TransformUsageFlags.Dynamic)
+            public override void Bake(TileSensorAuthoring authoring) => this.BakeQuery(TransformUsageFlags.Dynamic)
                 .AddComponents(new TileSensor { Quadrant = authoring._quadrant });
         }
     }

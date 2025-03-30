@@ -13,11 +13,167 @@ MonoBehaviour:
   m_Name: TileStorageScriptableObject
   m_EditorClassIdentifier: 
   _tiles:
-    _serializedList: []
+    _serializedList:
+    - Key:
+        Sprite: {fileID: 21300000, guid: 16f6bc62e65da424d97aa9335923fb91, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 7157d78c4a0e86846adc5e7d1859f2c1, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: c710aa99c833c5349b25c9820a757246, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 29850dc77ff361949b7090644389abb2, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: d6eb9c3b410a0634cb9ee4646db0e689, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: b4c0b43f2b427d04fbc0055b5be5e7c4, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 570e32c077efdcd4e9158251e5374a55, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 61c655297ec00b741be5dc0f7403b5d5, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 4e671ceed1750cc49886bac485c392ec, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 0ed2947441cb1e54d8978c4855503de8, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 0c38cf69e26cdb74caa60e47a36e8d5e, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 4449137ea4e31414ca88c36d6a6b3d52, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: ea62a58909718974d91614051d61f1dc, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: ebaeb31db586e5e4da244f2d0703da0c, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 9fb66c71ce3a11e44b794fe039a619e1, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 4db5df1b24d5354418f5c08c9d266d50, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 132c550fc60326b4ebb2f6a26268cb53, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 8c6bd8978263b1244b4f63af86881015, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: c0064644c7596f7439243c1134ccb701, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 7db22ff0bcf56b345addbcc73b97d012, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: e0828ede23851ce46b47890bdf08baf2, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 87ed791f996cac2469b632464958ae72, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: d437a48694a8f8b47995fd613426c67c, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 08fdc2c2ed943f54f83eb1eb9f0cc6ef, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 69ea95dc73e680242b5e675da9a93d66, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: a83af709298decf41b71bcaf5674ca8d, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 725620c1d41279b4cb8aad7272666c16, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 001ce113874a264419ddc4bbc7d4fa5b, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: f8f41646e292152408c5b8cfa31b7916, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 14087c875000a3c46ae2db2fca865632, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 64af879ceb3b97443a25e3485a15904b, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: bc0c097666b44a546869a9634d34c5c8, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: f964a6daedc3d7d48b9983a5836f7ce1, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 996c2c58442c8ec47a3580f75039f9a6, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: f7618fdb9ec78294c8cf2a21367fc8d8, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 6ba9f1216f3cff6409f081fa9b267286, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 16a7bf72d7bde834890d3df059af489b, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 215b47f945c27c248a0382e5eb6a452e, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: ca41179162941414ba4d449c452b1b1b, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 8a9ba47158074b64c978cdec76aa3e38, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 201c72601771e9640b3a363ac9c51675, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 01f1076f8b00362488f9b8f65fb04511, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 20dc06d6ddb93ce458646083c90d7f4a, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 7d7ab90974750434ebb7a98fe725290a, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: faf40f9d41f645d4d830781efd945ff1, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 6c4f25ce54488634884d49860cd14f05, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 30ed6066a0b444c46b18f6b35acdf8bb, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: a2cedcbf726e1d946aef0f585b9db8f1, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 17bb2d981ae131443bed826478acf4b8, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 43b380f8e870f314fba865774b9e0a34, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: c6238eb45c27b614bb293e797c04d599, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 5046ef0cf9aa97c4895f29b317c4d144, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 4567d77168a19384e95457ccc0538ec0, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: d500c4314ecec9e499a60829132d08ef, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 2edaa2367626915459d1f995863b576a, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 92c4da88cde9e3a4bbc538968cd85a95, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: a6cbcef075a56d742bd61168c2182772, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 2d84f32526916364aa9defc4a2144cd4, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: f2034f6c615c0774481f32f3a6d0afda, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 55bbeb93f2cc337419b2568df64452d9, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: b9840ff520cf9b048b3f2c5b9fe6daf2, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 6965679cc81e55c408b8c9ef33363147, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 7ac0553a5e0c6004db5ec9a991d861ee, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: f1e54fbc1cdac1a4cb49c47fbece00fd, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: c2db92ff3c76bac4992cd83c8c41267e, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 8c0e51916a72acb4aa26a03f3dea44be, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: b2bff018473d85e409b31ad4d4dd08a8, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: e0876add115a987479f95d7b15849925, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 4e5b30bd1580860469da549260949b83, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 1190fc89da8cb1e4e8f189bc36bacab1, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 53b0f2179da6d3840ae22f24df5c2082, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 561ea31a298c74545a5d4bfa3a0cbb58, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: d415ba6fe180ef043866c9dbd0763285, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: b7c6a89ba3b70e94a96cfc4285c7798a, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 9b228e8f27289cf4195bb259fe3a8729, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: aa00ae02566cb9744a9ead2037906352, type: 2}
+    - Key:
+        Sprite: {fileID: 21300000, guid: 1e181cb888cff0447b3d30387018742c, type: 2}
+        SolidType: 0
+      Value: {fileID: 11400000, guid: 4324ddd85c613604e9c15508b122c3ae, type: 2}
   _freeSpaceMap:
     _list: 
   _sizeDataStorage: {fileID: 11400000, guid: 7cf9d98a9cc648748ad6f44c4b170fd5, type: 2}
   _spriteStorage: {fileID: 11400000, guid: 3b0c4f8686cf92b46ba066e24c44af4f, type: 2}
   _folder:
-    <StoragePath>k__BackingField: Assets\DnaCore\PhysicsEcs2D\Tiles\Storage\Editor
-    <Path>k__BackingField: Assets\DnaCore\PhysicsEcs2D\Tiles\Storage\Editor\GeneratedTiles
+    <StoragePath>k__BackingField: Assets\DnaPrototype\Editor\TileStorage
+    <Path>k__BackingField: Assets\DnaPrototype\Editor\TileStorage\GeneratedTiles

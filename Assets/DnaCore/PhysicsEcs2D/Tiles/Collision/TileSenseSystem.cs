@@ -1,8 +1,6 @@
 using DnaCore.PhysicsEcs2D.Systems;
 using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
-using DnaCore.PhysicsEcs2D.Tiles.Generators;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator;
-using DnaCore.Utilities;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
@@ -30,6 +28,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
             }
             
             state.RequireForUpdate<NativeTilemap>();
+            state.RequireForUpdate<TileSensor>();
         }
         
         public void OnStartRunning(ref SystemState state)
@@ -48,10 +47,8 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
         
         public void OnDestroy(ref SystemState state)
         {
-            if (_tilesBlob.IsCreated)
-            {
-                _tilesBlob.Dispose();
-            }
+            if (!_tilesBlob.IsCreated) return;
+	        _tilesBlob.Dispose();
         }
     }
 
@@ -62,18 +59,15 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 	    
 	    [ReadOnly] public BlobAssetReference<TilesBlob> TilesBlob;
 	    [ReadOnly] public NativeTilemap Tilemap;
-
-        private void Execute(ref LocalToWorld transform, ref TileSensor sensor) =>
-	        FindTileData((int2)transform.Position.xy, ref sensor);
-
-        private void FindTileData(int2 targetPosition, ref TileSensor sensor)
+	    
+        private void Execute(ref TileSensor sensor)
         {
-	        int2 inTilePosition = targetPosition & ModSize;
-	        targetPosition >>= DivSize;
+	        int2 inTilePosition = sensor.Position & ModSize;
+	        int2 tilePosition = sensor.Position >> DivSize;
 
-	        if (!TrySearch(targetPosition, 0, sensor.Quadrant, out int index))
+	        if (!TrySearch(tilePosition, 0, sensor.Quadrant, out int index))
 	        {
-		        FindFurtherTile(targetPosition, inTilePosition, ref sensor);
+		        FindFurtherTile(tilePosition, inTilePosition, ref sensor);
 		        return;
 	        }
 
@@ -83,11 +77,11 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 	        switch (size)
 	        {
 		        case 0:
-			        FindFurtherTile(targetPosition, inTilePosition, ref sensor);
+			        FindFurtherTile(tilePosition, inTilePosition, ref sensor);
 			        break;
 		        case Size:
 			        sensor.Radians = tile.GetAngle(sensor.Quadrant);
-			        FindCloserTile(targetPosition, inTilePosition, ref sensor);
+			        FindCloserTile(tilePosition, inTilePosition, ref sensor);
 			        break;
 		        default:
 			        sensor.Distance = CalculateInTilePosition(inTilePosition, sensor.Quadrant) - size;
@@ -96,9 +90,9 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 	        }
         }
 
-        private void FindFurtherTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
+        private void FindFurtherTile(int2 tilePosition, int2 inTilePosition, ref TileSensor sensor)
         {
-	        if (TrySearch(targetPosition, 1, sensor.Quadrant, out int index))
+	        if (TrySearch(tilePosition, 1, sensor.Quadrant, out int index))
 	        {
 		        ref NativeTile tile = ref GetTile(index);
 		        byte size = tile.GetSize(sensor.Quadrant, inTilePosition);
@@ -115,10 +109,10 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 	        sensor.Radians = float.NaN;
         }
 
-        private void FindCloserTile(int2 targetPosition, int2 inTilePosition, ref TileSensor sensor)
+        private void FindCloserTile(int2 tilePosition, int2 inTilePosition, ref TileSensor sensor)
         {
 	        byte size;
-	        if (TrySearch(targetPosition, -1, sensor.Quadrant, out int index))
+	        if (TrySearch(tilePosition, -1, sensor.Quadrant, out int index))
 	        {
 		        ref NativeTile tile = ref GetTile(index);
 		        size = tile.GetSize(sensor.Quadrant, inTilePosition);
@@ -145,18 +139,18 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 	        _ => 0
         };
         
-        private bool TrySearch(int2 position, sbyte shift, Quadrant quadrant, out int index)
+        private bool TrySearch(int2 tilePosition, sbyte shift, Quadrant quadrant, out int index)
         {
 	        switch (quadrant)
 	        {
-		        case Quadrant.Down: position.y -= shift; break;
-		        case Quadrant.Right: position.x += shift; break;
-		        case Quadrant.Up: position.y += shift; break;
-		        case Quadrant.Left: position.x -= shift; break;
-		        default: index = default; return false;
+		        case Quadrant.Down: tilePosition.y -= shift; break;
+		        case Quadrant.Right: tilePosition.x += shift; break;
+		        case Quadrant.Up: tilePosition.y += shift; break;
+		        case Quadrant.Left: tilePosition.x -= shift; break;
+		        default: index = 0; return false;
 	        }
 
-	        return Tilemap.IndexesReference.Value.TryGetValue(position, out index);
+	        return Tilemap.IndexesReference.Value.TryGetValue(tilePosition, out index);
         }
 		
 		private ref NativeTile GetTile(int index) => ref TilesBlob.Value.Tiles[index];

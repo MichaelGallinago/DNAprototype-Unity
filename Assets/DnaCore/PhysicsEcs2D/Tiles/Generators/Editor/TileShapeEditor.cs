@@ -1,5 +1,4 @@
 using DnaCore.PhysicsEcs2D.Tiles.SolidTypes;
-using DnaCore.PhysicsEcs2D.Tiles.Storage.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +7,6 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.Editor
     [CustomEditor(typeof(TileShape))]
     public class TileShapeEditor : UnityEditor.Editor
     {
-        [SerializeField] private TileStorageScriptableObject _tileStorage;
         [SerializeField] private SolidTypesScriptableObject _solidTypes;
         
         private TileShape _tileShape;

@@ -19,6 +19,9 @@ namespace DnaCore.Utilities.Mathematics
             return (Quadrant)((int)radians / 90 & 3);
         }
 
+        public static Quadrant Combine(this Quadrant target, Quadrant quadrant) => 
+            (Quadrant)(((int)target + (int)quadrant) & 3);
+
         public static float ProjectOnPlane(float2 vector, float radians) =>
             math.csum(vector * new float2(math.cos(radians), math.sin(radians)));
         

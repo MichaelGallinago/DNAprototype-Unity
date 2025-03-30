@@ -4,7 +4,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Hash128 = Unity.Entities.Hash128;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator
 {
@@ -15,7 +14,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator
     {
         [field: SerializeField] public Tilemap Tilemap { get; private set; }
         [field: SerializeField] public TilemapRenderer TilemapRenderer { get; private set; }
-
+        
         public TileShape[] TileShapes => GetComponentsInChildren<TileShape>();
 
         private void Start() => Tilemap.RefreshAllTiles(); // Color initialization fix (with [ExecuteAlways])
@@ -39,7 +38,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator
 
                 BlobAssetReference<BlobHashMap<int2, int>> blobReference =
                     builder.CreateBlobAssetReference<BlobHashMap<int2, int>>(Allocator.Persistent);
-                AddBlobAsset(ref blobReference, out Hash128 _);
+                AddBlobAsset(ref blobReference, out Unity.Entities.Hash128 _);
 
                 Entity entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new NativeTilemap { IndexesReference = blobReference });
@@ -50,7 +49,6 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator
                     {
                         GameObject = authoring.TilemapRenderer.gameObject
                     });
-
                 }
                 
                 builder.Dispose();

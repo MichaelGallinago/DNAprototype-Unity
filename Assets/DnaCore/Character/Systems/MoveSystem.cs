@@ -2,7 +2,6 @@ using DnaCore.Character.Components;
 using DnaCore.Character.Input;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Systems;
-using DnaCore.Utilities;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Entities;

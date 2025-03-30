@@ -1,4 +1,3 @@
-using DnaCore.Utilities;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Entities;
@@ -9,6 +8,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity
     [BurstCompile]
     public struct TileSensor : IComponentData
     {
+        public int2 Position;
         public Quadrant Quadrant;
         public int Distance;
         public float Radians;
