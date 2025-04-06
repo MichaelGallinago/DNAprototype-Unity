@@ -3,7 +3,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity
+namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 {
     [BurstCompile]
     public struct TileSensor : IComponentData

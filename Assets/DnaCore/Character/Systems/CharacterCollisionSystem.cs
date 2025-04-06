@@ -1,7 +1,6 @@
 using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Tiles.Collision;
-using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
@@ -34,54 +33,6 @@ namespace DnaCore.Character.Systems
         }
         
         public readonly void OnDestroy(ref SystemState state) {}
-    }
-    
-    [BurstCompile]
-    public partial struct SensorAdjustJob : IJobEntity
-    {
-        [ReadOnly] public ComponentLookup<TileSensor> SensorLookup;
-        
-        private void Execute(in Rotation rotation, in LocalToWorld transform, in CharacterSensors characterSensors)
-        {
-            var position = (int2)transform.Position.xy;
-            Quadrant quadrant = MathUtilities.GetQuadrant(rotation.Radians);
-            var sign = (int)rotation.Facing;
-            
-            characterSensors.FloorLeft.SetSensorData(
-                ref SensorLookup, position + new int2(-19, 0), quadrant.Combine(Quadrant.Down));
-            characterSensors.FloorRight.SetSensorData(
-                ref SensorLookup, position + new int2(19, 0), quadrant.Combine(Quadrant.Down));
-            characterSensors.WallBottom.SetSensorData(
-                ref SensorLookup, position + new int2(sign * 23, 12), quadrant.Combine(Quadrant.Right));
-            characterSensors.WallTop.SetSensorData(
-                ref SensorLookup, position + new int2(sign * 23, 52), quadrant.Combine(Quadrant.Right));
-        }
-    }
-    
-    [BurstCompile]
-    public static class TileSensorExtensions
-    {
-        public static void SetSensorData(this Entity entity, 
-            ref ComponentLookup<TileSensor> lookup, int2 position, Quadrant quadrant)
-        {
-            var sensor = lookup.GetRefRW(entity);
-            sensor.ValueRW.Position = position;
-            sensor.ValueRW.Quadrant = quadrant;
-        }
-        
-        public static void SetSensorData(this Entity entity, 
-            ref ComponentLookup<TileSensor> lookup, int2 position)
-        {
-            var sensor = lookup.GetRefRW(entity);
-            sensor.ValueRW.Position = position;
-        }
-        
-        public static void SetSensorData(this Entity entity, 
-            ref ComponentLookup<TileSensor> lookup, Quadrant quadrant)
-        {
-            var sensor = lookup.GetRefRW(entity);
-            sensor.ValueRW.Quadrant = quadrant;
-        }
     }
 
     [BurstCompile]

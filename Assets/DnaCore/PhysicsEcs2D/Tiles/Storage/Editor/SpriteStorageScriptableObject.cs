@@ -15,7 +15,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [CreateAssetMenu(
         fileName = nameof(SpriteStorageScriptableObject),
-        menuName = ScriptableObjectUtilities.Folder + nameof(SpriteStorageScriptableObject))]
+        menuName = AssetMenuPaths.ScriptableObjects + nameof(SpriteStorageScriptableObject))]
     public class SpriteStorageScriptableObject : ScriptableObject
     {
         [SerializeField, SerializedDictionary(nameof(BitTile), nameof(SpriteStorageData))]

@@ -1,19 +1,16 @@
-using DnaCore.PhysicsEcs2D.Systems;
-using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
 using DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
 using UnityEngine;
 using static DnaCore.PhysicsEcs2D.Tiles.TileConstants;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 {
     [BurstCompile]
-    [UpdateAfter(typeof(TransformUpdateSystem))]
+    [UpdateAfter(typeof(SensorAdjustSystem))]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct TileSenseSystem : ISystem, ISystemStartStop
     {

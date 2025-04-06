@@ -1,4 +1,4 @@
-using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using Unity.Entities;
 
 namespace DnaCore.Character.Components

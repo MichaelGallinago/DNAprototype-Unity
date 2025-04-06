@@ -6,7 +6,7 @@ namespace DnaCore.Character
 {
     [CreateAssetMenu(
         fileName = nameof(PhysicsConfig),
-        menuName = ScriptableObjectUtilities.Folder + nameof(PhysicsConfig))]
+        menuName = AssetMenuPaths.ScriptableObjects + nameof(PhysicsConfig))]
     public class PhysicsConfig : ScriptableObject
     {
         [field: SerializeField] public float JumpSpeed { get; private set; }

@@ -5,7 +5,7 @@ namespace Scenes.Menu.Audio
 {
     [CreateAssetMenu(
         fileName = nameof(AudioStorage), 
-        menuName = ScriptableObjectUtilities.Folder + nameof(AudioStorage))]
+        menuName = AssetMenuPaths.ScriptableObjects + nameof(AudioStorage))]
     public class AudioStorage : ScriptableObject
     {
         [field: SerializeField] public AudioClip TubeAppearance { get; private set; }

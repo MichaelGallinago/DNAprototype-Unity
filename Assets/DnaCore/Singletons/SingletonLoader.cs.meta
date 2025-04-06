@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 37f27b39b91b96643b5bfd6d66c6c3c4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _windowControllerPrefab: {instanceID: 0}
+  - _audioPlayerPrefab: {instanceID: 0}
+  - _dataStore: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

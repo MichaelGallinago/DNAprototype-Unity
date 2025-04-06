@@ -7,13 +7,13 @@ using Tiles;
 using UnityEditor;
 using UnityEngine;
 
-using static DnaCore.Utilities.ScriptableObjectUtilities;
+using static DnaCore.Utilities.AssetMenuPaths;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [CreateAssetMenu(
         fileName = nameof(SizeDataStorageScriptableObject), 
-        menuName = Folder + nameof(SizeDataStorageScriptableObject))]
+        menuName = ScriptableObjects + nameof(SizeDataStorageScriptableObject))]
     public class SizeDataStorageScriptableObject : ScriptableObject
     {
         private static readonly Vector4 RightAngles = new(0f, Circle.Quarter, Circle.Half, Circle.HalfAndQuarter);

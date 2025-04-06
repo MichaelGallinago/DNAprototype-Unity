@@ -7,7 +7,7 @@ using AspectRatio = DnaCore.Settings.AspectRatio;
 namespace DnaCore.Singletons.Window
 {
     public class WindowControllerInstance : MonoSingleton<WindowControllerInstance>
-    {                          
+    {
         [SerializeField] private RenderTextureMatcher _renderTextureMatcher;
         
         private Camera _camera;

@@ -2,6 +2,7 @@ using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace DnaCore.PhysicsEcs2D.Systems
@@ -18,6 +19,7 @@ namespace DnaCore.PhysicsEcs2D.Systems
             state.Dependency = new AccelerationJob().ScheduleParallel(state.Dependency);
             state.Dependency = new GravityJob().ScheduleParallel(state.Dependency);
             state.Dependency = new MovementJob().ScheduleParallel(state.Dependency);
+            state.Dependency = new RotationJob().ScheduleParallel(state.Dependency);
         }
 
         public readonly void OnDestroy(ref SystemState state) {}
@@ -46,5 +48,12 @@ namespace DnaCore.PhysicsEcs2D.Systems
             transform.Position.xy += velocity.Vector.GetValueDelta(TimeSystem.Speed);
             velocity.Vector.ResetInstanceValue();
         }
+    }
+    
+    [BurstCompile]
+    public partial struct RotationJob : IJobEntity
+    {
+        private static void Execute(ref LocalTransform transform, in Rotation rotation) =>
+            transform.Rotation = quaternion.RotateZ(rotation.Radians);
     }
 }

@@ -2,13 +2,18 @@
 
 namespace DnaCore.Singletons
 {
-    public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
+    public abstract class MonoSingleton : MonoBehaviour
+    {
+        public abstract void RegisterInstance();
+    }
+    
+    public abstract class MonoSingleton<T> : MonoSingleton where T : MonoSingleton<T>
     {
         public static T Instance { get; private set; }
         
         protected virtual void Initialize() {}
 
-        public void RegisterInstance()
+        public override void RegisterInstance()
         {
             if (Instance == this) return;
             if (Instance || this is not T singleton)

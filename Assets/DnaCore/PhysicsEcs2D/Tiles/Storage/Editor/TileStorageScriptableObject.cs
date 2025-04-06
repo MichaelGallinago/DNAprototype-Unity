@@ -14,13 +14,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-using static DnaCore.Utilities.ScriptableObjectUtilities;
+using static DnaCore.Utilities.AssetMenuPaths;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.Storage.Editor
 {
     [CreateAssetMenu(
         fileName = nameof(TileStorageScriptableObject),
-        menuName = Folder + nameof(TileStorageScriptableObject))]
+        menuName = ScriptableObjects + nameof(TileStorageScriptableObject))]
     public class TileStorageScriptableObject : ScriptableObject
     {
         private static readonly string[] FolderPathTransferArray = new string[1];

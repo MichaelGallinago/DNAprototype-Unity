@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
-using static DnaCore.Utilities.ScriptableObjectUtilities;
+using static DnaCore.Utilities.AssetMenuPaths;
 
 namespace DnaCore.PhysicsEcs2D.Tiles.SolidTypes
 {
     [CreateAssetMenu(
         fileName = nameof(SolidTypesScriptableObject), 
-        menuName = Folder + nameof(SolidTypesScriptableObject))]
+        menuName = ScriptableObjects + nameof(SolidTypesScriptableObject))]
     public class SolidTypesScriptableObject : ScriptableObject
     {
         [SerializeField, SerializedDictionary("Surrogate material key", nameof(SolidType))]

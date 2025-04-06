@@ -2,7 +2,7 @@ using DnaCore.Character.Components;
 using DnaCore.Character.Input;
 using DnaCore.IK2D.Bodies;
 using DnaCore.PhysicsEcs2D.Components;
-using DnaCore.PhysicsEcs2D.Tiles.Collision.TileSensorEntity;
+using DnaCore.PhysicsEcs2D.Tiles.Collision;
 using DnaCore.Utilities.Ecs;
 using Unity.Entities;
 using UnityEngine;

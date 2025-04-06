@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f27b39b91b96643b5bfd6d66c6c3c4, type: 3}
   m_Name: SingletonLoader
   m_EditorClassIdentifier: 
-  WindowControllerPrefab: {fileID: 7814686181706793933, guid: 674de81a69769bb45b2d4d2db7943d5c, type: 3}
-  AudioPlayerPrefab: {fileID: 1496942239041339919, guid: e2151cd3b597847468c81357dfc91ebd, type: 3}
+  _monoSingletons:
+  - {fileID: 7814686181706793933, guid: 674de81a69769bb45b2d4d2db7943d5c, type: 3}
+  - {fileID: 1496942239041339919, guid: e2151cd3b597847468c81357dfc91ebd, type: 3}
+  _scriptableSingletons:
+  - {fileID: 11400000, guid: 96fb67f5357fc4b48ab4e50d2ab05332, type: 2}

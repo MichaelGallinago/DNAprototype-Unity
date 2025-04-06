@@ -46,10 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bodyAuthoring: {fileID: 4344754961501881749}
-  _physicsBody: {fileID: 0}
   _physicsConfig: {fileID: 11400000, guid: a42d287d230d0574a93a1af86357e688, type: 2}
-  _tileSensorFloor1: {fileID: 0}
-  _tileSensorFloor2: {fileID: 0}
 --- !u!1001 &6591770863612774049
 PrefabInstance:
   m_ObjectHideFlags: 0
