@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.Utilities.Mathematics;
@@ -56,9 +57,9 @@ namespace DnaCore.PhysicsEcs2D.Systems
     {
         private static void Execute(ref LocalTransform transform, in Rotation rotation)
         {
-            transform.Rotation = 
-                math.mul(quaternion.RotateZ(rotation.Radians), 
-                    quaternion.RotateY(rotation.Facing == Direction.Positive ? 0f : math.PI));
+            quaternion spin = quaternion.RotateZ(rotation.Radians);
+            transform.Rotation = rotation.Facing == Direction.Positive ? 
+                spin : new quaternion(-spin.value.z, spin.value.w, 0f, 0f);
         }
     }
 }
