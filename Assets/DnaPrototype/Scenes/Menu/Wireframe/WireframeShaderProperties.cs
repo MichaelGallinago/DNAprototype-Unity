@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scenes.Menu.Wireframe
+namespace DnaPrototype.Scenes.Menu.Wireframe
 {
     public static class WireframeShaderProperties
     {

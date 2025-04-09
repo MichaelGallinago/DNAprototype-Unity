@@ -27,6 +27,8 @@ namespace DnaCore.Singletons
         }
 
 #if UNITY_EDITOR
+        private void OnValidate() => _instance = this;
+        
         public static void AddScriptableSingleton(ScriptableSingleton scriptableSingleton)
         {
             _instance._scriptableSingletons ??= new List<ScriptableSingleton>();

@@ -24,8 +24,8 @@ namespace DnaCore.Character.Authoring
                     {
                         FloorLeft = this.BakeQueryAdditional(TransformUsageFlags.None).AddComponents<TileSensor>(),
                         FloorRight = this.BakeQueryAdditional(TransformUsageFlags.None).AddComponents<TileSensor>(),
-                        WallBottom = this.BakeQueryAdditional(TransformUsageFlags.None).AddComponents<TileSensor>(),
-                        WallTop = this.BakeQueryAdditional(TransformUsageFlags.None).AddComponents<TileSensor>()
+                        //WallBottom = this.BakeQueryAdditional(TransformUsageFlags.None).AddComponents<TileSensor>(),
+                        //WallTop = this.BakeQueryAdditional(TransformUsageFlags.None).AddComponents<TileSensor>()
                     },
                     new BehaviourTree { Current = Behaviours.Ground },
                     new Gravity { Vector = authoring._physicsConfig.GravityVector },

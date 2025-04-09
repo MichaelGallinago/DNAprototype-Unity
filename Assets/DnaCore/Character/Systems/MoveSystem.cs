@@ -2,6 +2,7 @@ using DnaCore.Character.Components;
 using DnaCore.Character.Input;
 using DnaCore.PhysicsEcs2D.Components;
 using DnaCore.PhysicsEcs2D.Systems;
+using DnaCore.Utilities.Ecs;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Entities;
@@ -42,7 +43,7 @@ namespace DnaCore.Character.Systems
         private static void Rotate(ref Rotation rotation)
         {
             if (Mathf.Approximately(rotation.Radians, 0f)) return;
-		
+            
             float speed = Circle.ByteStep * TimeSystem.Speed;
             rotation.Radians += rotation.Radians >= Circle.Half ? speed : -speed;
 		

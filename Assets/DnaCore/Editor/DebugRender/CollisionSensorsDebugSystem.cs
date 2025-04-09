@@ -1,6 +1,9 @@
-﻿using Unity.Collections;
+﻿using DnaCore.PhysicsEcs2D.Tiles.Collision;
+using Unity.Collections;
 using Unity.Entities;
 using DnaCore.Utilities.Mathematics;
+using Unity.Burst;
+using Unity.Mathematics;
 using UnityEngine;
 using static Unity.Collections.NativeArrayOptions;
 
@@ -9,58 +12,100 @@ namespace DnaCore.Editor.DebugRender
     [UpdateInGroup(typeof(PresentationSystemGroup))]
     public partial class CollisionSensorsDebugSystem : SystemBase
     {
-        private static readonly int InstanceColorBuffer = Shader.PropertyToID("_InstanceColorBuffer");
-        
         private readonly CollisionSensorsDebugSystemAssets _assets = CollisionSensorsDebugSystemAssets.Instance;
+        
+        private const int GraphicsBufferStride = sizeof(float) * 4;
+        private const int BatchLimit = 1023;
         
         private NativeArray<Matrix4x4> _matrices;
         private NativeArray<Color> _colors;
         private GraphicsBuffer _colorBuffer;
         private MaterialPropertyBlock _matProps;
         private RenderParams _renderParams;
-
-        private const int Count = 4;
+        private EntityQuery _tileSensorQuery;
+        private int _capacity = 16;
         
         protected override void OnCreate()
         {
-            _matrices = new NativeArray<Matrix4x4>(Count, Allocator.Persistent, UninitializedMemory);
-            _colors = new NativeArray<Color>(Count, Allocator.Persistent, UninitializedMemory);
-            _colorBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, Count, sizeof(float) * 4);
+            _tileSensorQuery = GetEntityQuery(ComponentType.ReadOnly<TileSensor>());
+            AllocateBuffers(_capacity);
 
             _matProps = new MaterialPropertyBlock();
-            _renderParams = new RenderParams(_assets.Material) { matProps = _matProps };
+            _renderParams = new RenderParams(_assets.Material)
+            {
+                matProps = _matProps, 
+                layer = LayerMask.NameToLayer("CollisionGeneration")
+            };
 
-            SetData(0, 0, 0, Color.red);
-            SetData(1, 16, 16, Color.black);
-            SetData(2, -16, 2, Color.green);
-            SetData(3, -48, 48, Color.white);
-        }
-        
-        private void SetData(int index, int x, int y, Color color)
-        {
-            _matrices[index] = MatrixUtilities.Get(x, y);
-            _colors[index] = color;
-        }
-    
-        private void SetData(int index, int x, int y, int scaleX, int scaleY, Color color)
-        {
-            _matrices[index] = MatrixUtilities.Get(x, y, scaleX, scaleY);
-            _colors[index] = color;
+            RequireForUpdate<TileSensor>();
         }
         
         protected override void OnUpdate()
         {
+            int count = _tileSensorQuery.CalculateEntityCount();
+            EnsureCapacity(count);
+            FillDebugData();
+
             _colorBuffer.SetData(_colors);
-            _matProps.SetBuffer(InstanceColorBuffer, _colorBuffer);
-        
-            Graphics.RenderMeshInstanced(_renderParams, _assets.Mesh, 0, _matrices, Count);
+            _matProps.SetBuffer(DebugRenderShaderProperties.InstanceColorBuffer, _colorBuffer);
+
+            RenderAll(count);
         }
         
-        protected override void OnDestroy()
+        private void EnsureCapacity(int required)
         {
-            _matrices.Dispose();
-            _colors.Dispose();
-            _colorBuffer.Dispose();
+            if (required <= _capacity) return;
+
+            DisposeBuffers();
+            AllocateBuffers(_capacity = MathUtilities.NextPowerOfTwo(required));
+        }
+
+        private void AllocateBuffers(int size)
+        {
+            _matrices = new NativeArray<Matrix4x4>(size, Allocator.Persistent, UninitializedMemory);
+            _colors = new NativeArray<Color>(size, Allocator.Persistent, UninitializedMemory);
+            _colorBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, size, GraphicsBufferStride);
+        }
+        
+        private void DisposeBuffers()
+        {
+            if (_matrices.IsCreated) _matrices.Dispose();
+            if (_colors.IsCreated) _colors.Dispose();
+            _colorBuffer?.Dispose();
+        }
+        
+        private void FillDebugData() => new FillSensorDebugJob
+        {
+            Matrices = _matrices,
+            Colors = _colors
+        }.ScheduleParallel(Dependency).Complete();
+        
+        private void RenderAll(int count)
+        {
+            var start = 0;
+
+            while (count > 0)
+            {
+                int batchCount = math.min(BatchLimit, count);
+                Graphics.RenderMeshInstanced(_renderParams, _assets.Mesh, 0, _matrices, batchCount, start);
+                start += batchCount;
+                count -= batchCount;
+            }
+        }
+
+        protected override void OnDestroy() => DisposeBuffers();
+    }
+    
+    [BurstCompile]
+    public partial struct FillSensorDebugJob : IJobEntity
+    {
+        public NativeArray<Matrix4x4> Matrices;
+        public NativeArray<Color> Colors;
+
+        private void Execute([EntityIndexInQuery] int index, in TileSensor sensor)
+        {
+            Matrices[index] = MatrixUtilities.Get(sensor.Position);
+            Colors[index] = sensor.IsInside ? Color.red : Color.green;
         }
     }
 }

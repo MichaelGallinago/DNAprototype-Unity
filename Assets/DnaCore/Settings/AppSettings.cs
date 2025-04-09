@@ -19,7 +19,7 @@ namespace DnaCore.Settings
             [MethodImpl(MethodImplOptions.AggressiveInlining)] get => ref Instance.Audio;
         }
         
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] 
         public static void Save() => AppSettingsInstance.Save();
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

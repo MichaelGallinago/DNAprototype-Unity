@@ -6,7 +6,7 @@ namespace DnaCore.Character.Components
     {
         public Entity FloorLeft;
         public Entity FloorRight;
-        public Entity WallTop;
-        public Entity WallBottom;
+        //public Entity WallTop;
+        //public Entity WallBottom;
     }
 }

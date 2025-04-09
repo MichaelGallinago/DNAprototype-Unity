@@ -1,6 +1,6 @@
+using DnaPrototype.Scenes.Menu.Wireframe;
 using LitMotion;
 using LitMotion.Extensions;
-using Scenes.Menu.Wireframe;
 using UnityEngine;
 
 namespace Scenes.Menu.Model

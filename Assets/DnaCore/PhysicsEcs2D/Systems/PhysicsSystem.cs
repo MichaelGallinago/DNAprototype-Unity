@@ -1,5 +1,6 @@
 using DnaCore.Character.Components;
 using DnaCore.PhysicsEcs2D.Components;
+using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -53,7 +54,11 @@ namespace DnaCore.PhysicsEcs2D.Systems
     [BurstCompile]
     public partial struct RotationJob : IJobEntity
     {
-        private static void Execute(ref LocalTransform transform, in Rotation rotation) =>
-            transform.Rotation = quaternion.RotateZ(rotation.Radians);
+        private static void Execute(ref LocalTransform transform, in Rotation rotation)
+        {
+            transform.Rotation = 
+                math.mul(quaternion.RotateZ(rotation.Radians), 
+                    quaternion.RotateY(rotation.Facing == Direction.Positive ? 0f : math.PI));
+        }
     }
 }

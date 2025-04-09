@@ -48,8 +48,8 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
             
             SetData(sensors.FloorLeft, floorLeftWorld, quadrant.Combine(Quadrant.Down));
             SetData(sensors.FloorRight, floorRightWorld, quadrant.Combine(Quadrant.Down));
-            SetData(sensors.WallBottom, position + new int2(sign * 13, 12), quadrant.Combine(Quadrant.Right));
-            SetData(sensors.WallTop, position + new int2(sign * 13, 52), quadrant.Combine(Quadrant.Right));
+            //SetData(sensors.WallBottom, position + new int2(sign * 13, 12), quadrant.Combine(Quadrant.Right));
+            //SetData(sensors.WallTop, position + new int2(sign * 13, 52), quadrant.Combine(Quadrant.Right));
         }
         
         private static int2 RotatePoint(int2 point, Quadrant quadrant)

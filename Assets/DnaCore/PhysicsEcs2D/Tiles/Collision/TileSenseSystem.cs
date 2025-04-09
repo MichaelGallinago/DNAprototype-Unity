@@ -1,4 +1,5 @@
 using DnaCore.PhysicsEcs2D.Tiles.Generators.TilemapGenerator;
+using DnaCore.Utilities.Ecs;
 using DnaCore.Utilities.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
@@ -62,6 +63,7 @@ namespace DnaCore.PhysicsEcs2D.Tiles.Collision
 	        int2 inTilePosition = sensor.Position & ModSize;
 	        int2 tilePosition = sensor.Position >> DivSize;
 
+	        Bursted.Log((int)sensor.Quadrant);
 	        if (!TrySearch(tilePosition, 0, sensor.Quadrant, out int index))
 	        {
 		        FindFurtherTile(tilePosition, inTilePosition, ref sensor);

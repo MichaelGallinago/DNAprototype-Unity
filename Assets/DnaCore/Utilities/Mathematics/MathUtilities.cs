@@ -16,7 +16,7 @@ namespace DnaCore.Utilities.Mathematics
         public static Quadrant GetQuadrant(float radians)
         {
             radians = radians % Circle.Full + (radians < 0f ? Circle.Full + Circle.OneEighth : Circle.OneEighth);
-            return (Quadrant)((int)radians / 90 & 3);
+            return (Quadrant)((int)(radians / Circle.Quarter) & 3);
         }
 
         public static Quadrant Combine(this Quadrant target, Quadrant quadrant) => 
@@ -27,6 +27,17 @@ namespace DnaCore.Utilities.Mathematics
         
         public static float FloatToDb(float value) => 
             math.log10(math.clamp(value, 0.0001f, 1f)) * 20f;
+        
+        public static int NextPowerOfTwo(int x)
+        {
+            x--;
+            x |= x >> 1;
+            x |= x >> 2;
+            x |= x >> 4;
+            x |= x >> 8;
+            x |= x >> 16;
+            return x + 1;
+        }
         
         public static int FindGreatestCommonDivisor(int x, int y)
         {
