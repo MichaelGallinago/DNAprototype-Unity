@@ -12,10 +12,19 @@ namespace DnaCore.Singletons
     {
         private const int SingletonLoaderIndex = 2;
         
-        [SerializeField] private List<MonoSingleton> _monoSingletons;
+        [SerializeField] private List<MonoSingleton> _monoSingletonPrefabs;
         [SerializeField] private List<ScriptableSingleton> _scriptableSingletons;
         
         private static SingletonLoader _instance;
+        
+        private void OnEnable()
+        {
+            _instance = this;
+#if UNITY_EDITOR
+            _monoSingletonPrefabs.RemoveAll(singleton => singleton == null);
+            _scriptableSingletons.RemoveAll(singleton => singleton == null);
+#endif
+        }
 
 #if UNITY_EDITOR
         public static void AddScriptableSingleton(ScriptableSingleton scriptableSingleton)
@@ -39,35 +48,21 @@ namespace DnaCore.Singletons
             }
             Debug.LogError($"{nameof(SingletonLoader)} Not Found at index {SingletonLoaderIndex} in preloaded assets.");
         }
-
-        private void OnValidate()
-        {
-            _monoSingletons.RemoveAll(singleton => singleton == null);
-            _scriptableSingletons.RemoveAll(singleton => singleton == null);
-        }
 #endif
-        
-        private void OnEnable() => _instance = this;
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void Load()
         {
             AppSettings.Load();
-            ApplySettings();
+            AppSettings.Apply();
             _instance.InitializePrefabs();
-        }
-
-        private static void ApplySettings()
-        {
-            QualitySettings.vSyncCount = AppSettings.Options.VSync;
-            Application.targetFrameRate = AppSettings.Options.TargetFrameRate;
         }
         
         private void InitializePrefabs()
         {
-            foreach (MonoSingleton monoSingleton in _monoSingletons) 
+            foreach (MonoSingleton monoSingleton in _monoSingletonPrefabs) 
             {
-                monoSingleton.RegisterInstance();
+                Instantiate(monoSingleton).RegisterInstance();
             }
             
             foreach (ScriptableSingleton scriptableSingleton in _scriptableSingletons)

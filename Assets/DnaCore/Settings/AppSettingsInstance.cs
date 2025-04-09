@@ -63,5 +63,11 @@ namespace DnaCore.Settings
 
         public static void Save() =>
             File.WriteAllText(AppSettingsFilePath, JsonUtility.ToJson(Instance, true));
+        
+        public static void Apply()
+        {
+            QualitySettings.vSyncCount = AppSettings.Options.VSync;
+            Application.targetFrameRate = AppSettings.Options.TargetFrameRate;
+        }
     }
 }

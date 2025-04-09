@@ -24,5 +24,8 @@ namespace DnaCore.Settings
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Load() => AppSettingsInstance.Load();
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Apply() => AppSettingsInstance.Apply();
     }
 }
